@@ -7,8 +7,11 @@ namespace CompetitionResults.EnumsAndConstants
 {
     public enum CompetitionType
     {
-        Personal = 1,
-        Team = 2,
-        TeamPersonal = 3
+        OpenPersonal = 1,
+        OpenTeam = 2,
+        OpenTeamPersonal = 3,
+        ClosePersonal = 4,
+        CloseTeam = 5,
+        CloseTeamPersonal = 6
     }
 }
