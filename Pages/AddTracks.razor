@@ -1,0 +1,98 @@
+﻿@page "/addTracks"
+@using EnumsAndConstants
+
+<div class="row">
+    <div class="col">
+        
+        <select class=" form-control" name="Type" @bind="newType">
+            <option value="Run1">
+                @TrackType.Run1
+            </option>
+            <option value="Run2">
+                @TrackType.Run2
+            </option>
+            <option value="QualificationRun1">
+                @TrackType.QualificationRun1
+            </option>
+            <option value="QualificationRun2">
+                @TrackType.QualificationRun2
+            </option>
+            <option value="SemiFinal">
+                @TrackType.SemiFinal
+            </option>
+            <option value="Final">
+                @TrackType.Final
+            </option>
+
+        </select>
+        @*<select class="form-control" name="Competition Name" @bind="newCompetitionName">
+
+        </select>*@
+                
+
+        <div class=" col">
+            <button class=" btn btn-success" @onclick="AddTrack">Add Track</button>
+        </div>
+    </div>
+</div>
+
+<div class=" container-fluid">
+    <div class=" row">
+        <div class="col">
+            <h2>List of Tracks</h2>
+            <table class=" table table-striped">
+                <thead class=" table-dark">
+                    <tr>
+                        <th scope="col">Track Type </th>                       
+
+                    </tr>
+                </thead>
+                @foreach (var item in track)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.TrackType
+                            </td>
+                            @*<td>
+                                @item.CompetitionName
+                            </td>*@
+                            <td>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteTrack(item))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private IList<Track> track = new List<Track>();
+
+    private TrackType newType;
+    //private Competition newCompetitionName;
+
+    private void AddTrack()
+    {
+
+        track.Add(new Track
+        {
+            //CompetitionName=newCompetitionName,
+            TrackType = newType,
+            IsActive = true
+        });
+
+    }
+
+    private void DeleteTrack(Track deletedTrack)
+    {
+        track.Remove(deletedTrack);
+    }
+
+}
