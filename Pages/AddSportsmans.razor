@@ -104,6 +104,7 @@
                                 @item.NamesOfCoaches
                             </td>
                             <td>
+                                <button class=" btn-dark">Edite</button>
                             </td>
                             <td>
                                 <button class=" btn-danger" @onclick="(()=>DeleteSportsman(item))">Delete</button>
@@ -131,6 +132,10 @@
 
     private void AddSportsman()
     {
+        if (newNameOfClub == null)
+        {
+            newNameOfClub = "Personally";
+        }
 
         sportsman.Add(new Sportsman
         {
