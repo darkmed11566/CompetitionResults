@@ -1,4 +1,5 @@
-﻿@page "/addTracks"
+﻿@inject CompetitionResults.Data.Repository.TrackRepository trackRepository;
+@page "/addTracks"
 @using EnumsAndConstants
 
 <div class="row">
@@ -25,10 +26,6 @@
             </option>
 
         </select>
-        @*<select class="form-control" name="Competition Name" @bind="newCompetitionName">
-
-            </select>*@
-
 
         <div class=" col">
             <button class=" btn btn-success" @onclick="AddTrack">Add Track</button>
@@ -54,14 +51,11 @@
                             <td>
                                 @item.TrackType
                             </td>
-                            @*<td>
-                                    @item.CompetitionName
-                                </td>*@
                             <td>
                                 <button class=" btn-dark">Edite</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteTrack(item))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteTrack(item.Id))">Delete</button>
                             </td>
                         </tr>
                     </tbody>
@@ -74,26 +68,32 @@
 
 @code {
 
-    private IList<Track> track = new List<Track>();
+    private IEnumerable<Track> track = new List<Track>();
+
+    protected override void OnInitialized()
+    {
+        track = trackRepository.GetAll();
+    }
 
     private TrackType newType;
-    //private Competition newCompetitionName;
+
 
     private void AddTrack()
     {
+        var dbTrack = new Track();
 
-        track.Add(new Track
-        {
-            //CompetitionName=newCompetitionName,
-            TrackType = newType,
-            IsActive = true
-        });
+        dbTrack.TrackType = newType;
+
+        dbTrack.IsActive = true;
+
+        trackRepository.Save(dbTrack);
+
 
     }
 
-    private void DeleteTrack(Track deletedTrack)
+    private void DeleteTrack(long id)
     {
-        track.Remove(deletedTrack);
+        trackRepository.Remove(id);
     }
 
 }

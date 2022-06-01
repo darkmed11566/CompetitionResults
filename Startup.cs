@@ -1,4 +1,5 @@
 using CompetitionResults.Data;
+using CompetitionResults.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace CompetitionResults
@@ -34,6 +36,44 @@ namespace CompetitionResults
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            RegisterRepositoriesAuto(services);
+
+        }
+
+        private void RegisterRepositoriesAuto(IServiceCollection services)
+        {
+            var baseRepoType = typeof(BaseRepository<>);
+
+            Assembly
+                .GetAssembly(baseRepoType)
+                .GetTypes()
+                .Where(type =>
+                    type.BaseType != null
+                    && type.BaseType.IsGenericType
+                    && type.BaseType.GetGenericTypeDefinition() == baseRepoType)
+                .ToList()
+                .ForEach(type => SmartAddScope(services, type));
+        }
+
+        private void SmartAddScope(IServiceCollection services, Type ourType)
+        {
+            services.AddScoped(ourType, serviceProvider =>
+            {
+                var constructor = ourType
+                    .GetConstructors()
+                    .OrderByDescending(x => x.GetParameters().Length)
+                    .First();
+
+                var parameters = constructor
+                    .GetParameters()
+                    .Select(x =>
+                        serviceProvider.GetService(x.ParameterType)
+                    )
+                    .ToArray();
+
+                return constructor.Invoke(parameters);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
