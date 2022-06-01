@@ -1,4 +1,5 @@
-﻿@page "/addCompetitions"
+﻿@inject CompetitionResults.Data.Repository.CompetitionRepository competitionRepository; 
+@page "/addCompetitions"
 @using EnumsAndConstants
 
             <div class="row">
@@ -90,7 +91,7 @@
                                 <button class=" btn-dark">Edite</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteCompetition(item))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteCompetition(item.Id))">Delete</button>
                             </td>
 
                         </tr>
@@ -103,7 +104,12 @@
 </div>
 
 @code {
-    private IList<Competition> competition = new List<Competition>();
+    private IEnumerable<Competition> competition = new List<Competition>();
+
+    protected override void OnInitialized()
+    {
+        competition = competitionRepository.GetAll();
+    }
 
     private string newCompetitionName;
     private DateTime newCompetitionStartData;
@@ -115,21 +121,21 @@
     private void AddCompetition()
     {
 
-        competition.Add(new Competition
-        {
-            CompetitionName = newCompetitionName,
-            CompetitionStartData = newCompetitionStartData,
-            CompetitionEndtData = newCompetitionEndData,
-            Rating = newRating,
-            Country = newCountry,
-            Type = newType,
-            IsActive = true
-        });
+        var dbCompetition = new Competition();
 
+        dbCompetition.CompetitionName = newCompetitionName;
+        dbCompetition.CompetitionStartData = newCompetitionStartData;
+        dbCompetition.CompetitionEndtData = newCompetitionEndData;
+        dbCompetition.Rating = newRating;
+        dbCompetition.Country = newCountry;
+        dbCompetition.Type = newType;
+        dbCompetition.IsActive = true;
+
+        competitionRepository.Save(dbCompetition);
     }
 
-    private void DeleteCompetition(Competition deletedCompetition)
-    {
-        competition.Remove(deletedCompetition);
+    private void DeleteCompetition(long id)
+    {      
+        competitionRepository.Remove(id);
     }
 }

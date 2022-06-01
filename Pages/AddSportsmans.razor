@@ -1,63 +1,64 @@
-﻿@page "/addSportsmans"
+﻿@inject CompetitionResults.Data.Repository.SportsmanRepository sportsmanRepository;
+@page "/addSportsmans"
 @using EnumsAndConstants
 
-            <div class="row">
-                <div class="col">
-                    <input class=" form-control" placeholder="Name" @bind="newName" />
-                    <input class=" form-control" placeholder="Second Name" @bind="newSecondName" />
-                    <input class=" form-control" type="date" placeholder="Date Of Birth" @bind="newDateOfBirt " />
+<div class="row">
+    <div class="col">
+        <input class=" form-control" placeholder="Name" @bind="newName" />
+        <input class=" form-control" placeholder="Second Name" @bind="newSecondName" />
+        <input class=" form-control" type="date" placeholder="Date Of Birth" @bind="newDateOfBirt " />
 
-                    <select class=" form-control" name="Sex" @bind="newSex">
-                        <option value="Male">
-                            @Sex.Male
-                        </option>
-                        <option value="Female">
-                            @Sex.Female
-                        </option>
-                    </select>
+        <select class=" form-control" name="Sex" @bind="newSex">
+            <option value="Male">
+                @Sex.Male
+            </option>
+            <option value="Female">
+                @Sex.Female
+            </option>
+        </select>
 
-                    <select class=" form-control" name="Country" @bind="newCountry">
-                        <option value="BLR">
-                            @ListOfCountries.BLR
-                        </option>
-                        <option value="LTV">
-                            @ListOfCountries.LTV
-                        </option>
-                        <option value="RUS">
-                            @ListOfCountries.RUS
-                        </option>
-                    </select>
+        <select class=" form-control" name="Country" @bind="newCountry">
+            <option value="BLR">
+                @ListOfCountries.BLR
+            </option>
+            <option value="LTV">
+                @ListOfCountries.LTV
+            </option>
+            <option value="RUS">
+                @ListOfCountries.RUS
+            </option>
+        </select>
 
-                    <select class=" form-control" name="Rang" @bind="newRang">
-                        <option value="NR">
-                            @Rangs.NR
-                        </option>
-                        <option value="III">
-                            @Rangs.III
-                        </option>
-                        <option value="II">
-                            @Rangs.II
-                        </option>
-                        <option value="I">
-                            @Rangs.I
-                        </option>
-                        <option value="CMS">
-                            @Rangs.CMS
-                        </option>
-                        <option value="MS">
-                            @Rangs.MS
-                        </option>
-                    </select>
+        <select class=" form-control" name="Rang" @bind="newRang">
+            <option value="NR">
+                @Rangs.NR
+            </option>
+            <option value="III">
+                @Rangs.III
+            </option>
+            <option value="II">
+                @Rangs.II
+            </option>
+            <option value="I">
+                @Rangs.I
+            </option>
+            <option value="CMS">
+                @Rangs.CMS
+            </option>
+            <option value="MS">
+                @Rangs.MS
+            </option>
+        </select>
 
-                    <input class=" form-control" placeholder="Name of club" @bind="newNameOfClub" />
-                    <input class=" form-control" placeholder="Names of coachers" @bind="newNamesOfCoachers" />
+        <input class=" form-control" placeholder="Name of club" @bind="newNameOfClub" />
+        <input class=" form-control" placeholder="Names of coachers" @bind="newNamesOfCoachers" />
 
-                    <div class=" col">
-                        <button class=" btn btn-success" @onclick="AddSportsman">Add sportsman</button>
-                    </div>
-                </div>
-            </div>
- 
+        <div class=" col">
+            <button class=" btn btn-success" @onclick="AddSportsman">Add sportsman</button>
+        </div>
+    </div>
+</div>
+
 <div class=" container-fluid">
     <div class=" row">
         <div class="col">
@@ -107,7 +108,7 @@
                                 <button class=" btn-dark">Edite</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteSportsman(item))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteSportsman(item.Id))">Delete</button>
                             </td>
                         </tr>
                     </tbody>
@@ -119,7 +120,12 @@
 </div>
 
 @code {
-    private IList<Sportsman> sportsman = new List<Sportsman>();
+    private IEnumerable<Sportsman> sportsman = new List<Sportsman>();
+
+    protected override void OnInitialized()
+    {
+        sportsman = sportsmanRepository.GetAll();
+    }
 
     private string newName;
     private string newSecondName;
@@ -137,23 +143,24 @@
             newNameOfClub = "Personally";
         }
 
-        sportsman.Add(new Sportsman
-        {
-            Name = newName,
-            SecondName = newSecondName,
-            DateOfBirth = newDateOfBirt,
-            Sex = newSex,
-            Country = newCountry,
-            Rang = newRang,
-            NameOfClub=newNameOfClub,
-            NamesOfCoaches=newNamesOfCoachers,
-            IsActive = true
-        });
+        var dbSportsman = new Sportsman();
+
+        dbSportsman.Name = newName;
+        dbSportsman.SecondName = newSecondName;
+        dbSportsman.Sex = newSex;
+        dbSportsman.DateOfBirth = newDateOfBirt;
+        dbSportsman.Country = newCountry;
+        dbSportsman.Rang = newRang;
+        dbSportsman.NameOfClub = newNameOfClub;
+        dbSportsman.NamesOfCoaches = newNamesOfCoachers;
+        dbSportsman.IsActive = true;
+
+        sportsmanRepository.Save(dbSportsman);
 
     }
 
-    private void DeleteSportsman(Sportsman deletedSportsman)
+    private void DeleteSportsman(long id)
     {
-        sportsman.Remove(deletedSportsman);
+        sportsmanRepository.Remove(id);
     }
 }
