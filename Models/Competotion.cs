@@ -14,6 +14,6 @@ namespace CompetitionResults.Models
         public bool Rating { get; set; }
         public CompetitionType Type { get; set; }
         public ListOfCountries Country { get; set; }
-
+        public CompetitionStatus Status { get; set; }
     }
 }
