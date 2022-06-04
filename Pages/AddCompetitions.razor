@@ -1,5 +1,4 @@
-﻿@inject CompetitionResults.Data.Repository.CompetitionRepository competitionRepository; 
-@page "/addCompetitions"
+﻿@page "/addCompetitions"
 @using EnumsAndConstants
 
             <div class="row">
@@ -40,7 +39,18 @@
                         <option value="CloseTeamPersonal">
                             @CompetitionType.CloseTeamPersonal
                         </option>
+                    </select>
 
+                    <select class=" form-control" name="Status" @bind="newStatus">
+                        <option value="Planned">
+                            @CompetitionStatus.Planned
+                        </option>
+                        <option value="Live">
+                            @CompetitionStatus.Live
+                        </option>
+                        <option value="Completed">
+                            @CompetitionStatus.Completed
+                        </option>
                     </select>
 
                     <div class=" col">
@@ -62,7 +72,7 @@
                         <th scope="col">Rating </th>
                         <th scope="col">Country </th>
                         <th scope="col"> Competition Type</th>
-
+                        <th scope="col"> Competition Status</th>
                     </tr>
                 </thead>
                 @foreach (var item in competition)
@@ -88,10 +98,13 @@
                                 @item.Type
                             </td>
                             <td>
+                                @item.Status
+                            </td>
+                            <td>
                                 <button class=" btn-dark">Edite</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteCompetition(item.Id))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteCompetition(item))">Delete</button>
                             </td>
 
                         </tr>
@@ -104,12 +117,7 @@
 </div>
 
 @code {
-    private IEnumerable<Competition> competition = new List<Competition>();
-
-    protected override void OnInitialized()
-    {
-        competition = competitionRepository.GetAll();
-    }
+    private IList<Competition> competition = new List<Competition>();
 
     private string newCompetitionName;
     private DateTime newCompetitionStartData;
@@ -117,25 +125,27 @@
     private bool newRating;
     private ListOfCountries newCountry;
     private CompetitionType newType;
+    private CompetitionStatus newStatus;
 
     private void AddCompetition()
     {
 
-        var dbCompetition = new Competition();
+        competition.Add(new Competition
+        {
+            CompetitionName = newCompetitionName,
+            CompetitionStartData = newCompetitionStartData,
+            CompetitionEndtData = newCompetitionEndData,
+            Rating = newRating,
+            Country = newCountry,
+            Type = newType,
+            IsActive = true,
+            Status = newStatus
+        });
 
-        dbCompetition.CompetitionName = newCompetitionName;
-        dbCompetition.CompetitionStartData = newCompetitionStartData;
-        dbCompetition.CompetitionEndtData = newCompetitionEndData;
-        dbCompetition.Rating = newRating;
-        dbCompetition.Country = newCountry;
-        dbCompetition.Type = newType;
-        dbCompetition.IsActive = true;
-
-        competitionRepository.Save(dbCompetition);
     }
 
-    private void DeleteCompetition(long id)
-    {      
-        competitionRepository.Remove(id);
+    private void DeleteCompetition(Competition deletedCompetition)
+    {
+        competition.Remove(deletedCompetition);
     }
 }
