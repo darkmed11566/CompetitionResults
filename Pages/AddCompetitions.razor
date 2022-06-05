@@ -39,20 +39,7 @@
                         <option value="CloseTeamPersonal">
                             @CompetitionType.CloseTeamPersonal
                         </option>
-                    </select>
-
-                    <select class=" form-control" name="Status" @bind="newStatus">
-                        <option value="Planned">
-                            @CompetitionStatus.Planned
-                        </option>
-                        <option value="Live">
-                            @CompetitionStatus.Live
-                        </option>
-                        <option value="Completed">
-                            @CompetitionStatus.Completed
-                        </option>
-                    </select>
-
+                    </select> 
                     <div class=" col">
                         <button class=" btn btn-success" @onclick="AddCompetition">Add Competition</button>
                     </div>
@@ -124,8 +111,7 @@
     private DateTime newCompetitionEndData;
     private bool newRating;
     private ListOfCountries newCountry;
-    private CompetitionType newType;
-    private CompetitionStatus newStatus;
+    private CompetitionType newType;    
 
     private void AddCompetition()
     {
@@ -139,9 +125,8 @@
             Country = newCountry,
             Type = newType,
             IsActive = true,
-            Status = newStatus
+            Status = CompetitionStatus.Planned
         });
-
     }
 
     private void DeleteCompetition(Competition deletedCompetition)
