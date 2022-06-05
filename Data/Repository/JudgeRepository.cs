@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CompetitionResults.Data.Repository
 {
-    public class TrackRepository : BaseRepository<Track>
+    public class JudgeRepository : BaseRepository<Judge>
     {
-        public TrackRepository(WebContext webContext) : base(webContext)
+        public JudgeRepository(WebContext webContext) : base(webContext)
         {
         }
     }

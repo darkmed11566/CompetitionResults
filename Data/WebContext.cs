@@ -14,5 +14,6 @@ namespace CompetitionResults.Data
         public DbSet<Competition> Competitions { get; set; }
         public DbSet<Sportsman> Sportsmens { get; set; }
         public DbSet<Track> Tracks { get; set; }
+        public DbSet<Judge> Judges { get; set; }
     }
 }

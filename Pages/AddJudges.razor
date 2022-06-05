@@ -1,0 +1,98 @@
+﻿@inject CompetitionResults.Data.Repository.JudgeRepository judgeRepository;
+@page "/addJudges"
+@using EnumsAndConstants
+
+<div class="row">
+    <div class="col">
+        <input class=" form-control" placeholder="Name" @bind="newName" />
+        <input class=" form-control" placeholder="Second Name" @bind="newSecondName" />
+        
+        <select class=" form-control" name="Country" @bind="newCountry">
+            <option value="BLR">
+                @ListOfCountries.BLR
+            </option>
+            <option value="LTV">
+                @ListOfCountries.LTV
+            </option>
+            <option value="RUS">
+                @ListOfCountries.RUS
+            </option>
+        </select>
+       
+        <div class=" col">
+            <button class=" btn btn-success" @onclick="AddJudge">Add judge</button>
+        </div>
+    </div>
+</div>
+
+<div class=" container-fluid">
+    <div class=" row">
+        <div class="col">
+            <h2>List of spostsmans</h2>
+            <table class=" table table-striped">
+                <thead class=" table-dark">
+                    <tr>
+                        <th scope="col">Name </th>
+                        <th scope="col">Second name </th>                        
+                        <th scope="col">Country </th>
+                    </tr>
+                </thead>
+                @foreach (var item in judge)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.SecondName
+                            </td>
+                            <td>
+                                @item.Country
+                            </td>
+                            <td>
+                                <button class=" btn-dark">Edite</button>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteJudge(item))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<Judge> judge = new List<Judge>();
+
+    protected override void OnInitialized()
+    {
+        judge = judgeRepository.GetAll();
+    }
+
+    private string newName;
+    private string newSecondName;
+    private ListOfCountries newCountry;
+
+    private void AddJudge()
+    {
+
+        var dbJudge = new Judge();
+
+        dbJudge.Name = newName;
+        dbJudge.SecondName = newSecondName;
+        dbJudge.Country = newCountry;
+        dbJudge.IsActive = true;
+
+        judgeRepository.Save(dbJudge);
+
+    }
+
+    private void DeleteJudge(Judge deletedJude)
+    {
+        judgeRepository.Remove(deletedJude);
+    }
+}
