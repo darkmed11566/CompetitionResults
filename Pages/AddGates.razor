@@ -1,0 +1,154 @@
+﻿@page "/addGates"
+@using EnumsAndConstants
+@inject CompetitionResults.Data.Repository.GateWithPenaltyRepository gateWithPenaltyRepository;
+@inject CompetitionResults.Data.Repository.GateWithTimeRepository gateWithTimeRepository;
+
+<div class="row">
+    <div class="col">
+
+        <select class=" form-control" name="Gate Name" @bind="newGateName">
+            
+            @foreach (var gate in Enum.GetValues(typeof(GateNameWithTime)))
+            { <option value="@gate">
+                @gate;
+            </option>
+            }
+        </select>
+
+        <div class=" col">
+            <button class=" btn btn-success" @onclick="AddGateWithTime">Add Gate With Time</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+
+        <select class=" form-control" name="Gate Name" @bind="newGateNumber">
+
+            @foreach (var gate in Enum.GetValues(typeof(GateNameWithPenalty)))
+            {
+                <option value="@gate">
+                    @gate;
+                </option>
+            }
+        </select>
+
+        <div class=" col">
+            <button class=" btn btn-danger" @onclick="AddBackGateWithPenalty">Add Back Gate With Penalty</button>
+        </div>
+        <div class=" col">
+            <button class=" btn btn-danger" @onclick="AddStraightGateWithPenalty">Add Straight Gate With Penalty</button>
+        </div>
+    </div>
+</div>
+
+<div class=" container-fluid">
+    <div class=" row">
+        <div class="col">
+            <h2>List of Gates</h2>
+            <table class=" table table-striped">
+                <thead class=" table-dark">
+                    <tr>
+                        <th scope="col">Gate Type </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">Gate Name/Number </th>
+                    </tr>
+
+                </thead>
+                @foreach (var item in gateWithTime)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.Type
+                            </td>
+                            <td>
+                                @item.GateName
+                            </td>
+                            <td>
+                                <button class=" btn-dark">Edite</button>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithTime(item))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+                @foreach (var item in gateWithPenalty)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.Type
+                            </td>
+                            <td>
+                                @item.GateNumber
+                            </td>
+                            <td>
+                                <button class=" btn-dark">Edite</button>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithPenalty(item))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<GateWithTime> gateWithTime = new List<GateWithTime>();
+    private IEnumerable<GateWithPenalty> gateWithPenalty = new List<GateWithPenalty>();
+
+    private GateNameWithPenalty newGateNumber;
+    private GateNameWithTime newGateName;
+
+    private void DeleteGateWithTime(GateWithTime deletedGatewithTime)
+    {
+        gateWithTimeRepository.Remove(deletedGatewithTime);
+    }
+    private void DeleteGateWithPenalty(GateWithPenalty deletedGateWithPenalty)
+    {
+        gateWithPenaltyRepository.Remove(deletedGateWithPenalty);
+    }
+    private void AddGateWithTime()
+    {
+
+        var dbGateWithTime = new GateWithTime();
+
+        dbGateWithTime.Type = GateType.TimeGate;
+        dbGateWithTime.GateName = newGateName;
+        dbGateWithTime.IsActive = true;
+
+        gateWithTimeRepository.Save(dbGateWithTime);
+
+    }
+    private void AddBackGateWithPenalty()
+    {
+
+        var dbBackGate = new GateWithPenalty();
+
+        dbBackGate.Type = GateType.BackGate;
+        dbBackGate.GateNumber = newGateNumber;
+        dbBackGate.IsActive = true;
+
+        gateWithPenaltyRepository.Save(dbBackGate);
+
+    }
+    private void AddStraightGateWithPenalty()
+    {
+
+        var dbStraightGate = new GateWithPenalty();
+
+        dbStraightGate.Type = GateType.StraightGate;
+        dbStraightGate.GateNumber = newGateNumber;
+        dbStraightGate.IsActive = true;
+
+        gateWithPenaltyRepository.Save(dbStraightGate);
+
+    }
+}

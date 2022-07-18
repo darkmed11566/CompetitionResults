@@ -15,5 +15,9 @@ namespace CompetitionResults.Data
         public DbSet<Sportsman> Sportsmens { get; set; }
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Judge> Judges { get; set; }
+        public DbSet<GateWithTime> GateWithTimes { get; set; }
+        public DbSet<GateWithPenalty> GateWithPenalties { get; set; }
+        public DbSet<Competitioner> Competitioners { get; set; }
+        public DbSet<Sector> Sectors { get; set; }
     }
 }

@@ -54,7 +54,7 @@
                                 <button class=" btn-dark">Edite</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteJudge(item))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteJudge(item.Id))">Delete</button>
                             </td>
                         </tr>
                     </tbody>
@@ -91,8 +91,8 @@
 
     }
 
-    private void DeleteJudge(Judge deletedJude)
+    private void DeleteJudge(long id)
     {
-        judgeRepository.Remove(deletedJude);
+        judgeRepository.Remove(id);
     }
 }
