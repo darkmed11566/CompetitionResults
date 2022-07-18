@@ -50,8 +50,6 @@
                 <thead class=" table-dark">
                     <tr>
                         <th scope="col">Gate Type </th>
-                    </tr>
-                    <tr>
                         <th scope="col">Gate Name/Number </th>
                     </tr>
 
@@ -106,6 +104,14 @@
 
     private GateNameWithPenalty newGateNumber;
     private GateNameWithTime newGateName;
+
+    protected override void OnInitialized()
+    {
+        gateWithTime = gateWithTimeRepository.GetAll(); 
+        gateWithPenalty = gateWithPenaltyRepository.GetAll();
+    }
+
+
 
     private void DeleteGateWithTime(GateWithTime deletedGatewithTime)
     {
