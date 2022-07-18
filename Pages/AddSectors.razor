@@ -1,0 +1,76 @@
+﻿@inject CompetitionResults.Data.Repository.SectorRepository sectorRepository;
+@page "/addSectors"
+@using EnumsAndConstants
+
+<div class="row">
+    <div class="col">
+        <input class=" form-control" placeholder="Name" @bind="newSectorNumber" />
+
+        <div class=" col">
+            <button class=" btn btn-success" @onclick="AddSector">Add Sector</button>
+        </div>
+    </div>
+</div>
+
+<div class=" container-fluid">
+    <div class=" row">
+        <div class="col">
+            <h2>List of spostsmans</h2>
+            <table class=" table table-striped">
+                <thead class=" table-dark">
+                    <tr>
+                        <th scope="col">SectorNumber </th>
+                    </tr>
+                </thead>
+                @foreach (var item in sector)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.SectorNumber
+                            </td>
+
+                            <td>
+                                <button class=" btn-dark">Edite</button>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteSector(item.Id))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<Sector>
+    sector = new List<Sector>();
+
+    protected override void OnInitialized()
+    {
+        sector = sectorRepository.GetAll();
+
+    }
+
+    private int newSectorNumber;
+
+    private void AddSector()
+    {
+
+        var dbSector = new Sector();
+
+        dbSector.SectorNumber = newSectorNumber;
+        dbSector.IsActive = true;
+
+        sectorRepository.Save(dbSector);
+
+    }
+
+    private void DeleteSector(long id)
+    {
+        sectorRepository.Remove(id);
+    }
+}

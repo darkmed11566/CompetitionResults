@@ -1,4 +1,5 @@
-﻿@inject CompetitionResults.Data.Repository.TrackRepository trackRepository;
+﻿@inject CompetitionResults.Data.Repository.GateWithTimeRepository gateWithTimeRepository;
+@inject CompetitionResults.Data.Repository.TrackRepository trackRepository;
 @page "/addTracks"
 @using EnumsAndConstants
 
@@ -69,6 +70,7 @@
 @code {
 
     private IEnumerable<Track> track = new List<Track>();
+    private IEnumerable<GateWithTime> gate = new List<GateWithTime>();
 
     protected override void OnInitialized()
     {
@@ -88,8 +90,29 @@
 
         trackRepository.Save(dbTrack);
 
+        var dbGateWithTimeStart = new GateWithTime();
+
+        dbGateWithTimeStart.Type = GateType.StartingGate;
+
+        dbGateWithTimeStart.GateName = GateNameWithTime.Start;
+
+        dbGateWithTimeStart.IsActive = true;
+
+        gateWithTimeRepository.Save(dbGateWithTimeStart);
+
+        var dbGateWithTimeFinish = new GateWithTime();
+
+        dbGateWithTimeFinish.Type = GateType.FinisGate;
+
+        dbGateWithTimeFinish.GateName = GateNameWithTime.Finish;
+
+        dbGateWithTimeFinish.IsActive = true;
+
+        gateWithTimeRepository.Save(dbGateWithTimeFinish);
 
     }
+
+
 
     private void DeleteTrack(long id)
     {
