@@ -1,0 +1,87 @@
+﻿@page "/addGateWichTimePassages"
+@using EnumsAndConstants
+
+@inject CompetitionResults.Data.Repository.GateWithTimePassageRepository gateWithTimePassageRepository;
+
+<div class="row">
+    <div class="col">
+
+       
+        <input class=" form-control" placeholder="Gate Wich Time Passage" @bind="newPassage" />
+
+        <div class=" col">
+            <button class=" btn btn-danger" @onclick="AddGateWithTimePassage">Send Time Passage</button>
+        </div>
+        
+    </div>
+</div>
+
+<div class=" container-fluid">
+    <div class=" row">
+        <div class="col">
+            <h2>List of Gates</h2>
+            <table class=" table table-striped">
+                <thead class=" table-dark">
+                    <tr>
+                        <th scope="col">Gate Name </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">Time Passage </th>
+                    </tr>
+
+                </thead>
+                @foreach (var item in gateWithTimePassage)
+                {
+                    <tbody>
+                        <tr>
+                            
+                            <td>
+                                @item.GatePasssage
+                            </td>
+                            <td>
+                                <button class=" btn-dark">Edite</button>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithTimePassage(item))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    
+    private IEnumerable<GateWithTimePassage> gateWithTimePassage = new List<GateWithTimePassage>();
+
+     private DateTime newPassage;
+
+    protected override void OnInitialized()
+    {
+        gateWithTimePassage = gateWithTimePassageRepository.GetAll();
+       
+    }
+
+
+
+    private void DeleteGateWithTimePassage(GateWithTimePassage deletedGateWithTimePassage)
+    {
+        gateWithTimePassageRepository.Remove(deletedGateWithTimePassage);
+    }
+   
+    private void AddGateWithTimePassage()
+    {
+
+        var dbGateWithTimePassage = new GateWithTimePassage();
+
+        dbGateWithTimePassage.GatePasssage = DateTime.Now;
+        dbGateWithTimePassage.IsActive = true;
+
+        gateWithTimePassageRepository.Save(dbGateWithTimePassage);
+
+    }
+   
+}

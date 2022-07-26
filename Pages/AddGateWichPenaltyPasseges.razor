@@ -1,0 +1,85 @@
+﻿@page "/addGateWichPenaltyPassages"
+@using EnumsAndConstants
+@inject CompetitionResults.Data.Repository.GateWithPenaltyPassageRepository gateWithPenaltyPassageRepository;
+
+<div class="row">
+    <div class="col">
+
+        <select class=" form-control" name="Gate Wich Penalty Passage" @bind="newPenalty">
+            
+            @foreach (var penalty in Enum.GetValues(typeof(Penalties)))
+            { <option value="@penalty">
+                @penalty;
+            </option>
+            }
+        </select>
+
+        <div class=" col">
+            <button class=" btn btn-success" @onclick="AddGateWithPenaltyPassage">Send Penalty</button>
+        </div>
+    </div>
+</div>
+
+<div class=" container-fluid">
+    <div class=" row">
+        <div class="col">
+            <h2>List of Gates</h2>
+            <table class=" table table-striped">
+                <thead class=" table-dark">
+                    <tr>
+                        <th scope="col">Number </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">Penalty </th>
+                    </tr>
+
+                </thead>
+                @foreach (var item in gateWithPenaltyPassage)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.PenaltyOnGate
+                            </td>                            
+                            <td>
+                                <button class=" btn-dark">Edite</button>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithPenaltyPassage(item))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }  
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<GateWithPenaltyPassage> gateWithPenaltyPassage = new List<GateWithPenaltyPassage>();
+    
+    private Penalties newPenalty;
+   
+
+    protected override void OnInitialized()
+    {
+        gateWithPenaltyPassage = gateWithPenaltyPassageRepository.GetAll();
+    }
+   
+    private void DeleteGateWithPenaltyPassage(GateWithPenaltyPassage deletedGateWithPenaltyPassage)
+    {
+        gateWithPenaltyPassageRepository.Remove(deletedGateWithPenaltyPassage);
+    } 
+
+    private void AddGateWithPenaltyPassage()
+    {
+
+        var dbGateWithPenaltyPassage = new GateWithPenaltyPassage();
+
+        dbGateWithPenaltyPassage.PenaltyOnGate = newPenalty;
+        dbGateWithPenaltyPassage.IsActive = true;
+
+        gateWithPenaltyPassageRepository.Save(dbGateWithPenaltyPassage);
+
+    }
+}
