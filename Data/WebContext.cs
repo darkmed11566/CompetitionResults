@@ -19,5 +19,7 @@ namespace CompetitionResults.Data
         public DbSet<GateWithPenalty> GateWithPenalties { get; set; }
         public DbSet<Competitioner> Competitioners { get; set; }
         public DbSet<Sector> Sectors { get; set; }
+        public DbSet<GateWithTimePassage> GateWithTimePassages { get; set; }
+        public DbSet<GateWithPenaltyPassage> GateWithPenaltiePassages { get; set; }
     }
 }
