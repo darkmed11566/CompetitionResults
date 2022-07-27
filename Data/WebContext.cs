@@ -21,5 +21,20 @@ namespace CompetitionResults.Data
         public DbSet<Sector> Sectors { get; set; }
         public DbSet<GateWithTimePassage> GateWithTimePassages { get; set; }
         public DbSet<GateWithPenaltyPassage> GateWithPenaltiePassages { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Competition>()
+                .HasMany(x => x.CompetitionTracks)
+                .WithOne(x => x.NameOfCompetition);
+
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+            base.OnConfiguring(optionsBuilder);
+        }
+
     }
 }
