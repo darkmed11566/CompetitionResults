@@ -9,6 +9,7 @@ namespace CompetitionResults.Models
     public class Competitioner:BaseModel
     {
         public int Number { get; set; }
-        public BoatClasses Class { get; set; } 
+        public BoatClasses Class { get; set; }
+       
     }
 }

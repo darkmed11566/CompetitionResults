@@ -9,6 +9,6 @@ namespace CompetitionResults.Models
     public class Track : BaseModel
     {
         public TrackType  TrackType { get; set; }
-        //public Competition CompetitionName { get; set; }
+        public virtual Competition NameOfCompetition { get; set; }
     }
 }
