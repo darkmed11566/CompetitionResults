@@ -6,7 +6,7 @@
     <div class="col">
         <input class=" form-control" placeholder="Name" @bind="newNumber" />
                 
-        <select class=" form-control" name="Country" @bind="newClass">
+        <select class=" form-control" name="Class" @bind="newClass">
             @foreach (var boatClass in Enum.GetValues(typeof(BoatClasses)))
             {
                 <option value="@boatClass">
