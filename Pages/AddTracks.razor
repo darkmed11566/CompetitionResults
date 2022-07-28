@@ -1,5 +1,6 @@
 ﻿@inject CompetitionResults.Data.Repository.GateWithTimeRepository gateWithTimeRepository;
 @inject CompetitionResults.Data.Repository.TrackRepository trackRepository;
+@inject CompetitionResults.Data.Repository.CompetitionRepository competitionRepository;  
 @page "/addTracks"
 @using EnumsAndConstants
 
@@ -7,26 +8,26 @@
     <div class="col">
 
         <select class=" form-control" name="Type" @bind="newType">
-            <option value="Run1">
-                @TrackType.Run1
-            </option>
-            <option value="Run2">
-                @TrackType.Run2
-            </option>
-            <option value="QualificationRun1">
-                @TrackType.QualificationRun1
-            </option>
-            <option value="QualificationRun2">
-                @TrackType.QualificationRun2
-            </option>
-            <option value="SemiFinal">
-                @TrackType.SemiFinal
-            </option>
-            <option value="Final">
-                @TrackType.Final
-            </option>
-
+            @foreach (var track in Enum.GetValues(typeof(TrackType)))
+            {
+                <option value="@track">
+                    @track;
+                </option>
+            }
         </select>
+
+        <input class=" form-control" placeholder="Conpetition Name" @bind="newNameOfCompetition" />
+
+        @*<select class=" form-control" name="Name Of Competition" @bind="newNameOfCompetition">
+            @foreach (var name in competition)
+            {
+                <option value="@name">
+                    @track;
+                </option>
+            }
+        </select>*@
+
+
 
         <div class=" col">
             <button class=" btn btn-success" @onclick="AddTrack">Add Track</button>
@@ -42,7 +43,7 @@
                 <thead class=" table-dark">
                     <tr>
                         <th scope="col">Track Type </th>
-
+                        <th scope="col">Nane Of Competition </th>
                     </tr>
                 </thead>
                 @foreach (var item in track)
@@ -51,6 +52,9 @@
                         <tr>
                             <td>
                                 @item.TrackType
+                            </td>
+                            <td>
+                                @item.NameOfCompetition
                             </td>
                             <td>
                                 <button class=" btn-dark">Edite</button>
@@ -72,12 +76,14 @@
     private IEnumerable<Track> track = new List<Track>();
     private IEnumerable<GateWithTime> gate = new List<GateWithTime>();
 
+
     protected override void OnInitialized()
     {
         track = trackRepository.GetAll();
     }
 
     private TrackType newType;
+    private Competition newNameOfCompetition;
 
 
     private void AddTrack()
@@ -87,6 +93,8 @@
         dbTrack.TrackType = newType;
 
         dbTrack.IsActive = true;
+
+        dbTrack.NameOfCompetition = newNameOfCompetition;
 
         trackRepository.Save(dbTrack);
 
