@@ -16,7 +16,7 @@
             }
         </select>
 
-        <input class=" form-control" placeholder="Conpetition Name" @bind="newNameOfCompetition" />
+        @*<input class=" form-control" placeholder="Conpetition Name" @bind="newNameOfCompetition" />*@
 
         @*<select class=" form-control" name="Name Of Competition" @bind="newNameOfCompetition">
             @foreach (var name in competition)
@@ -54,7 +54,7 @@
                                 @item.TrackType
                             </td>
                             <td>
-                                @item.NameOfCompetition
+                                @*@item.NameOfCompetition*@
                             </td>
                             <td>
                                 <button class=" btn-dark">Edite</button>
@@ -94,7 +94,7 @@
 
         dbTrack.IsActive = true;
 
-        dbTrack.NameOfCompetition = newNameOfCompetition;
+        //dbTrack.NameOfCompetition = newNameOfCompetition;
 
         trackRepository.Save(dbTrack);
 

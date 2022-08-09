@@ -245,31 +245,12 @@ namespace CompetitionResults.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<long?>("NameOfCompetitionId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("TrackType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NameOfCompetitionId");
-
                     b.ToTable("Tracks");
-                });
-
-            modelBuilder.Entity("CompetitionResults.Models.Track", b =>
-                {
-                    b.HasOne("CompetitionResults.Models.Competition", "NameOfCompetition")
-                        .WithMany("CompetitionTracks")
-                        .HasForeignKey("NameOfCompetitionId");
-
-                    b.Navigation("NameOfCompetition");
-                });
-
-            modelBuilder.Entity("CompetitionResults.Models.Competition", b =>
-                {
-                    b.Navigation("CompetitionTracks");
                 });
 #pragma warning restore 612, 618
         }

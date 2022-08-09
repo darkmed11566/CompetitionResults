@@ -24,9 +24,9 @@ namespace CompetitionResults.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Competition>()
-                .HasMany(x => x.CompetitionTracks)
-                .WithOne(x => x.NameOfCompetition);
+            //modelBuilder.Entity<Competition>()
+            //    .HasMany(x => x.CompetitionTracks)
+            //    .WithOne(x => x.NameOfCompetition);
 
         }
 
