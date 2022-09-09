@@ -55,33 +55,6 @@
 
 @code {
     
-    private IEnumerable<GateWithTimePassage> gateWithTimePassage = new List<GateWithTimePassage>();
-
-     private DateTime newPassage;
-
-    protected override void OnInitialized()
-    {
-        gateWithTimePassage = gateWithTimePassageRepository.GetAll();
-       
-    }
-
-
-
-    private void DeleteGateWithTimePassage(GateWithTimePassage deletedGateWithTimePassage)
-    {
-        gateWithTimePassageRepository.Remove(deletedGateWithTimePassage);
-    }
-   
-    private void AddGateWithTimePassage()
-    {
-
-        var dbGateWithTimePassage = new GateWithTimePassage();
-
-        dbGateWithTimePassage.GatePasssage = DateTime.Now;
-        dbGateWithTimePassage.IsActive = true;
-
-        gateWithTimePassageRepository.Save(dbGateWithTimePassage);
-
-    }
+    
    
 }
