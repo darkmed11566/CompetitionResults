@@ -46,31 +46,4 @@
 </div>
 
 @code {
-    private IEnumerable<Sector>
-    sector = new List<Sector>();
-
-    protected override void OnInitialized()
-    {
-        sector = sectorRepository.GetAll();
-
-    }
-
-    private int newSectorNumber;
-
-    private void AddSector()
-    {
-
-        var dbSector = new Sector();
-
-        dbSector.SectorNumber = newSectorNumber;
-        dbSector.IsActive = true;
-
-        sectorRepository.Save(dbSector);
-
-    }
-
-    private void DeleteSector(long id)
-    {
-        sectorRepository.Remove(id);
-    }
 }
