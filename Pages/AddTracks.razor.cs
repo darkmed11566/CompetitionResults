@@ -20,7 +20,7 @@ namespace CompetitionResults.Pages
         }
 
         private TrackType newType;
-        private Competition newNameOfCompetition;
+        //private Competition newNameOfCompetition;
 
 
         private void AddTrack()

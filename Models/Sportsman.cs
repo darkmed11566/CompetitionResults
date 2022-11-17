@@ -16,5 +16,7 @@ namespace CompetitionResults.Models
         public Rangs Rang { get; set; }
         public string NameOfClub { get; set; }
         public string NamesOfCoaches { get; set; }
+        public string URLPhoto { get; set; }
+        public string Achievements { get; set; }
     }
 }

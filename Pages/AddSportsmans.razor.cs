@@ -24,6 +24,8 @@ namespace CompetitionResults.Pages
         private Rangs newRang;
         private string newNameOfClub;
         private string newNamesOfCoachers;
+        private string newPhoto;
+        private string newAchievements;
 
         private void AddSportsman()
         {
@@ -43,6 +45,8 @@ namespace CompetitionResults.Pages
             dbSportsman.NameOfClub = newNameOfClub;
             dbSportsman.NamesOfCoaches = newNamesOfCoachers;
             dbSportsman.IsActive = true;
+            dbSportsman.URLPhoto = newPhoto;
+            dbSportsman.Achievements = newAchievements;
 
             sportsmanRepository.Save(dbSportsman);
 

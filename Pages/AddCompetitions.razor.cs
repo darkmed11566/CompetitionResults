@@ -12,6 +12,11 @@ namespace CompetitionResults.Pages
 
         private IEnumerable<Competition> competition = new List<Competition>();
 
+        protected override void OnInitialized()
+        {
+            competition = competitionRepository.GetAll();
+        }
+
         private string newCompetitionName;
         private DateTime newCompetitionStartData;
         private DateTime newCompetitionEndData;
