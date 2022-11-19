@@ -9,45 +9,30 @@
         <input class=" form-control" type="date" placeholder="Date Of Birth" @bind="newDateOfBirt " />
 
         <select class=" form-control" name="Sex" @bind="newSex">
-            <option value="Male">
-                @Sex.Male
-            </option>
-            <option value="Female">
-                @Sex.Female
-            </option>
+            @foreach (var sex in Enum.GetValues(typeof(Sex)))
+            {
+                <option value="@sex">
+                    @sex;
+                </option>
+            }
         </select>
 
         <select class=" form-control" name="Country" @bind="newCountry">
-            <option value="BLR">
-                @ListOfCountries.BLR
-            </option>
-            <option value="LTV">
-                @ListOfCountries.LTV
-            </option>
-            <option value="RUS">
-                @ListOfCountries.RUS
-            </option>
+            @foreach (var country in Enum.GetValues(typeof(ListOfCountries)))
+            {
+                <option value="@country">
+                    @country;
+                </option>
+            }
         </select>
 
         <select class=" form-control" name="Rang" @bind="newRang">
-            <option value="NR">
-                @Rangs.NR
-            </option>
-            <option value="III">
-                @Rangs.III
-            </option>
-            <option value="II">
-                @Rangs.II
-            </option>
-            <option value="I">
-                @Rangs.I
-            </option>
-            <option value="CMS">
-                @Rangs.CMS
-            </option>
-            <option value="MS">
-                @Rangs.MS
-            </option>
+            @foreach (var rang in Enum.GetValues(typeof(Rangs)))
+            {
+                <option value="@rang">
+                    @rang;
+                </option>
+            }
         </select>
 
         <input class=" form-control" placeholder="Name of club" @bind="newNameOfClub" />
@@ -76,6 +61,10 @@
                         <th scope="col">Rang </th>
                         <th scope="col">Name of club </th>
                         <th scope="col">Names of coachers </th>
+                        <th scope="col">URLPhoto</th>
+                        <th scope="col">Achievements </th>
+                        <th scope="col">Rating</th>
+
                     </tr>
                 </thead>
                 @foreach (var item in sportsman)
@@ -105,6 +94,17 @@
                             </td>
                             <td>
                                 @item.NamesOfCoaches
+                            </td>
+                            <td>
+                                <div>
+                                    <img class="image" src="@item.URLPhoto">
+                                </div>
+                            </td>
+                            <td>
+                                @item.Achievements
+                            </td>
+                            <td>
+                                @item.Rating
                             </td>
                             <td>
                                 <button class=" btn-dark">Edite</button>

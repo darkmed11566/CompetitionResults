@@ -18,5 +18,6 @@ namespace CompetitionResults.Models
         public string NamesOfCoaches { get; set; }
         public string URLPhoto { get; set; }
         public string Achievements { get; set; }
+        public int Rating { get; set; }
     }
 }

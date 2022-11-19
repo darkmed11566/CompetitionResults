@@ -47,7 +47,7 @@ namespace CompetitionResults.Pages
             dbSportsman.IsActive = true;
             dbSportsman.URLPhoto = newPhoto;
             dbSportsman.Achievements = newAchievements;
-
+            dbSportsman.Rating = 0;
             sportsmanRepository.Save(dbSportsman);
 
         }

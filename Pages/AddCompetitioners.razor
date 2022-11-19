@@ -29,7 +29,8 @@
                 <thead class=" table-dark">
                     <tr>
                         <th scope="col">Number </th>
-                        <th scope="col">BoatClass </th> 
+                        <th scope="col">BoatClass </th>
+                        <th scope="col">Status </th>
                     </tr>
                 </thead>
                 @foreach (var item in competitioner)
@@ -41,7 +42,10 @@
                             </td>
                             <td>
                                 @item.Class
-                            </td>                           
+                            </td>   
+                            <td>
+                                @item.StatusInTrack
+                            </td>
                             <td>
                                 <button class=" btn-dark">Edite</button>
                             </td>

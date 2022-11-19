@@ -28,6 +28,7 @@ namespace CompetitionResults.Pages
             dbCompetitioner.Number = newNumber;
             dbCompetitioner.Class = newClass;
             dbCompetitioner.IsActive = true;
+            dbCompetitioner.StatusInTrack = StatusSportsmanInTrack.RegisteredForCompetition;
 
             competitionerRepository.Save(dbCompetitioner);
 
