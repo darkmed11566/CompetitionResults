@@ -10,6 +10,6 @@ namespace CompetitionResults.Models
     {
         public int Number { get; set; }
         public BoatClasses Class { get; set; }
-       
+        public StatusSportsmanInTrack StatusInTrack { get; set; }
     }
 }

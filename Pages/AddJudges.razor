@@ -8,15 +8,12 @@
         <input class=" form-control" placeholder="Second Name" @bind="newSecondName" />
         
         <select class=" form-control" name="Country" @bind="newCountry">
-            <option value="BLR">
-                @ListOfCountries.BLR
-            </option>
-            <option value="LTV">
-                @ListOfCountries.LTV
-            </option>
-            <option value="RUS">
-                @ListOfCountries.RUS
-            </option>
+            @foreach (var country in Enum.GetValues(typeof(ListOfCountries)))
+            {
+                <option value="@country">
+                    @country;
+                </option>
+            }
         </select>
        
         <div class=" col">
