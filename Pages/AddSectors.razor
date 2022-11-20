@@ -1,10 +1,20 @@
-﻿@inject CompetitionResults.Data.Repository.SectorRepository sectorRepository;
+﻿
 @page "/addSectors"
 @using EnumsAndConstants
 
 <div class="row">
     <div class="col">
         <input class=" form-control" placeholder="Name" @bind="newSectorNumber" />
+        
+        <select class=" form-control" name="Track" @bind="newTrack">
+
+            @foreach (var track in TracksForSelect)
+            {
+                <option value="@track.Id">
+                    @track.Id
+                </option>
+            }
+        </select>
 
         <div class=" col">
             <button class=" btn btn-success" @onclick="AddSector">Add Sector</button>
@@ -27,7 +37,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                @item.SectorNumber
+                                @item.Number
                             </td>
 
                             <td>

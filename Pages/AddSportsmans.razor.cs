@@ -42,8 +42,8 @@ namespace CompetitionResults.Pages
             dbSportsman.DateOfBirth = newDateOfBirt;
             dbSportsman.Country = newCountry;
             dbSportsman.Rang = newRang;
-            dbSportsman.NameOfClub = newNameOfClub;
-            dbSportsman.NamesOfCoaches = newNamesOfCoachers;
+            dbSportsman.ClubName = newNameOfClub;
+            dbSportsman.CoachName = newNamesOfCoachers;
             dbSportsman.IsActive = true;
             dbSportsman.URLPhoto = newPhoto;
             dbSportsman.Achievements = newAchievements;

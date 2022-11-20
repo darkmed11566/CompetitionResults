@@ -8,10 +8,10 @@ namespace CompetitionResults.Models
 {
     public class Competition: BaseModel
     {
-        public string CompetitionName { get; set; }
-        public DateTime CompetitionStartData { get; set; }
-        public DateTime CompetitionEndtData { get; set; }
-        public bool Rating { get; set; }
+        public string Name { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndtDate { get; set; }
+        public bool IsRated { get; set; }
         public CompetitionType Type { get; set; }
         public ListOfCountries Country { get; set; }
         public CompetitionStatus Status { get; set; }

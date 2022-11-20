@@ -8,6 +8,8 @@ namespace CompetitionResults.Models
 {
     public class Sector : BaseModel
     {
-        public int SectorNumber { get; set; }
+        public int Number { get; set; }
+        public long TrackId { get; set; }
+        public virtual Track Track { get; set; }
     }
 }

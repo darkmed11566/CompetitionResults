@@ -26,7 +26,7 @@ namespace CompetitionResults.Pages
             var dbCompetitioner = new Competitioner();
 
             dbCompetitioner.Number = newNumber;
-            dbCompetitioner.Class = newClass;
+            dbCompetitioner.BoatClass = newClass;
             dbCompetitioner.IsActive = true;
             dbCompetitioner.StatusInTrack = StatusSportsmanInTrack.RegisteredForCompetition;
 
