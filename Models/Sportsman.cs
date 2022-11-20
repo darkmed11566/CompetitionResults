@@ -14,8 +14,8 @@ namespace CompetitionResults.Models
         public Sex Sex { get; set; }
         public ListOfCountries Country { get; set; }
         public Rangs Rang { get; set; }
-        public string NameOfClub { get; set; }
-        public string NamesOfCoaches { get; set; }
+        public string ClubName { get; set; }
+        public string CoachName { get; set; }
         public string URLPhoto { get; set; }
         public string Achievements { get; set; }
         public int Rating { get; set; }

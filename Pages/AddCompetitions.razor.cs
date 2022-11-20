@@ -29,12 +29,12 @@ namespace CompetitionResults.Pages
 
             var dbCompetition = new Competition();
 
-            dbCompetition.CompetitionName = newCompetitionName;
-            dbCompetition.CompetitionStartData = newCompetitionStartData;
+            dbCompetition.Name = newCompetitionName;
+            dbCompetition.StartDate = newCompetitionStartData;
             dbCompetition.IsActive = true;
-            dbCompetition.CompetitionEndtData = newCompetitionEndData;
+            dbCompetition.EndtDate = newCompetitionEndData;
             dbCompetition.Country = newCountry;
-            dbCompetition.Rating = newRating;
+            dbCompetition.IsRated = newRating;
             dbCompetition.Type = newType;
             dbCompetition.Status = CompetitionStatus.Planned;
 

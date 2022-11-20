@@ -24,7 +24,9 @@ namespace CompetitionResults.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
+            modelBuilder.Entity<Track>()
+                 .HasMany(x => x.Sectors)
+                 .WithOne(x => x.Track).HasForeignKey(x=>x.TrackId);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
