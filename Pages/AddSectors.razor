@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col">
         <input class=" form-control" placeholder="Name" @bind="newSectorNumber" />
-        
+
         <select class=" form-control" name="Track" @bind="newTrack">
 
             @foreach (var track in TracksForSelect)
@@ -15,7 +15,7 @@
                 </option>
             }
         </select>
-
+        <input class=" form-control" type="checkbox" @bind="newIsFull" />
         <div class=" col">
             <button class=" btn btn-success" @onclick="AddSector">Add Sector</button>
         </div>
@@ -39,7 +39,12 @@
                             <td>
                                 @item.Number
                             </td>
-
+                            <td>
+                                @item.TrackId
+                            </td>
+                            <td>
+                                @item.IsFull
+                            </td>
                             <td>
                                 <button class=" btn-dark">Edite</button>
                             </td>

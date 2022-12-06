@@ -9,5 +9,6 @@ namespace CompetitionResults.Models
     public class Gate:BaseModel
     {
         public GateType Type { get; set; }
+       
     }
 }

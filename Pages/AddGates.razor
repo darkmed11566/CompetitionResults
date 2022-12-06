@@ -33,6 +33,16 @@
             }
         </select>
 
+        <select class=" form-control" name="Sector" @bind="newSector">
+
+            @foreach (var sector in SectorsForSelect)
+            {
+                <option value="@sector.Id">
+                    @sector.Id
+                </option>
+            }
+        </select>
+
         <div class=" col">
             <button class=" btn btn-danger" @onclick="AddBackGateWithPenalty">Add Back Gate With Penalty</button>
         </div>
@@ -51,6 +61,7 @@
                     <tr>
                         <th scope="col">Gate Type </th>
                         <th scope="col">Gate Name/Number </th>
+                        <th scope="col">Id Track/Sector </th>
                     </tr>
 
                 </thead>
@@ -64,6 +75,7 @@
                             <td>
                                 @item.GateName
                             </td>
+
                             <td>
                                 <button class=" btn-dark">Edite</button>
                             </td>
@@ -82,6 +94,9 @@
                             </td>
                             <td>
                                 @item.GateNumber
+                            </td>
+                            <td>
+                                @item.SectorId
                             </td>
                             <td>
                                 <button class=" btn-dark">Edite</button>
