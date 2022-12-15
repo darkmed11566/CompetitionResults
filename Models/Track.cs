@@ -9,6 +9,9 @@ namespace CompetitionResults.Models
     public class Track : BaseModel
     {
         public TrackType  TrackType { get; set; }
+        public long CompetitionId { get; set; }
+        public bool IsFull { get; set; }
+        public virtual Competition Competition { get; set; }
         public virtual List<Sector> Sectors { get; set; }
     }
 }

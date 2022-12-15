@@ -6,7 +6,9 @@
 
 <div class="row">
     <div class="col">
-
+        <div class="col">
+            Type
+        </div>
         <select class=" form-control" name="Type" @bind="newType">
             @foreach (var track in Enum.GetValues(typeof(TrackType)))
             {
@@ -15,7 +17,22 @@
                 </option>
             }
         </select>
-       
+        <div class="col">
+            CompetitionID
+        </div>
+        <select class=" form-control" name="CompetitionId" @bind="newCompetition">
+
+            @foreach (var item in CompetitionsForSelect)
+            {
+                <option value="@item.Id">
+                    @item.Id
+                </option>
+            }
+        </select>
+        <div class="col">
+            Full
+            <input class=" form-control" type="checkbox" @bind="newIsFull" />
+        </div>
         <div class=" col">
             <button class=" btn btn-success" @onclick="AddTrack">Add Track</button>
         </div>
@@ -30,7 +47,8 @@
                 <thead class=" table-dark">
                     <tr>
                         <th scope="col">Track Type </th>
-                        <th scope="col">Nane Of Competition </th>
+                        <th scope="col">CompetitionId </th>
+                        <th scope="col">IsFull </th>
                     </tr>
                 </thead>
                 @foreach (var item in track)
@@ -41,7 +59,10 @@
                                 @item.TrackType
                             </td>
                             <td>
-                                @*@item.NameOfCompetition*@
+                                @item.CompetitionId
+                            </td>
+                            <td>
+                                @item.IsFull
                             </td>
                             <td>
                                 <button class=" btn-dark">Edite</button>

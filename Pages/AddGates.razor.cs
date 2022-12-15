@@ -34,7 +34,8 @@ namespace CompetitionResults.Pages
 
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
             gateWithPenalty = await context.GateWithPenalties.AsNoTracking().ToListAsync();
-            SectorsForSelect = await context.Sectors.AsNoTracking().ToListAsync();
+            SectorsForSelect = await context.Sectors.AsNoTracking()
+                .Where(x => x.IsFull == false && x.IsActive == true).ToListAsync();
             newSector = SectorsForSelect.OrderBy(x => x.Id).FirstOrDefault()?.Id ?? 0;
         }
 

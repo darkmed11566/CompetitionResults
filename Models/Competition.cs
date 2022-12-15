@@ -12,8 +12,10 @@ namespace CompetitionResults.Models
         public DateTime StartDate { get; set; }
         public DateTime EndtDate { get; set; }
         public bool IsRated { get; set; }
+        public bool IsFull { get; set; }
         public CompetitionType Type { get; set; }
         public ListOfCountries Country { get; set; }
         public CompetitionStatus Status { get; set; }
+        public virtual List<Track> Tracks { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace CompetitionResults.Pages
         private bool newRating;
         private ListOfCountries newCountry;
         private CompetitionType newType;
+        private bool newIsFull;
 
         private void AddCompetition()
         {
@@ -35,6 +36,7 @@ namespace CompetitionResults.Pages
             dbCompetition.EndtDate = newCompetitionEndData;
             dbCompetition.Country = newCountry;
             dbCompetition.IsRated = newRating;
+            dbCompetition.IsFull = newIsFull;
             dbCompetition.Type = newType;
             dbCompetition.Status = CompetitionStatus.Planned;
 

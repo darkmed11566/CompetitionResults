@@ -10,7 +10,7 @@
 
             @foreach (var track in TracksForSelect)
             {
-                <option value="@track.Id">
+                <option value="@track.TrackType">
                     @track.Id
                 </option>
             }
@@ -30,6 +30,8 @@
                 <thead class=" table-dark">
                     <tr>
                         <th scope="col">SectorNumber </th>
+                        <th scope="col">TrackId </th>
+                        <th scope="col">Full </th>
                     </tr>
                 </thead>
                 @foreach (var item in sector)

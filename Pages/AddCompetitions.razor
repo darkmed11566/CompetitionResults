@@ -4,11 +4,29 @@
 
 <div class="row">
     <div class="col">
+        <div class="col">
+            Conpetition Name
+        </div>
         <input class=" form-control" placeholder="Conpetition Name" @bind="newCompetitionName" />
+        <div class="col">
+            Start Data
+        </div>
         <input class=" form-control" type="date" placeholder="Competition Start Data" @bind="newCompetitionStartData" />
+        <div class="col">
+            End Data
+        </div>
         <input class=" form-control" type="date" placeholder="Competition End Data" @bind="newCompetitionEndData" />
+        <div class="col">
+            Rating
         <input class=" form-control" type="checkbox" @bind="newRating" />
-
+        </div>
+        <div class="col">
+           Full
+        <input class=" form-control" type="checkbox" @bind="newIsFull" />
+        </div>
+        <div class="col">
+            Country
+        </div>
         <select class=" form-control" name="Country" @bind="newCountry">
             @foreach (var country in Enum.GetValues(typeof(ListOfCountries)))
             {
@@ -17,7 +35,9 @@
                 </option>
             }
         </select>
-
+        <div class="col">
+            Type
+        </div>
         <select class=" form-control" name="Type" @bind="newType">
             @foreach (var type in Enum.GetValues(typeof(CompetitionType)))
             {
@@ -41,13 +61,14 @@
             <table class=" table table-striped">
                 <thead class=" table-dark">
                     <tr>
-                        <th scope="col">Conpetition Name </th>
-                        <th scope="col">Competition Start Data </th>
-                        <th scope="col">Competition Endt Data</th>
+                        <th scope="col">Name </th>
+                        <th scope="col">Start Data </th>
+                        <th scope="col">Endt Data</th>
                         <th scope="col">Rating </th>
+                        <th scope="col">Full </th>
                         <th scope="col">Country </th>
-                        <th scope="col"> Competition Type</th>
-                        <th scope="col"> Competition Status</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 @foreach (var item in competition)
@@ -65,6 +86,9 @@
                             </td>
                             <td>
                                 @item.IsRated
+                            </td>
+                            <td>
+                                @item.IsFull
                             </td>
                             <td>
                                 @item.Country
