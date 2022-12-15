@@ -23,7 +23,8 @@ namespace CompetitionResults.Pages
 
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
             sector = await  context.Sectors.AsNoTracking().ToListAsync();
-            TracksForSelect = await context.Tracks.AsNoTracking().ToListAsync();
+            TracksForSelect = await context.Tracks.AsNoTracking()
+                .Where(x => x.IsFull == false && x.IsActive == true).ToListAsync();
             newTrack = TracksForSelect.OrderBy(x => x.Id).FirstOrDefault()?.Id ?? 0;
         }
 
