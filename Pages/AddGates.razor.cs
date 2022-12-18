@@ -22,11 +22,10 @@ namespace CompetitionResults.Pages
         private GateNameWithPenalty newGateNumber;
         private GateNameWithTime newGateName;
         private IEnumerable<Sector> SectorsForSelect = new List<Sector>();
+        private IEnumerable<Track> TracksForSelect = new List<Track>();
         private long newSector;
-        protected override void OnInitialized()
-        {
-            gateWithTime = gateWithTimeRepository.GetAll();
-        }
+        private long newTrack;
+        
 
         protected override async Task OnInitializedAsync()
         {
@@ -37,8 +36,15 @@ namespace CompetitionResults.Pages
             SectorsForSelect = await context.Sectors.AsNoTracking()
                 .Where(x => x.IsFull == false && x.IsActive == true).ToListAsync();
             newSector = SectorsForSelect.OrderBy(x => x.Id).FirstOrDefault()?.Id ?? 0;
-        }
 
+            using var scopeT = serviceScopeFactory.CreateScope();
+
+            var contextT = scopeT.ServiceProvider.GetRequiredService<WebContext>();
+            gateWithTime = await contextT.GateWithTimes.AsNoTracking().ToListAsync();
+            TracksForSelect = await contextT.Tracks.AsNoTracking()
+                .Where(x => x.IsFull == false && x.IsActive == true).ToListAsync();
+            newTrack = TracksForSelect.OrderBy(x => x.Id).FirstOrDefault()?.Id ?? 0;
+        }
 
         private void DeleteGateWithTime(GateWithTime deletedGatewithTime)
         {
@@ -48,7 +54,7 @@ namespace CompetitionResults.Pages
         {
             gateWithPenaltyRepository.Remove(deletedGateWithPenalty);
         }
-        private void AddGateWithTime()
+        private async Task AddGateWithTime()
         {
 
             var dbGateWithTime = new GateWithTime();
@@ -56,8 +62,13 @@ namespace CompetitionResults.Pages
             dbGateWithTime.Type = GateType.TimeGate;
             dbGateWithTime.GateName = newGateName;
             dbGateWithTime.IsActive = true;
+            dbGateWithTime.TrackId = newTrack;
 
-            gateWithTimeRepository.Save(dbGateWithTime);
+            using var scope = serviceScopeFactory.CreateScope();
+
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+            await context.GateWithTimes.AddAsync(dbGateWithTime);
+            await context.SaveChangesAsync();
 
         }
         private async Task AddBackGateWithPenalty()
@@ -99,5 +110,9 @@ namespace CompetitionResults.Pages
             var x = args.Value;
         }
 
+        protected void TrackSelected(ChangeEventArgs args)
+        {
+            var x = args.Value;
+        }
     }
 }

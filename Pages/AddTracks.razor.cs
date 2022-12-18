@@ -23,6 +23,7 @@ namespace CompetitionResults.Pages
         private long newCompetition;
         private IEnumerable<Competition> CompetitionsForSelect = new List<Competition>();
         private bool newIsFull;
+        private long Id;
         protected override async Task OnInitializedAsync()
         {
             using var scope = serviceScopeFactory.CreateScope();
@@ -48,9 +49,9 @@ namespace CompetitionResults.Pages
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
             await context.Tracks.AddAsync(dbTrack);
             await context.SaveChangesAsync();
-
+            Id = dbTrack.Id;
+            await AddStartGate();
             await AddFinishGate();
-            await AddStartGate();           
 
         }
 
@@ -62,13 +63,13 @@ namespace CompetitionResults.Pages
             dbGateWithTimeStart.Type = GateType.StartingGate;
             dbGateWithTimeStart.GateName = GateNameWithTime.Start;
             dbGateWithTimeStart.IsActive = true;
-
+            dbGateWithTimeStart.TrackId = Id;
             using var scope = serviceScopeFactory.CreateScope();
 
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
             await context.GateWithTimes.AddAsync(dbGateWithTimeStart);
             await context.SaveChangesAsync();
-
+            
         }
         private async Task AddFinishGate()
         {  
@@ -76,6 +77,7 @@ namespace CompetitionResults.Pages
             dbGateWithTimeFinish.Type = GateType.FinisGate;
             dbGateWithTimeFinish.GateName = GateNameWithTime.Finish;
             dbGateWithTimeFinish.IsActive = true;
+            dbGateWithTimeFinish.TrackId = Id;
 
             using var scope = serviceScopeFactory.CreateScope();
 
