@@ -35,6 +35,10 @@ namespace CompetitionResults.Data
             modelBuilder.Entity<Competition>()
                .HasMany(x => x.Tracks)
                .WithOne(x => x.Competition).HasForeignKey(x => x.CompetitionId);
+
+            modelBuilder.Entity<Track>()
+                 .HasMany(x => x.Gates)
+                 .WithOne(x => x.Track).HasForeignKey(x => x.TrackId);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

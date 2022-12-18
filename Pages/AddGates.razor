@@ -7,11 +7,22 @@
     <div class="col">
 
         <select class=" form-control" name="Gate Name" @bind="newGateName">
-            
+
             @foreach (var gate in Enum.GetValues(typeof(GateNameWithTime)))
-            { <option value="@gate">
-                @gate;
-            </option>
+            {
+                <option value="@gate">
+                    @gate;
+                </option>
+            }
+        </select>
+
+        <select class=" form-control" name="Track" @bind="newTrack">
+
+            @foreach (var track in TracksForSelect)
+            {
+                <option value="@track.Id">
+                    @track.Id
+                </option>
             }
         </select>
 
@@ -75,7 +86,9 @@
                             <td>
                                 @item.GateName
                             </td>
-
+                            <td>
+                                @item.TrackId
+                            </td>
                             <td>
                                 <button class=" btn-dark">Edite</button>
                             </td>

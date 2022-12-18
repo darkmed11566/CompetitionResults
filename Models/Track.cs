@@ -13,5 +13,6 @@ namespace CompetitionResults.Models
         public bool IsFull { get; set; }
         public virtual Competition Competition { get; set; }
         public virtual List<Sector> Sectors { get; set; }
+        public virtual List<GateWithTime> Gates { get; set; }
     }
 }
