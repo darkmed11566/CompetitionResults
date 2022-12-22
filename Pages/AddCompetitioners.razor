@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col">
         <input class=" form-control" placeholder="Name" @bind="newNumber" />
-                
+
         <select class=" form-control" name="Class" @bind="newClass">
             @foreach (var boatClass in Enum.GetValues(typeof(BoatClasses)))
             {
@@ -20,6 +20,15 @@
             {
                 <option value="@sportsman.Id">
                     @sportsman.Id
+                </option>
+            }
+        </select>
+        <select class=" form-control" name="CompetitionId" @bind="newCompetition">
+
+            @foreach (var item in CompetitionsForSelect)
+            {
+                <option value="@item.Id">
+                    @item.Id
                 </option>
             }
         </select>
@@ -41,6 +50,7 @@
                         <th scope="col">BoatClass </th>
                         <th scope="col">Status </th>
                         <th scope="col">SportsmanId </th>
+                        <th scope="col">CompetitionId </th>
                     </tr>
                 </thead>
                 @foreach (var item in competitioner)
@@ -58,6 +68,9 @@
                             </td>
                             <td>
                                 @item.SportsmanId
+                            </td>
+                            <td>
+                                @item.CompetitionId
                             </td>
                             <td>
                                 <button class=" btn-dark">Edite</button>

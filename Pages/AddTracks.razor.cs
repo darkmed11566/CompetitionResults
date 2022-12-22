@@ -89,6 +89,10 @@ namespace CompetitionResults.Pages
         {
             var x = args.Value;
         }
+        protected void CompetitionSelect(ChangeEventArgs args)
+        {
+            var x = args.Value;
+        }
 
         private void DeleteTrack(long id)
         {
