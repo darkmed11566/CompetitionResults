@@ -17,5 +17,6 @@ namespace CompetitionResults.Models
         public ListOfCountries Country { get; set; }
         public CompetitionStatus Status { get; set; }
         public virtual List<Track> Tracks { get; set; }
+        public virtual List<Competitioner> Competitioners { get; set; }
     }
 }
