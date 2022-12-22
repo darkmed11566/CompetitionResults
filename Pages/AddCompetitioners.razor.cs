@@ -27,12 +27,20 @@ namespace CompetitionResults.Pages
             SportsmansForSelect = await context.Sportsmens.AsNoTracking()
                 .Where(x=> x.IsActive == true).ToListAsync();
             newSportsman = SportsmansForSelect.OrderBy(x => x.Id).FirstOrDefault()?.Id ?? 0;
+
+            competitioner = await context.Competitioners.AsNoTracking().ToListAsync();
+            CompetitionsForSelect = await context.Competitions.AsNoTracking()
+                .Where(x =>x.IsActive == true).ToListAsync();
+            newCompetition = CompetitionsForSelect.OrderBy(x => x.Id).FirstOrDefault()?.Id ?? 0;
+
         }
 
         private int newNumber;
         private BoatClasses newClass;
         private IEnumerable<Sportsman> SportsmansForSelect = new List<Sportsman>();
         private long newSportsman;
+        private long newCompetition;
+        private IEnumerable<Competition> CompetitionsForSelect = new List<Competition>();
         private async Task AddCompetitioner()
         {
 
@@ -43,6 +51,7 @@ namespace CompetitionResults.Pages
             dbCompetitioner.IsActive = true;
             dbCompetitioner.StatusInTrack = StatusSportsmanInTrack.RegisteredForCompetition;
             dbCompetitioner.SportsmanId = newSportsman;
+            dbCompetitioner.CompetitionId = newCompetition;
 
             using var scope = serviceScopeFactory.CreateScope();
 

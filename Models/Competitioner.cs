@@ -12,6 +12,8 @@ namespace CompetitionResults.Models
         public BoatClasses BoatClass { get; set; }
         public StatusSportsmanInTrack StatusInTrack { get; set; }
         public long SportsmanId { get; set; }
+        public long CompetitionId { get; set; }
         public virtual Sportsman Sportsman { get; set; }
+        public virtual Competition Competition { get; set; }
     }
 }
