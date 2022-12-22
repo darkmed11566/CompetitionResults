@@ -43,7 +43,6 @@ namespace CompetitionResults.Data
             modelBuilder.Entity<Sportsman>()
                  .HasMany(x => x.Competitioners)
                  .WithOne(x => x.Sportsman).HasForeignKey(x => x.SportsmanId);
-
             modelBuilder.Entity<Competition>()
                  .HasMany(x => x.Competitioners)
                  .WithOne(x => x.Competition).HasForeignKey(x => x.CompetitionId);
