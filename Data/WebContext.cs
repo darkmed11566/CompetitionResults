@@ -40,6 +40,10 @@ namespace CompetitionResults.Data
                  .HasMany(x => x.Gates)
                  .WithOne(x => x.Track).HasForeignKey(x => x.TrackId);
 
+            modelBuilder.Entity<Sportsman>()
+                 .HasMany(x => x.Competitioners)
+                 .WithOne(x => x.Sportsman).HasForeignKey(x => x.SportsmanId);
+
             modelBuilder.Entity<Competition>()
                  .HasMany(x => x.Competitioners)
                  .WithOne(x => x.Competition).HasForeignKey(x => x.CompetitionId);
