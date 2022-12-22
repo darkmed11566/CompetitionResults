@@ -19,5 +19,6 @@ namespace CompetitionResults.Models
         public string URLPhoto { get; set; }
         public string Achievements { get; set; }
         public int Rating { get; set; }
+        public virtual List<Competitioner> Competitioners { get; set; }
     }
 }
