@@ -15,54 +15,107 @@ namespace CompetitionResults.Pages
         [Inject]
         protected IServiceScopeFactory serviceScopeFactory { get; set; }
 
-        private IEnumerable<Sector> sector = new List<Sector>();
+        protected IEnumerable<Sector> sectors = new List<Sector>();
+        protected Sector sectorModel = new Sector { IsActive = true };
+
+        protected IEnumerable<Track> TracksForSelect = new List<Track>();
 
         protected override async Task OnInitializedAsync()
         {
-            using var scope = serviceScopeFactory.CreateScope();
-
-            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-            sector = await  context.Sectors.AsNoTracking().ToListAsync();
-            TracksForSelect = await context.Tracks.AsNoTracking()
-                .Where(x => x.IsFull == false && x.IsActive == true).ToListAsync();
-            newTrack = TracksForSelect.OrderBy(x => x.Id).FirstOrDefault()?.Id ?? 0;
-        }
-
-        private int newSectorNumber;
-        private long newTrack;
-        private IEnumerable<Track> TracksForSelect = new List<Track>();
-        private bool newIsFull;
-        private async Task AddSector()
-        {
-            var dbSector = new Sector();
-
-            dbSector.Number = newSectorNumber;
-            dbSector.IsActive = true;
-            dbSector.TrackId = newTrack;
-            dbSector.IsFull = newIsFull;
+            await RenewStateAsync();
 
             using var scope = serviceScopeFactory.CreateScope();
-
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-            await context.Sectors.AddAsync(dbSector);
-            await context.SaveChangesAsync();  
+
+            TracksForSelect = await context
+                .Tracks.AsNoTracking()
+                .Where(x => !x.IsFull && x.IsActive)
+                .ToListAsync();
+
+            sectorModel.TrackId = TracksForSelect
+                .OrderBy(x => x.Id).
+                FirstOrDefault()?.Id ?? 0;
+
+            await ResetDataToDefaultAsync();
         }
 
-        protected void TrackSelected(ChangeEventArgs args) 
+
+
+        private async Task RenewStateAsync()
         {
-            var x = args.Value;
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+
+            sectors = await context.Sectors
+                .AsNoTracking()
+                .Where(t => t.IsActive)
+                .ToListAsync();
         }
 
 
-        private void DeleteSector(long id)
+        private async Task SaveSector()
         {
-            //sectorRepository.Remove(id);
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+
+            if (sectorModel.Id is 0)
+            {
+
+                await context.Sectors.AddAsync(sectorModel);
+            }
+            else
+            {
+                context.Sectors.Update(sectorModel);
+            }
+
+            await context.SaveChangesAsync();
+            await RenewStateAsync();
+            await ResetDataToDefaultAsync();
+
         }
 
+        private void EditSector(Sector sectorToEdite)
+        {
+            var shallowCopy = new Sector
+            {
+                Id = sectorToEdite.Id,
+                Number = sectorToEdite.Number,
+                TrackId = sectorToEdite.TrackId,
+                IsActive = sectorToEdite.IsActive
+            };
 
+            sectorModel = shallowCopy;
+        }
 
+        private async Task DeleteSectorAsync(Sector sectorToDelete)
+        {
+            sectorToDelete.IsActive = false;
 
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+            context.Sectors.Update(sectorToDelete);
+            await context.SaveChangesAsync();
+            await RenewStateAsync();
+        }
 
+        private async Task ResetDataToDefaultAsync()
+        {
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+
+            sectorModel = new Sector
+            {
+                IsFull = false,
+                IsActive = true,
+                Number = 1,
+                TrackId = TracksForSelect
+                 .OrderBy(x => x.Id)
+                    .FirstOrDefault()
+                    ?.Id ?? 0
+            };
+
+            await RenewStateAsync();
+        }
 
 
     }

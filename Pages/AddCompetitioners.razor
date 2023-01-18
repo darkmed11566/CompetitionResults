@@ -4,17 +4,31 @@
 
 <div class="row">
     <div class="col">
-        <input class=" form-control" placeholder="Name" @bind="newNumber" />
 
-        <select class=" form-control" name="Class" @bind="newClass">
-            @foreach (var boatClass in Enum.GetValues(typeof(BoatClasses)))
+        <div class="col">
+            Number
+        </div>
+
+        <input class=" form-control" placeholder="Name" @bind="competitionerModel.Number" />
+
+        <div class="col">
+            Class
+        </div>
+
+        <select class=" form-control" name="Class" @bind="competitionerModel.BoatClass">
+            @foreach (var boatClass in BoatClassesForSelect)
             {
                 <option value="@boatClass">
                     @boatClass;
                 </option>
             }
         </select>
-        <select class=" form-control" name="Sportsman" @bind="newSportsman">
+
+        <div class="col">
+            Sportsman Id
+        </div>
+
+        <select class=" form-control" name="Sportsman" @bind="competitionerModel.SportsmanId">
 
             @foreach (var sportsman in SportsmansForSelect)
             {
@@ -23,7 +37,12 @@
                 </option>
             }
         </select>
-        <select class=" form-control" name="CompetitionId" @bind="newCompetition">
+
+        <div class="col">
+            Competition Id
+        </div>
+
+        <select class=" form-control" name="CompetitionId" @bind="competitionerModel.CompetitionId">
 
             @foreach (var item in CompetitionsForSelect)
             {
@@ -34,7 +53,7 @@
         </select>
 
         <div class=" col">
-            <button class=" btn btn-success" @onclick="AddCompetitioner">Add Competitioner</button>
+            <button class=" btn btn-success" @onclick="SaveCompetitioner">Save</button>
         </div>
     </div>
 </div>
@@ -73,10 +92,10 @@
                                 @item.CompetitionId
                             </td>
                             <td>
-                                <button class=" btn-dark">Edite</button>
+                                <button class=" btn-dark" @onclick="(()=>EditCompetitioner(item))">Edit</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteCompetitioner(item.Id))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteCompetitionerAsync(item))">Delete</button>
                             </td>
                         </tr>
                     </tbody>

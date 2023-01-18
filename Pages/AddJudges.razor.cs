@@ -1,5 +1,9 @@
-﻿using CompetitionResults.EnumsAndConstants;
+﻿using CompetitionResults.Data;
+using CompetitionResults.EnumsAndConstants;
 using CompetitionResults.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +13,101 @@ namespace CompetitionResults.Pages
 {
     public partial class AddJudges
     {
-        private IEnumerable<Judge> judge = new List<Judge>();
+        [Inject]
+        protected IServiceScopeFactory serviceScopeFactory { get; set; }
 
-        protected override void OnInitialized()
+        protected IEnumerable<Judge> judges = new List<Judge>();
+
+        protected Judge  judgeModel = new Judge { IsActive = true };
+
+        protected IEnumerable<ListOfCountries> CountryForSelect = new List<ListOfCountries>();
+
+        protected override async Task OnInitializedAsync()
         {
-            judge = judgeRepository.GetAll();
+            await RenewStateAsync();
+
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();            
+
+            CountryForSelect = Enum.GetValues(typeof(ListOfCountries))
+                .OfType<ListOfCountries>()
+                .ToList();
+
+            await ResetDataToDefaultAsync();
         }
 
-        private string newName;
-        private string newSecondName;
-        private ListOfCountries newCountry;
-
-        private void AddJudge()
+        private async Task RenewStateAsync()
         {
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
 
-            var dbJudge = new Judge();
+            judges = await context.Judges
+                .AsNoTracking()
+                .Where(t => t.IsActive)
+                .ToListAsync();
+        }
+               
 
-            dbJudge.Name = newName;
-            dbJudge.SecondName = newSecondName;
-            dbJudge.Country = newCountry;
-            dbJudge.IsActive = true;
+        private async Task SaveJudge()
+        {
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
 
-            judgeRepository.Save(dbJudge);
+            if (judgeModel.Id is 0)
+            {               
+               
+                await context.Judges.AddAsync(judgeModel);
+            }
+            else
+            {
+                context.Judges.Update(judgeModel);
+            }
+
+            await context.SaveChangesAsync();
+            await RenewStateAsync();
+            await ResetDataToDefaultAsync();
 
         }
 
-        private void DeleteJudge(long id)
+        private void EditJudge(Judge judgeToEdite)
         {
-            judgeRepository.Remove(id);
+            var shallowCopy = new Judge
+            {
+                Id = judgeToEdite.Id,
+                Country = judgeToEdite.Country,
+                Name = judgeToEdite.SecondName,
+                SecondName = judgeToEdite.Name,
+                IsActive = judgeToEdite.IsActive
+            };
+
+            judgeModel = shallowCopy;
+        }
+
+        private async Task DeleteJudgeAsync(Judge judgeToDelete)
+        {
+            judgeModel.IsActive = false;
+
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+            context.Judges.Update(judgeToDelete);
+            await context.SaveChangesAsync();
+            await RenewStateAsync();
+        }
+
+        private async Task ResetDataToDefaultAsync()
+        {
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+
+            judgeModel = new Judge
+            {               
+                IsActive = true,
+               Country = ListOfCountries.BLR,
+                Name = "Enter name",
+                SecondName = "Enter secondname"
+            };
+
+            await RenewStateAsync();
         }
 
     }

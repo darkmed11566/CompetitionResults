@@ -9,18 +9,18 @@
         <div class="col">
             Type
         </div>
-        <select class=" form-control" name="Type" @bind="newType">
-            @foreach (var track in Enum.GetValues(typeof(TrackType)))
+        <select class=" form-control" name="TrackType" @bind="trackModel.TrackType" >
+            @foreach (var trackType in TrackTypesForSelect)
             {
-                <option value="@track">
-                    @track;
+                <option value="@trackType">
+                    @trackType
                 </option>
             }
         </select>
         <div class="col">
             CompetitionID
         </div>
-        <select class=" form-control" name="CompetitionId" @bind="newCompetition">
+        <select class=" form-control" name="CompetitionId" @bind="trackModel.CompetitionId">
 
             @foreach (var item in CompetitionsForSelect)
             {
@@ -31,10 +31,10 @@
         </select>
         <div class="col">
             Full
-            <input class=" form-control" type="checkbox" @bind="newIsFull" />
+            <input class=" form-control" type="checkbox" @bind="trackModel.IsFull" />
         </div>
         <div class=" col">
-            <button class=" btn btn-success" @onclick="AddTrack">Add Track</button>
+            <button class=" btn btn-success" @onclick="SaveTrack">Save</button>
         </div>
     </div>
 </div>
@@ -51,7 +51,7 @@
                         <th scope="col">IsFull </th>
                     </tr>
                 </thead>
-                @foreach (var item in track)
+                @foreach (var item in tracks)
                 {
                     <tbody>
                         <tr>
@@ -65,10 +65,10 @@
                                 @item.IsFull
                             </td>
                             <td>
-                                <button class=" btn-dark">Edite</button>
+                                <button class=" btn-dark" @onclick="(()=>EditTrack(item))">Edit</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteTrack(item.Id))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteTrackAsync(item))">Delete</button>
                             </td>
                         </tr>
                     </tbody>

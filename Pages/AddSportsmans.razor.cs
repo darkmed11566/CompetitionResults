@@ -1,5 +1,9 @@
-﻿using CompetitionResults.EnumsAndConstants;
+﻿using CompetitionResults.Data;
+using CompetitionResults.EnumsAndConstants;
 using CompetitionResults.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,52 +13,134 @@ namespace CompetitionResults.Pages
 {
     public partial class AddSportsmans
     {
-        private IEnumerable<Sportsman> sportsman = new List<Sportsman>();
+        [Inject]
+        protected IServiceScopeFactory serviceScopeFactory { get; set; }
 
-        protected override void OnInitialized()
+        protected IEnumerable<Sportsman> sportsmans = new List<Sportsman>();
+
+        protected IEnumerable<ListOfCountries> CountryForSelect = new List<ListOfCountries>();
+        protected IEnumerable<Sex> SexForSelect = new List<Sex>();
+        protected IEnumerable<Rangs> RangsForSelect = new List<Rangs>();
+
+        protected Sportsman sportsmanModel = new Sportsman { IsActive = true };
+        protected override async Task OnInitializedAsync()
         {
-            sportsman = sportsmanRepository.GetAll();
+            await RenewStateAsync();
+
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+
+            CountryForSelect = Enum.GetValues(typeof(ListOfCountries))
+               .OfType<ListOfCountries>()
+               .ToList();
+
+            SexForSelect = Enum.GetValues(typeof(Sex))
+                .OfType<Sex>()
+                .ToList();
+
+            RangsForSelect = Enum.GetValues(typeof(Rangs))
+                 .OfType<Rangs>()
+                 .ToList();
+
+            await ResetDataToDefaultAsync();
         }
 
-        private string newName;
-        private string newSecondName;
-        private DateTime newDateOfBirt;
-        private Sex newSex;
-        private ListOfCountries newCountry;
-        private Rangs newRang;
-        private string newNameOfClub;
-        private string newNamesOfCoachers;
-        private string newPhoto;
-        private string newAchievements;
-
-        private void AddSportsman()
+        private async Task RenewStateAsync()
         {
-            if (newNameOfClub == null)
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+
+            sportsmans = await context.Sportsmens
+                .AsNoTracking()
+                .Where(t => t.IsActive)
+                .ToListAsync();
+        }       
+
+        private void EditSportsman(Sportsman sportsmanToEdit)
+        {
+            var shallowCopy = new Sportsman
             {
-                newNameOfClub = "Personally";
+                Id = sportsmanToEdit.Id,
+                IsActive = sportsmanToEdit.IsActive,
+                Name = sportsmanToEdit.Name,
+                SecondName = sportsmanToEdit.SecondName,
+                DateOfBirth = sportsmanToEdit.DateOfBirth,
+                Sex = sportsmanToEdit.Sex,
+                Country = sportsmanToEdit.Country,
+                Rang = sportsmanToEdit.Rang,
+                ClubName = sportsmanToEdit.ClubName,
+                CoachName = sportsmanToEdit.CoachName,
+                Rating = sportsmanToEdit.Rating,
+                Achievements = sportsmanToEdit.Achievements,
+                URLPhoto = sportsmanToEdit.URLPhoto
+            };
+
+            sportsmanModel = shallowCopy;
+        }
+
+
+
+
+        private async Task DeleteSportsmanAsync(Sportsman sportsmanToDelete)
+        {
+            sportsmanModel.IsActive = false;
+
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+            context.Sportsmens.Update(sportsmanToDelete);
+            await context.SaveChangesAsync();
+            await RenewStateAsync();
+        }
+
+
+        private async Task SaveSportsman()
+        {
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+
+            if (sportsmanModel.Id is 0)
+            {
+
+                if (sportsmanModel.ClubName == null)
+                {
+                    sportsmanModel.ClubName = "Personally";
+                }
+
+                await context.Sportsmens.AddAsync(sportsmanModel);
+            }
+            else
+            {
+                context.Sportsmens.Update(sportsmanModel);
             }
 
-            var dbSportsman = new Sportsman();
-
-            dbSportsman.Name = newName;
-            dbSportsman.SecondName = newSecondName;
-            dbSportsman.Sex = newSex;
-            dbSportsman.DateOfBirth = newDateOfBirt;
-            dbSportsman.Country = newCountry;
-            dbSportsman.Rang = newRang;
-            dbSportsman.ClubName = newNameOfClub;
-            dbSportsman.CoachName = newNamesOfCoachers;
-            dbSportsman.IsActive = true;
-            dbSportsman.URLPhoto = newPhoto;
-            dbSportsman.Achievements = newAchievements;
-            dbSportsman.Rating = 0;
-            sportsmanRepository.Save(dbSportsman);
-
+            await context.SaveChangesAsync();
+            await RenewStateAsync();
+            await ResetDataToDefaultAsync();
         }
 
-        private void DeleteSportsman(long id)
+        private async Task ResetDataToDefaultAsync()
         {
-            sportsmanRepository.Remove(id);
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+
+            sportsmanModel = new Sportsman
+            {
+                IsActive = true,
+                Name = "Enter name",
+                SecondName = "Enter secondname",
+                Rang = Rangs.NR,
+                Country = ListOfCountries.BLR,
+                Rating = 0,
+                Sex = Sex.Male,
+                URLPhoto = "Enter photo url",
+                ClubName = "Personally",
+                CoachName = "Enter coach name",
+                DateOfBirth = new DateTime (1950,01,01),
+                Achievements = "Enter  achievements"
+                
+            };
+
+            await RenewStateAsync();
         }
     }
 }

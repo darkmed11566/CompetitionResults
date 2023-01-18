@@ -16,87 +16,126 @@ namespace CompetitionResults.Pages
         [Inject]
         protected IServiceScopeFactory serviceScopeFactory { get; set; }
 
-        private IEnumerable<Track> track = new List<Track>();
-        private IEnumerable<GateWithTime> gate = new List<GateWithTime>();
-     
-        private TrackType newType;
-        private long newCompetition;
-        private IEnumerable<Competition> CompetitionsForSelect = new List<Competition>();
-        private bool newIsFull;
-        private long Id;
+        protected IEnumerable<Track> tracks = new List<Track>();
+
+        protected Track trackModel = new Track { IsActive = true };
+
+        protected IEnumerable<Competition> CompetitionsForSelect = new List<Competition>();
+        protected IEnumerable<TrackType> TrackTypesForSelect = new List<TrackType>();
+
         protected override async Task OnInitializedAsync()
         {
-            using var scope = serviceScopeFactory.CreateScope();
+            await RenewStateAsync();
 
+            using var scope = serviceScopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-            track = await context.Tracks.AsNoTracking().ToListAsync();
-            CompetitionsForSelect = await context.Competitions.AsNoTracking()
-                .Where (x=>x.IsFull==false&&x.IsActive==true).ToListAsync();
-            newCompetition = CompetitionsForSelect.OrderBy(x => x.Id).FirstOrDefault()?.Id ?? 0;
+
+            CompetitionsForSelect = await context.Competitions
+                .AsNoTracking()
+                .Where(x => !x.IsFull && x.IsActive)
+                .ToListAsync();
+
+            trackModel.CompetitionId = CompetitionsForSelect
+                .OrderBy(x => x.Id)
+                .FirstOrDefault()?.Id ?? 0;
+
+            TrackTypesForSelect = Enum.GetValues(typeof(TrackType))
+                .OfType<TrackType>()
+                .ToList();
+
+            await ResetDataToDefaultAsync();
         }
 
-        private async Task AddTrack()
+        private async Task SaveTrack()
         {
-            var dbTrack = new Track();
-
-            dbTrack.TrackType = newType;
-            dbTrack.IsActive = true;
-            dbTrack.CompetitionId = newCompetition;
-            dbTrack.IsFull = newIsFull;
-
             using var scope = serviceScopeFactory.CreateScope();
-
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-            await context.Tracks.AddAsync(dbTrack);
+
+            if (trackModel.Id is 0)
+            {
+                List<GateWithTime> gatesForTrackModel = new List<GateWithTime>
+                {
+                    new GateWithTime
+                    {
+                        Type = GateType.StartingGate,
+                        GateName = GateNameWithTime.Start,
+                        IsActive = true
+                    },
+                    new GateWithTime
+                    {
+                        Type = GateType.FinisGate,
+                        GateName = GateNameWithTime.Finish,
+                        IsActive = true
+                    }
+                };
+
+                trackModel.Gates = gatesForTrackModel;
+
+                await context.Tracks.AddAsync(trackModel);
+            }
+            else
+            {
+                context.Tracks.Update(trackModel);
+            }
+
             await context.SaveChangesAsync();
-            Id = dbTrack.Id;
-            await AddStartGate();
-            await AddFinishGate();
-
+            await RenewStateAsync();
+            await ResetDataToDefaultAsync();
         }
 
-        private async Task AddStartGate()
+        private async Task RenewStateAsync()
         {
-
-            var dbGateWithTimeStart = new GateWithTime();
-
-            dbGateWithTimeStart.Type = GateType.StartingGate;
-            dbGateWithTimeStart.GateName = GateNameWithTime.Start;
-            dbGateWithTimeStart.IsActive = true;
-            dbGateWithTimeStart.TrackId = Id;
             using var scope = serviceScopeFactory.CreateScope();
-
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-            await context.GateWithTimes.AddAsync(dbGateWithTimeStart);
-            await context.SaveChangesAsync();
-            
+
+            tracks = await context.Tracks
+                .AsNoTracking()
+                .Where(t => t.IsActive)
+                .ToListAsync();
         }
-        private async Task AddFinishGate()
-        {  
-            var dbGateWithTimeFinish = new GateWithTime();
-            dbGateWithTimeFinish.Type = GateType.FinisGate;
-            dbGateWithTimeFinish.GateName = GateNameWithTime.Finish;
-            dbGateWithTimeFinish.IsActive = true;
-            dbGateWithTimeFinish.TrackId = Id;
+
+        private void EditTrack(Track trackToEdit)
+        {
+            var shallowCopy = new Track
+            {
+                Id = trackToEdit.Id,
+                IsFull = trackToEdit.IsFull,
+                CompetitionId = trackToEdit.CompetitionId,
+                TrackType = trackToEdit.TrackType,
+                IsActive = trackToEdit.IsActive
+            };
+
+            trackModel = shallowCopy;
+        }
+
+        private async Task DeleteTrackAsync(Track trackToDelete)
+        {
+            trackToDelete.IsActive = false;
 
             using var scope = serviceScopeFactory.CreateScope();
-
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-            await context.GateWithTimes.AddAsync(dbGateWithTimeFinish);
+            context.Tracks.Update(trackToDelete);
             await context.SaveChangesAsync();
-        }
-        protected void TrackSelected(ChangeEventArgs args)
-        {
-            var x = args.Value;
-        }
-        protected void CompetitionSelect(ChangeEventArgs args)
-        {
-            var x = args.Value;
+            await RenewStateAsync();
         }
 
-        private void DeleteTrack(long id)
+        private async Task ResetDataToDefaultAsync()
         {
-            trackRepository.Remove(id);
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+
+            trackModel = new Track
+            {
+                IsFull = false,
+                IsActive = true,
+                TrackType = TrackType.Run1,
+                 CompetitionId = CompetitionsForSelect
+                 .OrderBy(x => x.Id)
+                    .FirstOrDefault()
+                    ?.Id ?? 0
+            };
+
+            await RenewStateAsync();
         }
     }
 }

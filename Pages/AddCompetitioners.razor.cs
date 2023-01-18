@@ -16,58 +16,136 @@ namespace CompetitionResults.Pages
         [Inject]
         protected IServiceScopeFactory serviceScopeFactory { get; set; }
 
-        private IEnumerable<Competitioner> competitioner = new List<Competitioner>();
-
+        protected IEnumerable<Competitioner> competitioner = new List<Competitioner>();        
+        protected IEnumerable<Sportsman> SportsmansForSelect = new List<Sportsman>();
+        protected IEnumerable<Competition> CompetitionsForSelect = new List<Competition>();
+        protected Competitioner competitionerModel = new Competitioner { IsActive = true, StatusInTrack = StatusSportsmanInTrack.RegisteredForCompetition };
+        protected IEnumerable<BoatClasses> BoatClassesForSelect = new List<BoatClasses>();
         protected override async Task OnInitializedAsync()
         {
+
+            await RenewStateAsync();
+
             using var scope = serviceScopeFactory.CreateScope();
-
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-            competitioner = await context.Competitioners.AsNoTracking().ToListAsync();
-            SportsmansForSelect = await context.Sportsmens.AsNoTracking()
-                .Where(x=> x.IsActive == true).ToListAsync();
-            newSportsman = SportsmansForSelect.OrderBy(x => x.Id).FirstOrDefault()?.Id ?? 0;
 
-            competitioner = await context.Competitioners.AsNoTracking().ToListAsync();
-            CompetitionsForSelect = await context.Competitions.AsNoTracking()
-                .Where(x =>x.IsActive == true).ToListAsync();
-            newCompetition = CompetitionsForSelect.OrderBy(x => x.Id).FirstOrDefault()?.Id ?? 0;
+            competitioner = await context.Competitioners
+                .AsNoTracking()
+                .ToListAsync();
 
+            SportsmansForSelect = await context.Sportsmens
+                .AsNoTracking()
+                .Where(x=> x.IsActive)
+                .ToListAsync();
+
+            competitionerModel.SportsmanId = SportsmansForSelect
+                .OrderBy(x => x.Id)
+                .FirstOrDefault()?.Id ?? 0;
+
+            competitioner = await context.Competitioners
+                .AsNoTracking()
+                .ToListAsync();
+
+            CompetitionsForSelect = await context.Competitions
+                .AsNoTracking()
+                .Where(x =>x.IsActive).ToListAsync();
+
+            competitionerModel.CompetitionId = CompetitionsForSelect
+                .OrderBy(x => x.Id)
+                .FirstOrDefault()?.Id ?? 0;
+
+            BoatClassesForSelect = Enum.GetValues(typeof(BoatClasses))
+               .OfType<BoatClasses>()
+               .ToList();
+
+            await ResetDataToDefaultAsync();
         }
 
-        private int newNumber;
-        private BoatClasses newClass;
-        private IEnumerable<Sportsman> SportsmansForSelect = new List<Sportsman>();
-        private long newSportsman;
-        private long newCompetition;
-        private IEnumerable<Competition> CompetitionsForSelect = new List<Competition>();
-        private async Task AddCompetitioner()
+
+        private async Task RenewStateAsync()
+        {
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+
+            competitioner = await context.Competitioners
+                .AsNoTracking()
+                .Where(t => t.IsActive)
+                .ToListAsync();
+        }
+
+
+        private async Task SaveCompetitioner()
         {
 
-            var dbCompetitioner = new Competitioner();
-
-            dbCompetitioner.Number = newNumber;
-            dbCompetitioner.BoatClass = newClass;
-            dbCompetitioner.IsActive = true;
-            dbCompetitioner.StatusInTrack = StatusSportsmanInTrack.RegisteredForCompetition;
-            dbCompetitioner.SportsmanId = newSportsman;
-            dbCompetitioner.CompetitionId = newCompetition;
-
             using var scope = serviceScopeFactory.CreateScope();
-
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-            await context.Competitioners.AddAsync(dbCompetitioner);
+
+            if (competitionerModel.Id is 0)
+            {
+                await context.Competitioners.AddAsync(competitionerModel);
+            }
+            else
+            {
+                context.Competitioners.Update(competitionerModel);
+            }
+
             await context.SaveChangesAsync();
+            await RenewStateAsync();
 
-        }
-        protected void TrackSelected(ChangeEventArgs args)
-        {
-            var x = args.Value;
+            await ResetDataToDefaultAsync();
         }
 
-        private void DeleteCompetitioner(long id)
+        private void EditCompetitioner(Competitioner competitionerToEdit)
         {
-            competitionerRepository.Remove(id);
+            var shallowCopy = new Competitioner
+            {
+                Id = competitionerToEdit.Id,
+                Number = competitionerToEdit.Number,
+                CompetitionId = competitionerToEdit.CompetitionId,
+                BoatClass = competitionerToEdit.BoatClass,
+                IsActive = competitionerToEdit.IsActive,
+                StatusInTrack =competitionerToEdit.StatusInTrack,
+                SportsmanId=competitionerToEdit.SportsmanId
+
+            };
+
+            competitionerModel = shallowCopy;
+        }
+
+        private async Task DeleteCompetitionerAsync(Competitioner competitionerToDelete)
+        {
+            competitionerToDelete.IsActive = false;
+
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+            context.Competitioners.Update(competitionerToDelete);
+            await context.SaveChangesAsync();
+            await RenewStateAsync();
+        }
+
+        private async Task ResetDataToDefaultAsync()
+        {
+            using var scope = serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+
+            competitionerModel = new Competitioner
+            {
+                IsActive = true,
+                BoatClass = BoatClasses.K1M,
+                Number = 1,
+                StatusInTrack = StatusSportsmanInTrack.RegisteredForCompetition,
+                CompetitionId = CompetitionsForSelect
+                .OrderBy(x => x.Id)
+                    .FirstOrDefault()
+                    ?.Id ?? 0,
+                SportsmanId= SportsmansForSelect
+                .OrderBy(x => x.Id)
+                    .FirstOrDefault()
+                    ?.Id ?? 0
+
+            };
+
+            await RenewStateAsync();
         }
     }
 }

@@ -4,44 +4,70 @@
 
 <div class="row">
     <div class="col">
-        <input class=" form-control" placeholder="Name" @bind="newName" />
-        <input class=" form-control" placeholder="Second Name" @bind="newSecondName" />
-        <input class=" form-control" type="date" placeholder="Date Of Birth" @bind="newDateOfBirt " />
-
-        <select class=" form-control" name="Sex" @bind="newSex">
-            @foreach (var sex in Enum.GetValues(typeof(Sex)))
+        <div>
+            Name
+        </div>
+        <input class=" form-control" placeholder="Name" @bind="sportsmanModel.Name" />
+        <div>
+            SecondName
+        </div>
+        <input class=" form-control" placeholder="Second Name" @bind="sportsmanModel.SecondName" />
+        <div>
+            DateOfBirth
+        </div>
+        <input class=" form-control" type="date" placeholder="Date Of Birth" @bind="sportsmanModel.DateOfBirth " />
+        <div>
+            Sex
+        </div>
+        <select class=" form-control" name="Sex" @bind="sportsmanModel.Sex">
+            @foreach (var sex in SexForSelect)
             {
                 <option value="@sex">
                     @sex;
                 </option>
             }
         </select>
-
-        <select class=" form-control" name="Country" @bind="newCountry">
-            @foreach (var country in Enum.GetValues(typeof(ListOfCountries)))
+        <div>
+            Country
+        </div>
+        <select class=" form-control" name="Country" @bind="sportsmanModel.Country">
+            @foreach (var country in CountryForSelect)
             {
                 <option value="@country">
                     @country;
                 </option>
             }
         </select>
-
-        <select class=" form-control" name="Rang" @bind="newRang">
-            @foreach (var rang in Enum.GetValues(typeof(Rangs)))
+        <div>
+            Rang
+        </div>
+        <select class=" form-control" name="Rang" @bind="sportsmanModel.Rang">
+            @foreach (var rang in RangsForSelect)
             {
                 <option value="@rang">
                     @rang;
                 </option>
             }
         </select>
-
-        <input class=" form-control" placeholder="Name of club" @bind="newNameOfClub" />
-        <input class=" form-control" placeholder="Names of coachers" @bind="newNamesOfCoachers" />
-        <input class=" form-control" placeholder="Photo" @bind="newPhoto" />
-        <input class=" form-control" placeholder="Achievements" @bind="newAchievements" />
+        <div>
+            NameOfClub
+        </div>
+        <input class=" form-control" placeholder="Name of club" @bind="sportsmanModel.ClubName" />
+        <div>
+            NamesOfCoachers
+        </div>
+        <input class=" form-control" placeholder="Names of coachers" @bind="sportsmanModel.CoachName" />
+        <div>
+            Photo
+        </div>
+        <input class=" form-control" placeholder="Photo" @bind="sportsmanModel.URLPhoto" />
+        <div>
+            Achivements
+        </div>
+        <input class=" form-control" placeholder="Achievements" @bind="sportsmanModel.Achievements" />
 
         <div class=" col">
-            <button class=" btn btn-success" @onclick="AddSportsman">Add sportsman</button>
+            <button class=" btn btn-success" @onclick="SaveSportsman">Save</button>
         </div>
     </div>
 </div>
@@ -67,7 +93,7 @@
 
                     </tr>
                 </thead>
-                @foreach (var item in sportsman)
+                @foreach (var item in sportsmans)
                 {
                     <tbody>
                         <tr>
@@ -107,10 +133,10 @@
                                 @item.Rating
                             </td>
                             <td>
-                                <button class=" btn-dark">Edite</button>
+                                <button class=" btn-dark" @onclick="(()=>EditSportsman(item))">Edite</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteSportsman(item.Id))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteSportsmanAsync(item))">Delete</button>
                             </td>
                         </tr>
                     </tbody>
