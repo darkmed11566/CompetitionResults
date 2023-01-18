@@ -5,18 +5,22 @@
 
 <div class="row">
     <div class="col">
+        <div>
+            Name
+        </div>
+        <select class="form-control" name="Gate Name" @bind="gateWithTimeModel.GateName">
 
-        <select class=" form-control" name="Gate Name" @bind="newGateName">
-
-            @foreach (var gate in Enum.GetValues(typeof(GateNameWithTime)))
+            @foreach (var gate in GateNamesWithTimeForSelect)
             {
                 <option value="@gate">
-                    @gate;
+                    @gate
                 </option>
             }
         </select>
-
-        <select class=" form-control" name="Track" @bind="newTrack">
+        <div>
+            TrackId
+        </div>
+        <select class="form-control" name="Track" @bind="gateWithTimeModel.TrackId">
 
             @foreach (var track in TracksForSelect)
             {
@@ -25,26 +29,42 @@
                 </option>
             }
         </select>
+        <div>
+            Type
+        </div>
+        <select class="form-control" name="Type" @bind="gateWithTimeModel.Type">
+
+            @foreach (var type in GateTypesForSelect)
+            {
+                <option value="@type">
+                    @type
+                </option>
+            }
+        </select>
 
         <div class=" col">
-            <button class=" btn btn-success" @onclick="AddGateWithTime">Add Gate With Time</button>
+            <button class=" btn btn-success" @onclick="SaveGateWithTime">Save Gate With Time</button>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col">
+        <div>
+            Number
+        </div>
+        <select class=" form-control" name="Gate Name" @bind="gateWithPenaltyModel.GateNumber">
 
-        <select class=" form-control" name="Gate Name" @bind="newGateNumber">
-
-            @foreach (var gate in Enum.GetValues(typeof(GateNameWithPenalty)))
+            @foreach (var gate in GateNamesWithPenaltyForSelect)
             {
                 <option value="@gate">
-                    @gate;
+                    @gate
                 </option>
             }
         </select>
-
-        <select class=" form-control" name="Sector" @bind="newSector">
+        <div>
+            SectorId
+        </div>
+        <select class=" form-control" name="Sector" @bind="gateWithPenaltyModel.SectorId">
 
             @foreach (var sector in SectorsForSelect)
             {
@@ -53,13 +73,22 @@
                 </option>
             }
         </select>
+        <div>
+            Type
+        </div>
+        <select class=" form-control" name="Type" @bind="gateWithPenaltyModel.Type">
+
+            @foreach (var type in GateTypesForSelect)
+            {
+                <option value="@type">
+                    @type
+                </option>
+            }
+        </select>
 
         <div class=" col">
-            <button class=" btn btn-danger" @onclick="AddBackGateWithPenalty">Add Back Gate With Penalty</button>
-        </div>
-        <div class=" col">
-            <button class=" btn btn-danger" @onclick="AddStraightGateWithPenalty">Add Straight Gate With Penalty</button>
-        </div>
+            <button class=" btn btn-danger" @onclick="SaveGateWithPenalty">Save Gate With Penalty</button>
+        </div>       
     </div>
 </div>
 
@@ -90,10 +119,10 @@
                                 @item.TrackId
                             </td>
                             <td>
-                                <button class=" btn-dark">Edite</button>
+                                <button class=" btn-dark" @onclick="(()=>EditGateWithTime(item))">Edit</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithTime(item))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithTimeAsync(item))">Delete</button>
                             </td>
                         </tr>
                     </tbody>
@@ -112,10 +141,10 @@
                                 @item.SectorId
                             </td>
                             <td>
-                                <button class=" btn-dark">Edite</button>
+                                <button class=" btn-dark" @onclick="(()=>EditGateWithPenalty(item))">Edit</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithPenalty(item))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithPenaltyAsync(item))">Delete</button>
                             </td>
                         </tr>
                     </tbody>

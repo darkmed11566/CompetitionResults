@@ -11,6 +11,6 @@ namespace CompetitionResults.EnumsAndConstants
         FinisGate = 2,
         TimeGate = 3,
         StraightGate = 4,
-        BackGate =5
+        BackGate = 5
     }
 }

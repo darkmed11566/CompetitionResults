@@ -4,9 +4,14 @@
 
 <div class="row">
     <div class="col">
-        <input class=" form-control" placeholder="Name" @bind="newSectorNumber" />
-
-        <select class=" form-control" name="Track" @bind="newTrack">
+        <div>
+            Number
+        </div>
+        <input class=" form-control" placeholder="Number" @bind="sectorModel.Number" />
+        <div>
+            TrackID
+        </div>
+        <select class=" form-control" name="Track" @bind="sectorModel.TrackId">
 
             @foreach (var track in TracksForSelect)
             {
@@ -15,9 +20,12 @@
                 </option>
             }
         </select>
-        <input class=" form-control" type="checkbox" @bind="newIsFull" />
+        <div>
+            IsFull
+        </div>
+        <input class=" form-control" type="checkbox" @bind="sectorModel.IsFull" />
         <div class=" col">
-            <button class=" btn btn-success" @onclick="AddSector">Add Sector</button>
+            <button class=" btn btn-success" @onclick="SaveSector">Save</button>
         </div>
     </div>
 </div>
@@ -34,7 +42,7 @@
                         <th scope="col">Full </th>
                     </tr>
                 </thead>
-                @foreach (var item in sector)
+                @foreach (var item in sectors)
                 {
                     <tbody>
                         <tr>
@@ -48,10 +56,10 @@
                                 @item.IsFull
                             </td>
                             <td>
-                                <button class=" btn-dark">Edite</button>
+                                <button class=" btn-dark" @onclick="(()=>EditSector(item))">Edite</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteSector(item.Id))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteSectorAsync(item))">Delete</button>
                             </td>
                         </tr>
                     </tbody>

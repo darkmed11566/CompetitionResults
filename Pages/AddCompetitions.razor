@@ -7,28 +7,28 @@
         <div class="col">
             Conpetition Name
         </div>
-        <input class=" form-control" placeholder="Conpetition Name" @bind="newCompetitionName" />
+        <input class=" form-control" placeholder="Conpetition Name" @bind="competitionModel.Name" />
         <div class="col">
             Start Data
         </div>
-        <input class=" form-control" type="date" placeholder="Competition Start Data" @bind="newCompetitionStartData" />
+        <input class=" form-control" type="date" placeholder="Competition Start Data" @bind="competitionModel.StartDate" />
         <div class="col">
             End Data
         </div>
-        <input class=" form-control" type="date" placeholder="Competition End Data" @bind="newCompetitionEndData" />
+        <input class=" form-control" type="date" placeholder="Competition End Data" @bind="competitionModel.EndtDate" />
         <div class="col">
             Rating
-        <input class=" form-control" type="checkbox" @bind="newRating" />
+            <input class=" form-control" type="checkbox" @bind="competitionModel.IsRated" />
         </div>
         <div class="col">
-           Full
-        <input class=" form-control" type="checkbox" @bind="newIsFull" />
+            Full
+            <input class=" form-control" type="checkbox" @bind="competitionModel.IsFull" />
         </div>
         <div class="col">
             Country
         </div>
-        <select class=" form-control" name="Country" @bind="newCountry">
-            @foreach (var country in Enum.GetValues(typeof(ListOfCountries)))
+        <select class=" form-control" name="Country" @bind="competitionModel.Country">
+            @foreach (var country in CountryForSelect)
             {
                 <option value="@country">
                     @country;
@@ -38,18 +38,28 @@
         <div class="col">
             Type
         </div>
-        <select class=" form-control" name="Type" @bind="newType">
-            @foreach (var type in Enum.GetValues(typeof(CompetitionType)))
+        <select class=" form-control" name="Type" @bind="competitionModel.Type">
+            @foreach (var type in TypesForSelect)
             {
                 <option value="@type">
                     @type;
                 </option>
             }
         </select>
-
+        <div class="col">
+            Status
+        </div>
+        <select class=" form-control" name="Status" @bind="competitionModel.Status">
+            @foreach (var status in StatusForSelect)
+            {
+                <option value="@status">
+                    @status;
+                </option>
+            }
+        </select>
 
         <div class=" col">
-            <button class=" btn btn-success" @onclick="AddCompetition">Add Competition</button>
+            <button class=" btn btn-success" @onclick="SaveCompetition">Save</button>
         </div>
     </div>
 </div>
@@ -71,7 +81,7 @@
                         <th scope="col">Status</th>
                     </tr>
                 </thead>
-                @foreach (var item in competition)
+                @foreach (var item in competitions)
                 {
                     <tbody>
                         <tr>
@@ -100,10 +110,10 @@
                                 @item.Status
                             </td>
                             <td>
-                                <button class=" btn-dark">Edite</button>
+                                <button class=" btn-dark" @onclick="(()=>EditCompetition(item))">Edite</button>
                             </td>
                             <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteCompetition(item.Id))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteCompetitionAsync(item))">Delete</button>
                             </td>
 
                         </tr>
