@@ -1,16 +1,16 @@
 ﻿@page "/addGateWichPenaltyPassages"
 @using EnumsAndConstants
 @inject CompetitionResults.Data.Repository.GateWithPenaltyPassageRepository gateWithPenaltyPassageRepository;
-
 <div class="row">
     <div class="col">
 
         <select class=" form-control" name="Gate Wich Penalty Passage" @bind="newPenalty">
-            
+
             @foreach (var penalty in Enum.GetValues(typeof(Penalties)))
-            { <option value="@penalty">
-                @penalty;
-            </option>
+            {
+                <option value="@penalty">
+                    @penalty;
+                </option>
             }
         </select>
 
@@ -25,14 +25,12 @@
         <div class="col">
             <h2>List of Gates</h2>
             <table class=" table table-striped">
-                <thead class=" table-dark">
+                <thead class=" table-dark">  
                     <tr>
-                        <th scope="col">Number </th>
-                    </tr>
-                    <tr>
+                        <th scope="col">Gate Id </th>  
                         <th scope="col">Penalty </th>
+                        <th scope="col">Sportsman Id </th> 
                     </tr>
-
                 </thead>
                 @foreach (var item in gateWithPenaltyPassage)
                 {
@@ -40,7 +38,13 @@
                         <tr>
                             <td>
                                 @item.PenaltyOnGate
-                            </td>                            
+                            </td>
+                            <td>
+                               
+                            </td>
+                            <td>
+                               
+                            </td>
                             <td>
                                 <button class=" btn-dark">Edite</button>
                             </td>
@@ -49,12 +53,12 @@
                             </td>
                         </tr>
                     </tbody>
-                }  
+                }
             </table>
         </div>
     </div>
 </div>
 
 @code {
-   
+
 }

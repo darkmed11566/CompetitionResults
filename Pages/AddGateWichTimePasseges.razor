@@ -1,18 +1,16 @@
 ﻿@page "/addGateWichTimePassages"
 @using EnumsAndConstants
-
 @inject CompetitionResults.Data.Repository.GateWithTimePassageRepository gateWithTimePassageRepository;
-
 <div class="row">
     <div class="col">
 
-       
+
         <input class=" form-control" placeholder="Gate Wich Time Passage" @bind="newPassage" />
 
         <div class=" col">
             <button class=" btn btn-danger" @onclick="AddGateWithTimePassage">Send Time Passage</button>
         </div>
-        
+
     </div>
 </div>
 
@@ -23,20 +21,24 @@
             <table class=" table table-striped">
                 <thead class=" table-dark">
                     <tr>
-                        <th scope="col">Gate Name </th>
-                    </tr>
-                    <tr>
+                        <th scope="col">Gate Id </th>
                         <th scope="col">Time Passage </th>
+                        <th scope="col">Sportsman Id </th>
                     </tr>
-
                 </thead>
                 @foreach (var item in gateWithTimePassage)
                 {
                     <tbody>
                         <tr>
-                            
+
                             <td>
                                 @item.GatePasssage
+                            </td>
+                            <td>
+                               
+                            </td>
+                            <td>
+                                
                             </td>
                             <td>
                                 <button class=" btn-dark">Edite</button>
@@ -54,7 +56,7 @@
 </div>
 
 @code {
-    
-    
-   
+
+
+
 }

@@ -1,43 +1,37 @@
-﻿@inject CompetitionResults.Data.Repository.GateWithTimeRepository gateWithTimeRepository;
-@inject CompetitionResults.Data.Repository.TrackRepository trackRepository;
-@inject CompetitionResults.Data.Repository.CompetitionRepository competitionRepository;  
-@page "/addTracks"
+﻿@page "/addTracks"
 @using EnumsAndConstants
 
 <div class="row">
     <div class="col">
-        <div class="col">
-            Type
-        </div>
-        <select class=" form-control" name="TrackType" @bind="trackModel.TrackType" >
-            @foreach (var trackType in TrackTypesForSelect)
-            {
-                <option value="@trackType">
-                    @trackType
-                </option>
-            }
-        </select>
-        <div class="col">
-            CompetitionID
-        </div>
-        <select class=" form-control" name="CompetitionId" @bind="trackModel.CompetitionId">
+        <EditForm Model="trackModel" OnValidSubmit="SaveTrack">
+            <div class="form-group">
+                <label> Type </label> 
+                <InputSelect class=" form-control" name="TrackType" @bind-Value="trackModel.TrackType">
+                    @foreach (var trackType in TrackTypesForSelect)
+                    {
+                        <option value="@trackType">
+                            @trackType
+                        </option>
+                    }
+                </InputSelect>
+                <label> CompetitionID </label>
+                <InputSelect class=" form-control" name="CompetitionId" @bind-Value="trackModel.CompetitionId">
 
-            @foreach (var item in CompetitionsForSelect)
-            {
-                <option value="@item.Id">
-                    @item.Id
-                </option>
-            }
-        </select>
-        <div class="col">
-            Full
-            <input class=" form-control" type="checkbox" @bind="trackModel.IsFull" />
-        </div>
-        <div class=" col">
-            <button class=" btn btn-success" @onclick="SaveTrack">Save</button>
-        </div>
+                    @foreach (var item in CompetitionsForSelect)
+                    {
+                        <option value="@item.Id">
+                            @item.Id
+                        </option>
+                    }
+                </InputSelect>
+                <label> Full </label>
+                    <InputCheckbox class=" form-control" type="checkbox" @bind-Value="trackModel.IsFull" />  
+            </div>                
+                    <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
     </div>
 </div>
+
 
 <div class=" container-fluid">
     <div class=" row">
