@@ -1,32 +1,26 @@
-﻿
-@page "/addSectors"
+﻿@page "/addSectors"
 @using EnumsAndConstants
 
 <div class="row">
     <div class="col">
-        <div>
-            Number
-        </div>
-        <input class=" form-control" placeholder="Number" @bind="sectorModel.Number" />
-        <div>
-            TrackID
-        </div>
-        <select class=" form-control" name="Track" @bind="sectorModel.TrackId">
-
-            @foreach (var track in TracksForSelect)
-            {
-                <option value="@track.Id">
-                    @track.Id
-                </option>
-            }
-        </select>
-        <div>
-            IsFull
-        </div>
-        <input class=" form-control" type="checkbox" @bind="sectorModel.IsFull" />
-        <div class=" col">
-            <button class=" btn btn-success" @onclick="SaveSector">Save</button>
-        </div>
+        <EditForm Model="sectorModel" OnValidSubmit="SaveSector">
+            <div class="form-group">               
+                <label> Number </label>  
+                <InputNumber class=" form-control" @bind-Value="sectorModel.Number" />
+                <label> TrackID </label>
+                <InputSelect class=" form-control" name="Track" @bind-Value="sectorModel.TrackId">
+                    @foreach (var track in TracksForSelect)
+                    {
+                        <option value="@track.Id">
+                            @track.Id
+                        </option>
+                    }
+                </InputSelect> 
+                <label> IsFull </label>
+                <InputCheckbox class=" form-control" type="checkbox" @bind-Value="sectorModel.IsFull" />
+            </div>         
+            <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
     </div>
 </div>
 

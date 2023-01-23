@@ -1,74 +1,63 @@
-﻿@inject CompetitionResults.Data.Repository.SportsmanRepository sportsmanRepository;
-@page "/addSportsmans"
+﻿@page "/addSportsmans"
 @using EnumsAndConstants
 
 <div class="row">
     <div class="col">
-        <div>
-            Name
-        </div>
-        <input class=" form-control" placeholder="Name" @bind="sportsmanModel.Name" />
-        <div>
-            SecondName
-        </div>
-        <input class=" form-control" placeholder="Second Name" @bind="sportsmanModel.SecondName" />
-        <div>
-            DateOfBirth
-        </div>
-        <input class=" form-control" type="date" placeholder="Date Of Birth" @bind="sportsmanModel.DateOfBirth " />
-        <div>
-            Sex
-        </div>
-        <select class=" form-control" name="Sex" @bind="sportsmanModel.Sex">
-            @foreach (var sex in SexForSelect)
-            {
-                <option value="@sex">
-                    @sex;
-                </option>
-            }
-        </select>
-        <div>
-            Country
-        </div>
-        <select class=" form-control" name="Country" @bind="sportsmanModel.Country">
-            @foreach (var country in CountryForSelect)
-            {
-                <option value="@country">
-                    @country;
-                </option>
-            }
-        </select>
-        <div>
-            Rang
-        </div>
-        <select class=" form-control" name="Rang" @bind="sportsmanModel.Rang">
-            @foreach (var rang in RangsForSelect)
-            {
-                <option value="@rang">
-                    @rang;
-                </option>
-            }
-        </select>
-        <div>
-            NameOfClub
-        </div>
-        <input class=" form-control" placeholder="Name of club" @bind="sportsmanModel.ClubName" />
-        <div>
-            NamesOfCoachers
-        </div>
-        <input class=" form-control" placeholder="Names of coachers" @bind="sportsmanModel.CoachName" />
-        <div>
-            Photo
-        </div>
-        <input class=" form-control" placeholder="Photo" @bind="sportsmanModel.URLPhoto" />
-        <div>
-            Achivements
-        </div>
-        <input class=" form-control" placeholder="Achievements" @bind="sportsmanModel.Achievements" />
+        <EditForm Model="sportsmanModel" OnValidSubmit="SaveSportsman">
+            <div class="form-group">
+                <label> Name </label>
+                <InputText class=" form-control" @bind-Value="sportsmanModel.Name" />
 
-        <div class=" col">
-            <button class=" btn btn-success" @onclick="SaveSportsman">Save</button>
-        </div>
+                <label> SecondName </label>
+                <InputText class=" form-control" placeholder="Second Name" @bind-Value="sportsmanModel.SecondName" />
+
+                <label> DateOfBirth </label>
+                <InputDate class=" form-control" @bind-Value="sportsmanModel.DateOfBirth " />
+
+                <label> Sex </label>
+                <InputSelect class=" form-control" name="Sex" @bind-Value="sportsmanModel.Sex">
+                    @foreach (var sex in SexForSelect)
+                    {
+                        <option value="@sex">
+                            @sex;
+                        </option>
+                    }
+                </InputSelect>
+
+                <label> Country </label>
+                <InputSelect class=" form-control" name="Country" @bind-Value="sportsmanModel.Country">
+                    @foreach (var country in CountryForSelect)
+                    {
+                        <option value="@country">
+                            @country;
+                        </option>
+                    }
+                </InputSelect>
+
+                <label> Rang </label>
+                <InputSelect class=" form-control" name="Rang" @bind-Value="sportsmanModel.Rang">
+                    @foreach (var rang in RangsForSelect)
+                    {
+                        <option value="@rang">
+                            @rang;
+                        </option>
+                    }
+                </InputSelect>
+
+                <label> NameOfClub </label>
+                <InputText class=" form-control" placeholder="Name of club" @bind-Value="sportsmanModel.ClubName" />
+
+                <label> NamesOfCoachers </label>
+                <InputText class=" form-control" placeholder="Names of coachers" @bind-Value="sportsmanModel.CoachName" />
+
+                <label> Photo </label>
+                <InputText class=" form-control" placeholder="Photo" @bind-Value="sportsmanModel.URLPhoto" />
+
+                <label> Achivements </label>
+                <InputText class=" form-control" placeholder="Achievements" @bind-Value="sportsmanModel.Achievements" />
+            </div>
+                <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
     </div>
 </div>
 
@@ -148,5 +137,5 @@
 </div>
 
 @code {
-   
+
 }

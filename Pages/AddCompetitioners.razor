@@ -1,60 +1,48 @@
-﻿@inject CompetitionResults.Data.Repository.CompetitionerRepository competitionerRepository;
-@page "/addCompetitioners"
+﻿@page "/addCompetitioners"
 @using EnumsAndConstants
 
 <div class="row">
     <div class="col">
+        <EditForm Model="competitionerModel" OnValidSubmit="SaveCompetitioner">
+            <div class="form-group">
+                <label> Number </label>
+                <InputNumber class=" form-control" @bind-Value="competitionerModel.Number" />
 
-        <div class="col">
-            Number
-        </div>
+                <label> CompetitionID </label>
+                <InputSelect class=" form-control" name="CompetitionId" @bind-Value="competitionerModel.CompetitionId">
 
-        <input class=" form-control" placeholder="Name" @bind="competitionerModel.Number" />
+                    @foreach (var item in CompetitionsForSelect)
+                    {
+                        <option value="@item.Id">
+                            @item.Id
+                        </option>
+                    }
+                </InputSelect>
 
-        <div class="col">
-            Class
-        </div>
+                <label> Class </label>
+                <InputSelect class=" form-control" name="Sportsman" @bind-Value="competitionerModel.SportsmanId">
 
-        <select class=" form-control" name="Class" @bind="competitionerModel.BoatClass">
-            @foreach (var boatClass in BoatClassesForSelect)
-            {
-                <option value="@boatClass">
-                    @boatClass;
-                </option>
-            }
-        </select>
+                    @foreach (var sportsman in SportsmansForSelect)
+                    {
+                        <option value="@sportsman.Id">
+                            @sportsman.Id
+                        </option>
+                    }
+                </InputSelect>
 
-        <div class="col">
-            Sportsman Id
-        </div>
+                <label> Sportsman Id </label>
+                <InputSelect class=" form-control" name="Sportsman" @bind-Value="competitionerModel.SportsmanId">
 
-        <select class=" form-control" name="Sportsman" @bind="competitionerModel.SportsmanId">
-
-            @foreach (var sportsman in SportsmansForSelect)
-            {
-                <option value="@sportsman.Id">
-                    @sportsman.Id
-                </option>
-            }
-        </select>
-
-        <div class="col">
-            Competition Id
-        </div>
-
-        <select class=" form-control" name="CompetitionId" @bind="competitionerModel.CompetitionId">
-
-            @foreach (var item in CompetitionsForSelect)
-            {
-                <option value="@item.Id">
-                    @item.Id
-                </option>
-            }
-        </select>
-
-        <div class=" col">
-            <button class=" btn btn-success" @onclick="SaveCompetitioner">Save</button>
-        </div>
+                    @foreach (var sportsman in SportsmansForSelect)
+                    {
+                        <option value="@sportsman.Id">
+                            @sportsman.Id
+                        </option>
+                    }
+                </InputSelect>
+            </div>
+                <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
     </div>
 </div>
 
@@ -107,5 +95,5 @@
 </div>
 
 @code {
-    
+
 }

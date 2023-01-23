@@ -81,7 +81,8 @@ namespace CompetitionResults.Pages
                 Id = sectorToEdite.Id,
                 Number = sectorToEdite.Number,
                 TrackId = sectorToEdite.TrackId,
-                IsActive = sectorToEdite.IsActive
+                IsActive = sectorToEdite.IsActive,
+                IsFull = sectorToEdite.IsFull
             };
 
             sectorModel = shallowCopy;

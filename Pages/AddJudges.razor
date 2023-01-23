@@ -1,32 +1,30 @@
-﻿@inject CompetitionResults.Data.Repository.JudgeRepository judgeRepository;
-@page "/addJudges"
+﻿@page "/addJudges"
 @using EnumsAndConstants
 
 <div class="row">
     <div class="col">
-        <div>
-            Name
-        </div>
-        <input class=" form-control" placeholder="Name" @bind="judgeModel.Name" />
-        <div>
-            SecondName
-        </div>
-        <input class=" form-control" placeholder="Second Name" @bind="judgeModel.SecondName" />
-        <div>
-            Country
-        </div>
-        <select class=" form-control" name="Country" @bind="judgeModel.Country">
-            @foreach (var country in CountryForSelect)
-            {
-                <option value="@country">
-                    @country;
-                </option>
-            }
-        </select>
-       
-        <div class=" col">
-            <button class=" btn btn-success" @onclick="SaveJudge">Save</button>
-        </div>
+
+        <EditForm Model="judgeModel" OnValidSubmit="SaveJudge">
+            <div class="form-group">
+                <label> Number </label>
+                <InputText class=" form-control" @bind-Value="judgeModel.Name" />
+
+                <label> SecondName </label>
+                <InputText class=" form-control" @bind-Value="judgeModel.SecondName" />
+
+                <label> Country </label>
+                <InputSelect class=" form-control" name="Country" @bind-Value="judgeModel.Country">
+                    @foreach (var country in CountryForSelect)
+                    {
+                        <option value="@country">
+                            @country;
+                        </option>
+                    }
+                </InputSelect>
+            </div>
+            <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
+
     </div>
 </div>
 
@@ -38,7 +36,7 @@
                 <thead class=" table-dark">
                     <tr>
                         <th scope="col">Name </th>
-                        <th scope="col">Second name </th>                        
+                        <th scope="col">Second name </th>
                         <th scope="col">Country </th>
                     </tr>
                 </thead>
@@ -56,7 +54,7 @@
                                 @item.Country
                             </td>
                             <td>
-                                <button class=" btn-dark"  @onclick="(()=>EditJudge(item))">Edite</button>
+                                <button class=" btn-dark" @onclick="(()=>EditJudge(item))">Edite</button>
                             </td>
                             <td>
                                 <button class=" btn-danger" @onclick="(()=>DeleteJudgeAsync(item))">Delete</button>
@@ -71,5 +69,5 @@
 </div>
 
 @code {
-   
+
 }
