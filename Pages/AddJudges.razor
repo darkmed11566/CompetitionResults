@@ -2,31 +2,32 @@
 @using EnumsAndConstants
 
 <div class="row">
-    <div class="col">
+        <div class="col">
 
-        <EditForm Model="judgeModel" OnValidSubmit="SaveJudge">
-            <div class="form-group">
-                <label> Number </label>
-                <InputText class=" form-control" @bind-Value="judgeModel.Name" />
+            <EditForm Model="judgeModel" OnValidSubmit="SaveJudge">
+                <div class="form-group">
+                    <label> Number </label>
+                    <InputText class=" form-control" @bind-Value="judgeModel.Name" />
 
-                <label> SecondName </label>
-                <InputText class=" form-control" @bind-Value="judgeModel.SecondName" />
+                    <label> SecondName </label>
+                    <InputText class=" form-control" @bind-Value="judgeModel.SecondName" />
 
-                <label> Country </label>
-                <InputSelect class=" form-control" name="Country" @bind-Value="judgeModel.Country">
-                    @foreach (var country in CountryForSelect)
-                    {
-                        <option value="@country">
-                            @country;
-                        </option>
-                    }
-                </InputSelect>
-            </div>
-            <button class=" btn btn-outline-primary">Save</button>
-        </EditForm>
+                    <label> Country </label>
+                    <InputSelect class=" form-control" name="Country" @bind-Value="judgeModel.Country">
+                        @foreach (var country in CountryForSelect)
+                        {
+                            <option value="@country">
+                                @country;
+                            </option>
+                        }
+                    </InputSelect>
+                </div>
+                <button class=" btn btn-outline-primary">Save</button>
+            </EditForm>
 
+        </div>
     </div>
-</div>
+
 
 <div class=" container-fluid">
     <div class=" row">

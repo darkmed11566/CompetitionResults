@@ -3,93 +3,87 @@
 
 
 <div class="row">
-    <div class="col">
-        <div>
-            Name
-        </div>
-        <select class="form-control" name="Gate Name" @bind="gateWithTimeModel.GateName">
+        <div class="col">
+            <EditForm Model="gateWithTimeModel" OnValidSubmit="SaveGateWithTime">
+                <div class="form-group">
 
-            @foreach (var gate in GateNamesWithTimeForSelect)
-            {
-                <option value="@gate">
-                    @gate
-                </option>
-            }
-        </select>
-        <div>
-            TrackId
-        </div>
-        <select class="form-control" name="Track" @bind="gateWithTimeModel.TrackId">
+                    <label> Name </label>
+                    <InputSelect class=" form-control" @bind-Value="gateWithTimeModel.GateName">
+                        @foreach (var item in GateNamesWithTimeForSelect)
+                        {
+                            <option value="@item">
+                                @item
+                            </option>
+                        }
+                    </InputSelect>
 
-            @foreach (var track in TracksForSelect)
-            {
-                <option value="@track.Id">
-                    @track.Id
-                </option>
-            }
-        </select>
-        <div>
-            Type
-        </div>
-        <select class="form-control" name="Type" @bind="gateWithTimeModel.Type">
+                    <label> TrackID </label>
+                    <CustomInputSelect class=" form-control" @bind-Value="gateWithTimeModel.TrackId">
+                        @foreach (var item in TracksForSelect)
+                        {
+                            <option value="@item.Id">
+                                 @item.TrackType
+                            </option>
+                        }
+                    </CustomInputSelect>
 
-            @foreach (var type in GateTypesForSelect)
-            {
-                <option value="@type">
-                    @type
-                </option>
-            }
-        </select>
+                    <label> Type </label>
+                    <InputSelect class=" form-control" @bind-Value="gateWithTimeModel.Type">
+                        @foreach (var item in GateTypesForSelect)
+                        {
+                            <option value="@item">
+                                @item
+                            </option>
+                        }
+                    </InputSelect>
 
-        <div class=" col">
-            <button class=" btn btn-success" @onclick="SaveGateWithTime">Save Gate With Time</button>
+                </div>
+                <button class=" btn btn-outline-primary">Save</button>
+            </EditForm>
         </div>
     </div>
-</div>
+
 <div class="row">
     <div class="col">
-        <div>
-            Number
-        </div>
-        <select class=" form-control" name="Gate Name" @bind="gateWithPenaltyModel.GateNumber">
+        <EditForm Model="gateWithPenaltyModel" OnValidSubmit="SaveGateWithPenalty">
+            <div class="form-group">
 
-            @foreach (var gate in GateNamesWithPenaltyForSelect)
-            {
-                <option value="@gate">
-                    @gate
-                </option>
-            }
-        </select>
-        <div>
-            SectorId
-        </div>
-        <select class=" form-control" name="Sector" @bind="gateWithPenaltyModel.SectorId">
+                <label> Number </label>
+                <InputSelect class=" form-control" @bind-Value="gateWithPenaltyModel.GateNumber">
+                    @foreach (var item in GateNamesWithPenaltyForSelect)
+                    {
+                        <option value="@item">
+                            @item
+                        </option>
+                    }
+                </InputSelect>
 
-            @foreach (var sector in SectorsForSelect)
-            {
-                <option value="@sector.Id">
-                    @sector.Id
-                </option>
-            }
-        </select>
-        <div>
-            Type
-        </div>
-        <select class=" form-control" name="Type" @bind="gateWithPenaltyModel.Type">
+                <label> SectorId </label>
+                <CustomInputSelect class=" form-control" @bind-Value="gateWithPenaltyModel.SectorId">
+                    @foreach (var item in SectorsForSelect)
+                    {
+                        <option value="@item.Id">
+                             @item.Number
+                        </option>
+                    }
+                </CustomInputSelect>
 
-            @foreach (var type in GateTypesForSelect)
-            {
-                <option value="@type">
-                    @type
-                </option>
-            }
-        </select>
+                <label> Type </label>
+                <InputSelect class=" form-control" @bind-Value="gateWithPenaltyModel.Type">
+                    @foreach (var item in GateTypesForSelect)
+                    {
+                        <option value="@item">
+                            @item
+                        </option>
+                    }
+                </InputSelect>
 
-        <div class=" col">
-            <button class=" btn btn-danger" @onclick="SaveGateWithPenalty">Save Gate With Penalty</button>
-        </div>       
+            </div>
+            <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
     </div>
 </div>
+
 
 <div class=" container-fluid">
     <div class=" row">
@@ -155,5 +149,5 @@
 </div>
 
 @code {
-   
+
 }

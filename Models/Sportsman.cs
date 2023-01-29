@@ -20,5 +20,6 @@ namespace CompetitionResults.Models
         public string Achievements { get; set; }
         public int Rating { get; set; }
         public virtual List<Competitioner> Competitioners { get; set; }
+        
     }
 }

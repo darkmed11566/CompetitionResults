@@ -11,9 +11,11 @@ namespace CompetitionResults.Models
         public int Number { get; set; }
         public BoatClasses BoatClass { get; set; }
         public StatusSportsmanInTrack StatusInTrack { get; set; }
-        public long SportsmanId { get; set; }
-        public long CompetitionId { get; set; }
+        public int SportsmanId { get; set; }
+        public int CompetitionId { get; set; }
         public virtual Sportsman Sportsman { get; set; }
         public virtual Competition Competition { get; set; }
+        public virtual List<GateWithPenaltyPassage> GateWithPenaltyPassages { get; set; }
+        public virtual List<GateWithTimePassage> GateWithTimePassages { get; set; }
     }
 }

@@ -5,46 +5,59 @@
     <div class="col">
         <EditForm Model="competitionerModel" OnValidSubmit="SaveCompetitioner">
             <div class="form-group">
+
                 <label> Number </label>
                 <InputNumber class=" form-control" @bind-Value="competitionerModel.Number" />
 
-                <label> CompetitionID </label>
-                <InputSelect class=" form-control" name="CompetitionId" @bind-Value="competitionerModel.CompetitionId">
+                <label> Class </label>
+                <InputSelect class=" form-control" @bind-Value="competitionerModel.BoatClass">
+
+                    @foreach (var boatClasses in BoatClassesForSelect)
+                    {
+                        <option value="@boatClasses">
+                            @boatClasses
+                        </option>
+                    }
+                </InputSelect>
+
+                <label> Status </label>
+                <InputSelect class=" form-control" @bind-Value="competitionerModel.StatusInTrack">
+
+                    @foreach (var status in StatusForSelect)
+                    {
+                        <option value="@status">
+                            @status
+                        </option>
+                    }
+                </InputSelect>
+
+                <label> Competition ID </label>
+                <CustomInputSelect class=" form-control" @bind-Value="competitionerModel.CompetitionId">
 
                     @foreach (var item in CompetitionsForSelect)
                     {
                         <option value="@item.Id">
-                            @item.Id
+                            @item.Name
                         </option>
                     }
-                </InputSelect>
-
-                <label> Class </label>
-                <InputSelect class=" form-control" name="Sportsman" @bind-Value="competitionerModel.SportsmanId">
-
-                    @foreach (var sportsman in SportsmansForSelect)
-                    {
-                        <option value="@sportsman.Id">
-                            @sportsman.Id
-                        </option>
-                    }
-                </InputSelect>
+                </CustomInputSelect>
 
                 <label> Sportsman Id </label>
-                <InputSelect class=" form-control" name="Sportsman" @bind-Value="competitionerModel.SportsmanId">
+                <CustomInputSelect class=" form-control" @bind-Value="competitionerModel.SportsmanId">
 
-                    @foreach (var sportsman in SportsmansForSelect)
+                    @foreach (var item in SportsmansForSelect)
                     {
-                        <option value="@sportsman.Id">
-                            @sportsman.Id
+                        <option value="@item.Id">
+                            @item.SecondName @item.Name
                         </option>
                     }
-                </InputSelect>
+                </CustomInputSelect>
             </div>
-                <button class=" btn btn-outline-primary">Save</button>
+            <button class=" btn btn-outline-primary">Save</button>
         </EditForm>
     </div>
 </div>
+
 
 <div class=" container-fluid">
     <div class=" row">

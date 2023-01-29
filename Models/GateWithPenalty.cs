@@ -9,7 +9,8 @@ namespace CompetitionResults.Models
     public class GateWithPenalty:Gate
     {
         public GateNameWithPenalty GateNumber { get; set; }
-        public long SectorId { get; set; }
+        public int SectorId { get; set; }
         public virtual Sector Sector { get; set; }
+        public virtual List<GateWithPenaltyPassage> PenaltyPassages { get; set; }
     }
 }

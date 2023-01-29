@@ -6,9 +6,7 @@
         <EditForm Model="competitionModel" OnValidSubmit="SaveCompetition">
 
             <div class="form-group">
-                <label>
-                    Conpetition Name
-                </label>
+                <label> Conpetition Name </label>
                 <InputText class=" form-control" @bind-Value="competitionModel.Name" />
 
                 <label> Start Data </label>
@@ -83,10 +81,10 @@
                                 @item.Name
                             </td>
                             <td>
-                                @item.StartDate
+                                @item.StartDate.ToString("dd.MM.yyyy")
                             </td>
                             <td>
-                                @item.EndtDate
+                                @item.EndtDate.ToString("dd.MM.yyyy")
                             </td>
                             <td>
                                 @item.IsRated
