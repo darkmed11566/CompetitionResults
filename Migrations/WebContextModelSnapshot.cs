@@ -21,9 +21,9 @@ namespace CompetitionResults.Migrations
 
             modelBuilder.Entity("CompetitionResults.Models.Competition", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Country")
@@ -60,16 +60,16 @@ namespace CompetitionResults.Migrations
 
             modelBuilder.Entity("CompetitionResults.Models.Competitioner", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("BoatClass")
                         .HasColumnType("int");
 
-                    b.Property<long>("CompetitionId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("CompetitionId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -77,8 +77,8 @@ namespace CompetitionResults.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
-                    b.Property<long>("SportsmanId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("SportsmanId")
+                        .HasColumnType("int");
 
                     b.Property<int>("StatusInTrack")
                         .HasColumnType("int");
@@ -94,9 +94,9 @@ namespace CompetitionResults.Migrations
 
             modelBuilder.Entity("CompetitionResults.Models.GateWithPenalty", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("GateNumber")
@@ -105,8 +105,8 @@ namespace CompetitionResults.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<long>("SectorId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("SectorId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -120,10 +120,16 @@ namespace CompetitionResults.Migrations
 
             modelBuilder.Entity("CompetitionResults.Models.GateWithPenaltyPassage", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompetitionerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GateWihtPenaltyId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -133,14 +139,18 @@ namespace CompetitionResults.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompetitionerId");
+
+                    b.HasIndex("GateWihtPenaltyId");
+
                     b.ToTable("GateWithPenaltiePassages");
                 });
 
             modelBuilder.Entity("CompetitionResults.Models.GateWithTime", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("GateName")
@@ -149,8 +159,8 @@ namespace CompetitionResults.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<long>("TrackId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("TrackId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -164,27 +174,37 @@ namespace CompetitionResults.Migrations
 
             modelBuilder.Entity("CompetitionResults.Models.GateWithTimePassage", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompetitionerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("GatePasssage")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("GateWihtTimeId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompetitionerId");
+
+                    b.HasIndex("GateWihtTimeId");
+
                     b.ToTable("GateWithTimePassages");
                 });
 
             modelBuilder.Entity("CompetitionResults.Models.Judge", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Country")
@@ -206,9 +226,9 @@ namespace CompetitionResults.Migrations
 
             modelBuilder.Entity("CompetitionResults.Models.Sector", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("IsActive")
@@ -220,8 +240,8 @@ namespace CompetitionResults.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
-                    b.Property<long>("TrackId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("TrackId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -232,9 +252,9 @@ namespace CompetitionResults.Migrations
 
             modelBuilder.Entity("CompetitionResults.Models.Sportsman", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Achievements")
@@ -280,13 +300,13 @@ namespace CompetitionResults.Migrations
 
             modelBuilder.Entity("CompetitionResults.Models.Track", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("CompetitionId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("CompetitionId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -334,6 +354,25 @@ namespace CompetitionResults.Migrations
                     b.Navigation("Sector");
                 });
 
+            modelBuilder.Entity("CompetitionResults.Models.GateWithPenaltyPassage", b =>
+                {
+                    b.HasOne("CompetitionResults.Models.Competitioner", "Competitioner")
+                        .WithMany("GateWithPenaltyPassages")
+                        .HasForeignKey("CompetitionerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CompetitionResults.Models.GateWithPenalty", "PenaltyGate")
+                        .WithMany("PenaltyPassages")
+                        .HasForeignKey("GateWihtPenaltyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Competitioner");
+
+                    b.Navigation("PenaltyGate");
+                });
+
             modelBuilder.Entity("CompetitionResults.Models.GateWithTime", b =>
                 {
                     b.HasOne("CompetitionResults.Models.Track", "Track")
@@ -343,6 +382,25 @@ namespace CompetitionResults.Migrations
                         .IsRequired();
 
                     b.Navigation("Track");
+                });
+
+            modelBuilder.Entity("CompetitionResults.Models.GateWithTimePassage", b =>
+                {
+                    b.HasOne("CompetitionResults.Models.Competitioner", "Competitioner")
+                        .WithMany("GateWithTimePassages")
+                        .HasForeignKey("CompetitionerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CompetitionResults.Models.GateWithTime", "TimaGate")
+                        .WithMany("TimePassages")
+                        .HasForeignKey("GateWihtTimeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Competitioner");
+
+                    b.Navigation("TimaGate");
                 });
 
             modelBuilder.Entity("CompetitionResults.Models.Sector", b =>
@@ -372,6 +430,23 @@ namespace CompetitionResults.Migrations
                     b.Navigation("Competitioners");
 
                     b.Navigation("Tracks");
+                });
+
+            modelBuilder.Entity("CompetitionResults.Models.Competitioner", b =>
+                {
+                    b.Navigation("GateWithPenaltyPassages");
+
+                    b.Navigation("GateWithTimePassages");
+                });
+
+            modelBuilder.Entity("CompetitionResults.Models.GateWithPenalty", b =>
+                {
+                    b.Navigation("PenaltyPassages");
+                });
+
+            modelBuilder.Entity("CompetitionResults.Models.GateWithTime", b =>
+                {
+                    b.Navigation("TimePassages");
                 });
 
             modelBuilder.Entity("CompetitionResults.Models.Sector", b =>

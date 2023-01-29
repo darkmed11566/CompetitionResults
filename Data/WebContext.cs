@@ -43,9 +43,30 @@ namespace CompetitionResults.Data
             modelBuilder.Entity<Sportsman>()
                  .HasMany(x => x.Competitioners)
                  .WithOne(x => x.Sportsman).HasForeignKey(x => x.SportsmanId);
+
             modelBuilder.Entity<Competition>()
                  .HasMany(x => x.Competitioners)
                  .WithOne(x => x.Competition).HasForeignKey(x => x.CompetitionId);
+
+            modelBuilder.Entity<GateWithPenaltyPassage>()
+                .HasOne(x => x.PenaltyGate)
+                .WithMany(x => x.PenaltyPassages)
+                .HasForeignKey(x => x.GateWihtPenaltyId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<GateWithTime>()
+                .HasMany(x => x.TimePassages)
+                .WithOne(x => x.TimaGate)
+                .HasForeignKey(x => x.GateWihtTimeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Competitioner>()
+                .HasMany(x => x.GateWithPenaltyPassages)
+                .WithOne(x => x.Competitioner).HasForeignKey(x => x.CompetitionerId);
+
+            modelBuilder.Entity<Competitioner>()
+               .HasMany(x => x.GateWithTimePassages)
+               .WithOne(x => x.Competitioner).HasForeignKey(x => x.CompetitionerId);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

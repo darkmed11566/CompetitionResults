@@ -1,22 +1,46 @@
 ﻿@page "/addGateWichPenaltyPassages"
 @using EnumsAndConstants
-@inject CompetitionResults.Data.Repository.GateWithPenaltyPassageRepository gateWithPenaltyPassageRepository;
+
 <div class="row">
     <div class="col">
 
-        <select class=" form-control" name="Gate Wich Penalty Passage" @bind="newPenalty">
+        <EditForm Model="gateWithPenaltyPassageModel" OnValidSubmit="SaveGateWithPenaltyPasseage">
+            <div class="form-group">
 
-            @foreach (var penalty in Enum.GetValues(typeof(Penalties)))
-            {
-                <option value="@penalty">
-                    @penalty;
-                </option>
-            }
-        </select>
+                <label> GateNumber </label>
+                <CustomInputSelect class=" form-control" @bind-Value="gateWithPenaltyPassageModel.GateWihtPenaltyId">
 
-        <div class=" col">
-            <button class=" btn btn-success" @onclick="AddGateWithPenaltyPassage">Send Penalty</button>
-        </div>
+                    @foreach (var item in GateWithPenaltiesForSelect)
+                    {
+                        <option value="@item.Id">
+                            @item.GateNumber
+                        </option>
+                    }
+                </CustomInputSelect>
+
+                <label> CompetitionerNumber </label>
+                <CustomInputSelect class=" form-control" @bind-Value="gateWithPenaltyPassageModel.CompetitionerId">
+
+                    @foreach (var item in CompetitionersForSelect)
+                    {
+                        <option value="@item.Id">
+                            @item.Number
+                        </option>
+                    }
+                </CustomInputSelect>
+
+                <label> Passage </label>
+                <InputSelect class=" form-control" @bind-Value="gateWithPenaltyPassageModel.PenaltyOnGate">
+                    @foreach (var item in PenaltiesForSelect)
+                    {
+                        <option value="@item">
+                            @item
+                        </option>
+                    }
+                </InputSelect>
+            </div>
+            <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>        
     </div>
 </div>
 
@@ -28,8 +52,8 @@
                 <thead class=" table-dark">  
                     <tr>
                         <th scope="col">Gate Id </th>  
+                        <th scope="col">Competitioner Id </th> 
                         <th scope="col">Penalty </th>
-                        <th scope="col">Sportsman Id </th> 
                     </tr>
                 </thead>
                 @foreach (var item in gateWithPenaltyPassage)
@@ -37,19 +61,19 @@
                     <tbody>
                         <tr>
                             <td>
+                               @item.GateWihtPenaltyId
+                            </td>
+                            <td>
+                               @item.CompetitionerId
+                            </td>
+                            <td>
                                 @item.PenaltyOnGate
                             </td>
                             <td>
-                               
+                                <button class=" btn-dark" @onclick="(()=>EditGateWithPenaltyPasseage(item))">Edit</button>
                             </td>
                             <td>
-                               
-                            </td>
-                            <td>
-                                <button class=" btn-dark">Edite</button>
-                            </td>
-                            <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithPenaltyPassage(item))">Delete</button>
+                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithPenaltyPasseageAsync(item))">Delete</button>
                             </td>
                         </tr>
                     </tbody>
@@ -58,6 +82,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 @code {
 

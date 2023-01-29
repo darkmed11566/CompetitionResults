@@ -4,18 +4,21 @@
 <div class="row">
     <div class="col">
         <EditForm Model="sectorModel" OnValidSubmit="SaveSector">
-            <div class="form-group">               
+            <div class="form-group">  
+                
                 <label> Number </label>  
                 <InputNumber class=" form-control" @bind-Value="sectorModel.Number" />
+
                 <label> TrackID </label>
-                <InputSelect class=" form-control" name="Track" @bind-Value="sectorModel.TrackId">
-                    @foreach (var track in TracksForSelect)
+                <CustomInputSelect class=" form-control" @bind-Value="sectorModel.TrackId">
+                    @foreach (var item in TracksForSelect)
                     {
-                        <option value="@track.Id">
-                            @track.Id
+                        <option value="@item.Id">
+                            @item.TrackType 
                         </option>
                     }
-                </InputSelect> 
+                </CustomInputSelect>
+                
                 <label> IsFull </label>
                 <InputCheckbox class=" form-control" type="checkbox" @bind-Value="sectorModel.IsFull" />
             </div>         

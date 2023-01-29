@@ -2,35 +2,36 @@
 @using EnumsAndConstants
 
 <div class="row">
-    <div class="col">
-        <EditForm Model="trackModel" OnValidSubmit="SaveTrack">
-            <div class="form-group">
-                <label> Type </label> 
-                <InputSelect class=" form-control" name="TrackType" @bind-Value="trackModel.TrackType">
-                    @foreach (var trackType in TrackTypesForSelect)
-                    {
-                        <option value="@trackType">
-                            @trackType
-                        </option>
-                    }
-                </InputSelect>
-                <label> CompetitionID </label>
-                <InputSelect class=" form-control" name="CompetitionId" @bind-Value="trackModel.CompetitionId">
+        <div class="col">
+            <EditForm Model="trackModel" OnValidSubmit="SaveTrack">
+                <div class="form-group">
+                    <label> Type </label>
+                    <InputSelect class=" form-control" @bind-Value="trackModel.TrackType">
+                        @foreach (var trackType in TrackTypesForSelect)
+                        {
+                            <option value="@trackType">
+                                @trackType
+                            </option>
+                        }
+                    </InputSelect>
+                    <label> CompetitionID </label>
+                    <CustomInputSelect class=" form-control" @bind-Value="trackModel.CompetitionId">
 
-                    @foreach (var item in CompetitionsForSelect)
-                    {
-                        <option value="@item.Id">
-                            @item.Id
-                        </option>
-                    }
-                </InputSelect>
-                <label> Full </label>
-                    <InputCheckbox class=" form-control" type="checkbox" @bind-Value="trackModel.IsFull" />  
-            </div>                
-                    <button class=" btn btn-outline-primary">Save</button>
-        </EditForm>
+                        @foreach (var item in CompetitionsForSelect)
+                        {
+                            <option value="@item.Id">
+                                @item.Name
+                            </option>
+                        }
+                    </CustomInputSelect>
+
+                    <label> Full </label>
+                    <InputCheckbox class=" form-control" @bind-Value="trackModel.IsFull" />
+                </div>
+                <button class=" btn btn-outline-primary">Save</button>
+            </EditForm>
+        </div>
     </div>
-</div>
 
 
 <div class=" container-fluid">

@@ -8,8 +8,9 @@ namespace CompetitionResults.Models
 {
     public class GateWithTime:Gate
     {
-        public long TrackId { get; set; }
+        public int TrackId { get; set; }
         public GateNameWithTime GateName { get; set; }
         public virtual Track Track { get; set; }
+        public virtual List<GateWithTimePassage> TimePassages { get; set; }
     }
 }
