@@ -1,0 +1,37 @@
+﻿@page "/viewGateWhithTime"
+@page "/viewGateWhithTime/{TrackId}"
+
+        <h3>ViewGateWithTime</h3>
+        <div class=" container-fluid">
+            <div class=" row">
+                <div class="col">
+                    <table class=" table table-striped">
+                        <thead class=" table-striped">
+                            <tr>
+                                <th scope="col">Gate Name </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in gateWithTimes)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @item.GateName
+                                    </td>
+                                    <td>
+                                        <NavLink class="nav-link" href="@($"/timeGateFilling?GateId={item.Id}")">
+                                            Time Gate
+                                        </NavLink>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+@code {
+
+}

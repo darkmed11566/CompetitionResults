@@ -1,0 +1,46 @@
+﻿<div class="row">
+    <div class="col">
+
+        <EditForm Model="gateWithPenaltyPassageModel" OnValidSubmit="SavePenaltyOnSector">
+            <div class="form-group">
+
+                <label> CompetitionerNumber </label>
+                <CustomInputSelect class=" form-control" @bind-Value="gateWithPenaltyPassageModel.CompetitionerId">
+
+                    @foreach (var item in CompetitionersForSelect)
+                    {
+                        <option value="@item.Id">
+                            @item.Number
+                        </option>
+                    }
+                </CustomInputSelect>
+
+                @foreach (var item in GateWithPenaltiesOnSector)
+                {
+                    <label> GateNumber </label>
+                    <div>
+                        @item.GateNumber
+                    </div>
+
+                    <label> Passage </label>
+                    <InputSelect class=" form-control" @bind-Value="gateWithPenaltyPassageModel.PenaltyOnGate">
+                        @foreach (var item in PenaltiesForSelect)
+                            {
+                            <option value="@item">
+                                @item
+                            </option>
+                            }
+                    </InputSelect>
+                }
+
+            </div>
+            <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
+
+    </div>
+</div>
+
+
+@code {
+
+}

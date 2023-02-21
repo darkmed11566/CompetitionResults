@@ -1,0 +1,46 @@
+﻿@page "/viewCompetitions"
+
+        <h3>ViewCompetitions</h3>
+
+        <div class=" container-fluid">
+            <div class=" row">
+                <div class="col">
+                    <table class=" table table-striped">
+                        <thead class=" table-striped">
+                            <tr>
+                                <th scope="col">Name </th>
+                                <th scope="col">Start Data </th>
+                                <th scope="col">Endt Data</th>
+                                <th scope="col">Country </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in competitions)
+                        {
+                            <NavLink class="nav-link" href="@($"/viewTracks?CompetitionId={item.Id}")">
+                                <tbody class=" table-striped">
+                                    <tr>
+                                        <td>
+                                            @item.Name
+                                        </td>
+                                        <td>
+                                            @item.StartDate.ToString("dd.MM.yyyy")
+                                        </td>
+                                        <td>
+                                            @item.EndtDate.ToString("dd.MM.yyyy")
+                                        </td>
+                                        <td>
+                                            @item.Country
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </NavLink>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+@code {
+
+}

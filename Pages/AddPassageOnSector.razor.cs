@@ -11,34 +11,32 @@ using System.Threading.Tasks;
 
 namespace CompetitionResults.Pages
 {
-    public partial class AddGateWichPenaltyPasseges
+    public partial class AddPassageOnSector
     {
         [Inject]
         protected IServiceScopeFactory serviceScopeFactory { get; set; }
-
         protected IEnumerable<GateWithPenaltyPassage> gateWithPenaltyPassage = new List<GateWithPenaltyPassage>();
         protected GateWithPenaltyPassage gateWithPenaltyPassageModel = new GateWithPenaltyPassage { IsActive = true };
-
+        protected IEnumerable<GateWithPenalty> GateWithPenaltiesOnSector = new List<GateWithPenalty>();
         protected IEnumerable<Competitioner> CompetitionersForSelect = new List<Competitioner>();
         protected IEnumerable<GateWithPenalty> GateWithPenaltiesForSelect = new List<GateWithPenalty>();
         protected IEnumerable<Penalties> PenaltiesForSelect = new List<Penalties>();
 
+        [Parameter]
+        public int IdSectorFromPage { get; set; }
+        [Parameter]
+        public int IdCompetitionFromPage { get; set; }
         protected override async Task OnInitializedAsync()
-        {
-            await RenewStateAsync();
-
+        {           
             using var scope = serviceScopeFactory.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
+            var context = scope.ServiceProvider.GetRequiredService<WebContext>();           
 
             CompetitionersForSelect = await context.Competitioners
                .AsNoTracking()
-               .Where(x => x.IsActive && x.StatusInTrack==StatusSportsmanInTrack.OnTrack)
-               .ToListAsync();
-
-            GateWithPenaltiesForSelect = await context.GateWithPenalties
-              .AsNoTracking()
-              .Where(x => x.IsActive)
-              .ToListAsync();
+               .Where(x => x.IsActive 
+               //&& x.StatusInTrack == StatusSportsmanInTrack.OnTrack
+               &&x.CompetitionId==IdCompetitionFromPage)
+               .ToListAsync();           
 
             gateWithPenaltyPassageModel.GateWihtPenaltyId = GateWithPenaltiesForSelect
                 .OrderBy(x => x.Id)
@@ -52,63 +50,32 @@ namespace CompetitionResults.Pages
                .OfType<Penalties>()
                .ToList();
 
+            GateWithPenaltiesOnSector = await context.GateWithPenalties
+              .AsNoTracking()
+              .Where(x => x.IsActive && x.SectorId == IdSectorFromPage)
+              .ToListAsync();
+
             await ResetDataToDefaultAsync();
         }
 
-        private async Task SaveGateWithPenaltyPasseage()
+        private async Task SavePenaltyOnSector()
         {
             using var scope = serviceScopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
 
             if (gateWithPenaltyPassageModel.Id is 0)
             {
-
+               
                 await context.GateWithPenaltiePassages.AddAsync(gateWithPenaltyPassageModel);
             }
             else
             {
                 context.GateWithPenaltiePassages.Update(gateWithPenaltyPassageModel);
             }
-
             await context.SaveChangesAsync();
-            await RenewStateAsync();
             await ResetDataToDefaultAsync();
         }
 
-        private void EditGateWithPenaltyPasseage(GateWithPenaltyPassage passageToEdit)
-        {
-            var shallowCopy = new GateWithPenaltyPassage
-            {
-                Id = passageToEdit.Id,
-                CompetitionerId = passageToEdit.CompetitionerId,
-                PenaltyOnGate = passageToEdit.PenaltyOnGate,
-                GateWihtPenaltyId = passageToEdit.GateWihtPenaltyId,
-                IsActive = passageToEdit.IsActive
-            };
-
-            gateWithPenaltyPassageModel = shallowCopy;
-        }
-
-        private async Task DeleteGateWithPenaltyPasseageAsync(GateWithPenaltyPassage passageToDelete)
-        {
-            passageToDelete.IsActive = false;
-
-            using var scope = serviceScopeFactory.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-            context.GateWithPenaltiePassages.Update(passageToDelete);
-            await context.SaveChangesAsync();
-            await RenewStateAsync();
-        }
-        private async Task RenewStateAsync()
-        {
-            using var scope = serviceScopeFactory.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-
-            gateWithPenaltyPassage = await context.GateWithPenaltiePassages
-                .AsNoTracking()
-                .Where(t => t.IsActive)
-                .ToListAsync();
-        }
         private async Task ResetDataToDefaultAsync()
         {
             using var scope = serviceScopeFactory.CreateScope();
@@ -131,8 +98,9 @@ namespace CompetitionResults.Pages
                     ?.Id ?? 0
             };
 
-            await RenewStateAsync();
+            await Task.CompletedTask;
         }
-        
+
     }
 }
+

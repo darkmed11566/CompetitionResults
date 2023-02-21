@@ -1,0 +1,39 @@
+﻿@using EnumsAndConstants
+
+<div class=" container-fluid">
+    <h2>Select Spostsmans</h2>
+    <div class=" row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            @foreach (var item in CompetitionersForSelect)
+            {
+                <button class=" btn-dark" @onclick="(() => EditCompetitioner(item))">@item.Number</button>
+            }
+            </div>
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col">
+        <EditForm Model="competitionerModel" OnValidSubmit="UpdateStatus">
+            <div class="form-group">
+
+                <label> Status </label>
+                <InputSelect class=" form-control" @bind-Value="competitionerModel.StatusInTrack">
+
+                    @foreach (var status in StatusForSelect)
+                    {
+                        <option value="@status">
+                            @status
+                        </option>
+                    }
+                </InputSelect>
+
+            </div>
+            <button class=" btn btn-outline-primary">Update</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+
+}
