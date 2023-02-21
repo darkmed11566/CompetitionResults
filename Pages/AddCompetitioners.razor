@@ -1,112 +1,110 @@
 ﻿@page "/addCompetitioners"
 @using EnumsAndConstants
 
-<div class="row">
-    <div class="col">
-        <EditForm Model="competitionerModel" OnValidSubmit="SaveCompetitioner">
-            <div class="form-group">
 
-                <label> Number </label>
-                <InputNumber class=" form-control" @bind-Value="competitionerModel.Number" />
+        <div class="row">
+            <div class="col">
+                <EditForm Model="competitionerModel" OnValidSubmit="SaveCompetitioner">
+                    <div class="form-group">
 
-                <label> Class </label>
-                <InputSelect class=" form-control" @bind-Value="competitionerModel.BoatClass">
+                        <label> Number </label>
+                        <InputNumber class=" form-control" @bind-Value="competitionerModel.Number" />
 
-                    @foreach (var boatClasses in BoatClassesForSelect)
-                    {
-                        <option value="@boatClasses">
-                            @boatClasses
-                        </option>
-                    }
-                </InputSelect>
+                        <label> Class </label>
+                        <InputSelect class=" form-control" @bind-Value="competitionerModel.BoatClass">
 
-                <label> Status </label>
-                <InputSelect class=" form-control" @bind-Value="competitionerModel.StatusInTrack">
+                            @foreach (var boatClasses in BoatClassesForSelect)
+                            {
+                                <option value="@boatClasses">
+                                    @boatClasses
+                                </option>
+                            }
+                        </InputSelect>
 
-                    @foreach (var status in StatusForSelect)
-                    {
-                        <option value="@status">
-                            @status
-                        </option>
-                    }
-                </InputSelect>
+                        <label> Status </label>
+                        <InputSelect class=" form-control" @bind-Value="competitionerModel.StatusInTrack">
 
-                <label> Competition ID </label>
-                <CustomInputSelect class=" form-control" @bind-Value="competitionerModel.CompetitionId">
+                            @foreach (var status in StatusForSelect)
+                            {
+                                <option value="@status">
+                                    @status
+                                </option>
+                            }
+                        </InputSelect>
 
-                    @foreach (var item in CompetitionsForSelect)
-                    {
-                        <option value="@item.Id">
-                            @item.Name
-                        </option>
-                    }
-                </CustomInputSelect>
+                        <label> Competition ID </label>
+                        <CustomInputSelect class=" form-control" @bind-Value="competitionerModel.CompetitionId">
 
-                <label> Sportsman Id </label>
-                <CustomInputSelect class=" form-control" @bind-Value="competitionerModel.SportsmanId">
+                            @foreach (var item in CompetitionsForSelect)
+                            {
+                                <option value="@item.Id">
+                                    @item.Name
+                                </option>
+                            }
+                        </CustomInputSelect>
 
-                    @foreach (var item in SportsmansForSelect)
-                    {
-                        <option value="@item.Id">
-                            @item.SecondName @item.Name
-                        </option>
-                    }
-                </CustomInputSelect>
+                        <label> Sportsman Id </label>
+                        <CustomInputSelect class=" form-control" @bind-Value="competitionerModel.SportsmanId">
+
+                            @foreach (var item in SportsmansForSelect)
+                            {
+                                <option value="@item.Id">
+                                    @item.SecondName @item.Name
+                                </option>
+                            }
+                        </CustomInputSelect>
+                    </div>
+                    <button class=" btn btn-outline-primary">Save</button>
+                </EditForm>
             </div>
-            <button class=" btn btn-outline-primary">Save</button>
-        </EditForm>
-    </div>
-</div>
-
-
-<div class=" container-fluid">
-    <div class=" row">
-        <div class="col">
-            <h2>List of spostsmans</h2>
-            <table class=" table table-striped">
-                <thead class=" table-dark">
-                    <tr>
-                        <th scope="col">Number </th>
-                        <th scope="col">BoatClass </th>
-                        <th scope="col">Status </th>
-                        <th scope="col">SportsmanId </th>
-                        <th scope="col">CompetitionId </th>
-                    </tr>
-                </thead>
-                @foreach (var item in competitioner)
-                {
-                    <tbody>
-                        <tr>
-                            <td>
-                                @item.Number
-                            </td>
-                            <td>
-                                @item.BoatClass
-                            </td>
-                            <td>
-                                @item.StatusInTrack
-                            </td>
-                            <td>
-                                @item.SportsmanId
-                            </td>
-                            <td>
-                                @item.CompetitionId
-                            </td>
-                            <td>
-                                <button class=" btn-dark" @onclick="(()=>EditCompetitioner(item))">Edit</button>
-                            </td>
-                            <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteCompetitionerAsync(item))">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                }
-
-            </table>
         </div>
-    </div>
-</div>
+        <div class=" container-fluid">
+            <div class=" row">
+                <div class="col">
+                    <h2>List of spostsmans</h2>
+                    <table class=" table table-striped">
+                        <thead class=" table-striped">
+                            <tr>
+                                <th scope="col">Number </th>
+                                <th scope="col">BoatClass </th>
+                                <th scope="col">Status </th>
+                                <th scope="col">SportsmanId </th>
+                                <th scope="col">CompetitionId </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in competitioner)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @item.Number
+                                    </td>
+                                    <td>
+                                        @item.BoatClass
+                                    </td>
+                                    <td>
+                                        @item.StatusInTrack
+                                    </td>
+                                    <td>
+                                        @item.SportsmanId
+                                    </td>
+                                    <td>
+                                        @item.CompetitionId
+                                    </td>
+                                    <td>
+                                        <button class=" btn-dark" @onclick="(()=>EditCompetitioner(item))">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button class=" btn-danger" @onclick="(()=>DeleteCompetitionerAsync(item))">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
 
+                    </table>
+                </div>
+            </div>
+        </div>
 @code {
 
 }

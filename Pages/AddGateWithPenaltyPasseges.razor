@@ -1,0 +1,86 @@
+﻿@page "/addGateWithPenaltyPassages"
+@using EnumsAndConstants
+
+        <div class="row">
+            <div class="col">
+
+                <EditForm Model="gateWithPenaltyPassageModel" OnValidSubmit="SaveGateWithPenaltyPasseage">
+                    <div class="form-group">
+
+                        <label> GateNumber </label>
+                        <CustomInputSelect class=" form-control" @bind-Value="gateWithPenaltyPassageModel.GateWihtPenaltyId">
+
+                            @foreach (var item in GateWithPenaltiesForSelect)
+                            {
+                                <option value="@item.Id">
+                                    @item.GateNumber
+                                </option>
+                            }
+                        </CustomInputSelect>
+
+                        <label> CompetitionerNumber </label>
+                        <CustomInputSelect class=" form-control" @bind-Value="gateWithPenaltyPassageModel.CompetitionerId">
+
+                            @foreach (var item in CompetitionersForSelect)
+                            {
+                                <option value="@item.Id">
+                                    @item.Number
+                                </option>
+                            }
+                        </CustomInputSelect>
+
+                        <label> Passage </label>
+                        <InputSelect class=" form-control" @bind-Value="gateWithPenaltyPassageModel.PenaltyOnGate">
+                            @foreach (var item in PenaltiesForSelect)
+                            {
+                                <option value="@item">
+                                    @item
+                                </option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <button class=" btn btn-outline-primary">Save</button>
+                </EditForm>
+            </div>
+        </div>
+        <div class=" container-fluid">
+            <div class=" row">
+                <div class="col">
+                    <h2>List of Gates</h2>
+                    <table class=" table table-striped">
+                        <thead class=" table-striped">
+                            <tr>
+                                <th scope="col">Gate Id </th>
+                                <th scope="col">Competitioner Id </th>
+                                <th scope="col">Penalty </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in gateWithPenaltyPassage)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @item.GateWihtPenaltyId
+                                    </td>
+                                    <td>
+                                        @item.CompetitionerId
+                                    </td>
+                                    <td>
+                                        @item.PenaltyOnGate
+                                    </td>
+                                    <td>
+                                        <button class=" btn-dark" @onclick="(()=>EditGateWithPenaltyPasseage(item))">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button class=" btn-danger" @onclick="(()=>DeleteGateWithPenaltyPasseageAsync(item))">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+@code {
+
+}

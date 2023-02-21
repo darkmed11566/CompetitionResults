@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CompetitionResults.Pages
 {
-    public partial class AddGateWichTimePasseges
+    public partial class AddGateWithTimePasseges
     {
         [Inject]
         protected IServiceScopeFactory serviceScopeFactory { get; set; }

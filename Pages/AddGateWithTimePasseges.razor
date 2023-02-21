@@ -1,0 +1,86 @@
+﻿@page "/addGateWithTimePassages"
+@using EnumsAndConstants
+>
+        <div class="row">
+            <div class="col">
+
+                <EditForm Model="gateWithTimePassageModel" OnValidSubmit="SaveGateWithTimePasseage">
+                    <div class="form-group">
+
+                        <label> GateName </label>
+                        <CustomInputSelect class=" form-control" @bind-Value="gateWithTimePassageModel.GateWihtTimeId">
+
+                            @foreach (var item in GateWithTimeForSelect)
+                            {
+                                <option value="@item.Id">
+                                    @item.GateName
+                                </option>
+                            }
+                        </CustomInputSelect>
+
+                        <label> CompetitionerNumber </label>
+                        <CustomInputSelect class=" form-control" @bind-Value="gateWithTimePassageModel.CompetitionerId">
+
+                            @foreach (var item in CompetitionersForSelect)
+                            {
+                                <option value="@item.Id">
+                                    @item.Number
+                                </option>
+                            }
+                        </CustomInputSelect>
+
+                        <label> Passage </label>
+                        <input @bind="gateWithTimePassageModel.GatePasssage " @bind:format="HH:mm:ss.ff" />
+
+                    </div>
+                    <button class=" btn btn-outline-primary">Save</button>
+                </EditForm>
+                <button class=" btn btn-success" @onclick="SaveGateWithTimePasseageNow">SaveNow</button>
+
+            </div>
+        </div>
+        <div class=" container-fluid">
+            <div class=" row">
+                <div class="col">
+                    <h2>List of Gates</h2>
+                    <table class=" table table-striped">
+                        <thead class=" table-striped">
+                            <tr>
+                                <th scope="col">Gate Id </th>
+                                <th scope="col">Competitioner Id </th>
+                                <th scope="col">Time Passage </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in gateWithTimePassage)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @item.GateWihtTimeId
+                                    </td>
+                                    <td>
+                                        @item.CompetitionerId
+                                    </td>
+                                    <td>
+                                        @item.GatePasssage.ToString("HH:mm:ss.ff")
+                                    </td>
+                                    <td>
+                                        <button class=" btn-dark" @onclick="(()=>EditGateWithTimePasseage(item))">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button class=" btn-danger" @onclick="(()=>DeleteGateWithTimePasseageAsync(item))">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+@code {
+
+
+
+}

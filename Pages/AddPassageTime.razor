@@ -1,0 +1,31 @@
+﻿<div class="row">
+    <div class="col">
+
+        <EditForm Model="gateWithTimePassageModel" OnValidSubmit="SavePassageTime">
+            <div class="form-group">
+
+                <label> CompetitionerNumber </label>
+                <CustomInputSelect class=" form-control" @bind-Value="gateWithTimePassageModel.CompetitionerId">
+
+                    @foreach (var item in CompetitionersForSelect)
+                    {
+                        <option value="@item.Id">
+                            @item.Number
+                        </option>
+                    }
+                </CustomInputSelect>
+
+                <label> Passage </label>
+                <input @bind="gateWithTimePassageModel.GatePasssage " @bind:format="HH:mm:ss.ff"/>
+
+            </div>
+            <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
+        <button class=" btn btn-success" @onclick="SavePasseageNow">SaveNow</button>
+
+    </div>
+</div>
+
+@code {
+
+}

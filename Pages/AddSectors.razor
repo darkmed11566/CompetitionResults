@@ -1,71 +1,70 @@
 ﻿@page "/addSectors"
 @using EnumsAndConstants
+>
+        <div class="row">
+            <div class="col">
+                <EditForm Model="sectorModel" OnValidSubmit="SaveSector">
+                    <div class="form-group">
 
-<div class="row">
-    <div class="col">
-        <EditForm Model="sectorModel" OnValidSubmit="SaveSector">
-            <div class="form-group">  
-                
-                <label> Number </label>  
-                <InputNumber class=" form-control" @bind-Value="sectorModel.Number" />
+                        <label> Number </label>
+                        <InputNumber class=" form-control" @bind-Value="sectorModel.Number" />
 
-                <label> TrackID </label>
-                <CustomInputSelect class=" form-control" @bind-Value="sectorModel.TrackId">
-                    @foreach (var item in TracksForSelect)
-                    {
-                        <option value="@item.Id">
-                            @item.TrackType 
-                        </option>
-                    }
-                </CustomInputSelect>
-                
-                <label> IsFull </label>
-                <InputCheckbox class=" form-control" type="checkbox" @bind-Value="sectorModel.IsFull" />
-            </div>         
-            <button class=" btn btn-outline-primary">Save</button>
-        </EditForm>
-    </div>
-</div>
+                        <label> TrackID </label>
+                        <CustomInputSelect class=" form-control" @bind-Value="sectorModel.TrackId">
+                            @foreach (var item in TracksForSelect)
+                            {
+                                <option value="@item.Id">
+                                    @item.TrackType
+                                </option>
+                            }
+                        </CustomInputSelect>
 
-<div class=" container-fluid">
-    <div class=" row">
-        <div class="col">
-            <h2>List of spostsmans</h2>
-            <table class=" table table-striped">
-                <thead class=" table-dark">
-                    <tr>
-                        <th scope="col">SectorNumber </th>
-                        <th scope="col">TrackId </th>
-                        <th scope="col">Full </th>
-                    </tr>
-                </thead>
-                @foreach (var item in sectors)
-                {
-                    <tbody>
-                        <tr>
-                            <td>
-                                @item.Number
-                            </td>
-                            <td>
-                                @item.TrackId
-                            </td>
-                            <td>
-                                @item.IsFull
-                            </td>
-                            <td>
-                                <button class=" btn-dark" @onclick="(()=>EditSector(item))">Edite</button>
-                            </td>
-                            <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteSectorAsync(item))">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                }
-
-            </table>
+                        <label> IsFull </label>
+                        <InputCheckbox class=" form-control" type="checkbox" @bind-Value="sectorModel.IsFull" />
+                    </div>
+                    <button class=" btn btn-outline-primary">Save</button>
+                </EditForm>
+            </div>
         </div>
-    </div>
-</div>
+        <div class=" container-fluid">
+            <div class=" row">
+                <div class="col">
+                    <h2>List of spostsmans</h2>
+                    <table class=" table table-striped">
+                        <thead class=" table-striped">
+                            <tr>
+                                <th scope="col">SectorNumber </th>
+                                <th scope="col">TrackId </th>
+                                <th scope="col">Full </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in sectors)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @item.Number
+                                    </td>
+                                    <td>
+                                        @item.TrackId
+                                    </td>
+                                    <td>
+                                        @item.IsFull
+                                    </td>
+                                    <td>
+                                        <button class=" btn-dark" @onclick="(()=>EditSector(item))">Edite</button>
+                                    </td>
+                                    <td>
+                                        <button class=" btn-danger" @onclick="(()=>DeleteSectorAsync(item))">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
 
 @code {
 }

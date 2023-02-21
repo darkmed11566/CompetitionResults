@@ -15,13 +15,13 @@ namespace CompetitionResults.Pages
     {
         [Inject]
         protected IServiceScopeFactory serviceScopeFactory { get; set; }
-
         protected IEnumerable<Competitioner> competitioner = new List<Competitioner>();        
         protected IEnumerable<Sportsman> SportsmansForSelect = new List<Sportsman>();
         protected IEnumerable<Competition> CompetitionsForSelect = new List<Competition>();
         protected Competitioner competitionerModel = new Competitioner { IsActive = true,};
         protected IEnumerable<BoatClasses> BoatClassesForSelect = new List<BoatClasses>();
         protected IEnumerable<StatusSportsmanInTrack> StatusForSelect = new List<StatusSportsmanInTrack>();
+
         protected override async Task OnInitializedAsync()
         {
 

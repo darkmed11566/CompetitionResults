@@ -1,0 +1,61 @@
+﻿@page "/viewTracks"
+@page "/viewTracks/{CompetitionId}"
+
+        <div class=" container-fluid">
+            <div class=" row">
+                <div class="col">
+                    <h2>List of Tracks</h2>
+                    <table class=" table table-striped">
+                        <thead class=" table-striped">
+                            <tr>
+                                <th scope="col">Track Type </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in tracks)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @item.TrackType
+                                    </td>
+                                    <td>
+                                        <NavLink class="nav-link" href="@($"/viewResults?TrackId={item.Id}&CompetitionId={item.CompetitionId}")">
+                                            View Results
+                                        </NavLink>
+                                    </td>
+                                    <td>
+                                        <NavLink class="nav-link" href="@($"/finishTimeFilling?TrackId={item.Id}&CompetitionId={item.CompetitionId}")">
+                                            Finish
+                                        </NavLink>
+                                        @*<NavLink class="nav-link" href="@($"/finishTimeFilling/{item.Id}/{item.CompetitionId}")">
+                                            Finish
+                                        </NavLink>*@
+                                    </td>
+                                    <td>
+                                        <NavLink class="nav-link" href="@($"/startTimeFilling?TrackId={item.Id}&CompetitionId={item.CompetitionId}")">
+                                            Start
+                                        </NavLink>
+                                    </td>
+                                    <td>
+                                        <NavLink class="nav-link" href="@($"/viewGateWhithTime?TrackId={item.Id}")">
+                                            View Gate With Time
+                                        </NavLink>
+                                    </td>
+                                    <td>
+                                        <NavLink class="nav-link" href="@($"/viewSectors?TrackId={item.Id}&CompetitionId={item.CompetitionId}")">
+                                            View Sectors
+                                        </NavLink>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+@code {
+
+}

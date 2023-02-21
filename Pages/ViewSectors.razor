@@ -1,0 +1,38 @@
+﻿@page "/viewSectors"
+@page "/viewSectors/{TrackId}"
+
+        <h3>ViewSectors</h3>
+        <div class=" container-fluid">
+            <div class=" row">
+                <div class="col">
+                    <h2>List of spostsmans</h2>
+                    <table class=" table table-striped">
+                        <thead class=" table-striped">
+                            <tr>
+                                <th scope="col">SectorNumber </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in sectors)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @item.Number
+                                    </td>
+                                    <td>
+                                        <NavLink class="nav-link" href="@($"/sectorsFilling?SectorId={item.Id}&CompetitionId={CompetitionId}")">
+                                            Sector Filling
+                                        </NavLink>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+@code {
+
+}

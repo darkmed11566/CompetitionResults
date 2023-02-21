@@ -1,0 +1,189 @@
+﻿@page "/viewResults"
+
+<h3>ViewResults</h3>
+<div class=" container-fluid">
+    <div class=" row">
+        <div class="col">
+            <h2>List of spostsmans</h2>
+            <table class=" table table-striped">
+                <thead class=" table-striped">
+                    <tr>
+                        <th scope="col">Number </th>
+                        <th scope="col">BoatClass </th>
+                        <th scope="col">Status </th>
+                        <th scope="col">SportsmanId </th>
+                        <th scope="col">CompetitionId </th>
+                    </tr>
+                </thead>
+                @foreach (var item in KM1)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.Number
+                            </td>
+                            <td>
+                                @item.Sportsman.SecondName
+                            </td>
+                            <td>
+                                @item.Sportsman.Name
+                            </td>
+                            <td>
+                                @item.Sportsman.Rang
+                            </td>
+                            <td>
+                                @item.Sportsman.DateOfBirth.ToString("yyyy")
+                            </td>
+                            <td>
+                                @item.Sportsman.ClubName
+                            </td>
+                            <td>
+                                @item.Sportsman.CoachName
+                            </td>
+                            <td>
+                                @item.GateWithTimePassages.FirstOrDefault(x => x.TimaGate.GateName == EnumsAndConstants.GateNameWithTime.Start)
+                            </td>
+                            <td>
+                                @item.GateWithTimePassages.FirstOrDefault(x => x.TimaGate.GateName == EnumsAndConstants.GateNameWithTime.Finish)
+                            </td>
+                            <td>
+                                @foreach (var penaltyPassage in item.GateWithPenaltyPassages)
+                                {
+                                    //switch (penaltyPassage.PenaltyOnGate)
+                                    //{
+                                    //    case EnumsAndConstants.Penalties.CleanPassage:
+                                    //        0
+                                    //       breack;
+
+                                    //    case EnumsAndConstants.Penalties.PassageWichTouch:
+                                    //        2
+                                    //      breack;
+
+                                    //    case EnumsAndConstants.Penalties.WrongPassageOrSkip:
+                                    //        50
+                                    //    breack;
+
+                                    //}
+                                }
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                                @foreach (var item in KW1)
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @item.Number
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.SecondName
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.Name
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.Rang
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.DateOfBirth.ToString("yyyy")
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.ClubName
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.CoachName
+                                            </td>
+                                            <td>
+                                                @item.GateWithTimePassages.FirstOrDefault(x => x.TimaGate.GateName == EnumsAndConstants.GateNameWithTime.Start)
+                                            </td>
+                                            <td>
+                                                @item.GateWithTimePassages.FirstOrDefault(x => x.TimaGate.GateName == EnumsAndConstants.GateNameWithTime.Finish)
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                }
+
+                                @foreach (var item in CM1)
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @item.Number
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.SecondName
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.Name
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.Rang
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.DateOfBirth.ToString("yyyy")
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.ClubName
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.CoachName
+                                            </td>
+                                            <td>
+                                                @item.GateWithTimePassages.FirstOrDefault(x => x.TimaGate.GateName == EnumsAndConstants.GateNameWithTime.Start)
+                                            </td>
+                                            <td>
+                                                @item.GateWithTimePassages.FirstOrDefault(x => x.TimaGate.GateName == EnumsAndConstants.GateNameWithTime.Finish)
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                }
+
+                                @foreach (var item in CW1)
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @item.Number
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.SecondName
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.Name
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.Rang
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.DateOfBirth.ToString("yyyy")
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.ClubName
+                                            </td>
+                                            <td>
+                                                @item.Sportsman.CoachName
+                                            </td>
+                                            <td>
+                                                @item.GateWithTimePassages.FirstOrDefault(x => x.TimaGate.GateName == EnumsAndConstants.GateNameWithTime.Start)
+                                            </td>
+                                            <td>
+                                                @item.GateWithTimePassages.FirstOrDefault(x => x.TimaGate.GateName == EnumsAndConstants.GateNameWithTime.Finish)
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                @code {
+
+                }

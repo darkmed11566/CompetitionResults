@@ -1,142 +1,139 @@
 ﻿@page "/addSportsmans"
 @using EnumsAndConstants
 
-<div class="row">
-    <div class="col">
-        <EditForm Model="sportsmanModel" OnValidSubmit="SaveSportsman">
-            <div class="form-group">
-                <label> Name </label>
-                <InputText class=" form-control" @bind-Value="sportsmanModel.Name" />
+        <div class="row">
+            <div class="col">
+                <EditForm Model="sportsmanModel" OnValidSubmit="SaveSportsman">
+                    <div class="form-group">
+                        <label> Name </label>
+                        <InputText class=" form-control" @bind-Value="sportsmanModel.Name" />
 
-                <label> SecondName </label>
-                <InputText class=" form-control" placeholder="Second Name" @bind-Value="sportsmanModel.SecondName" />
+                        <label> SecondName </label>
+                        <InputText class=" form-control" placeholder="Second Name" @bind-Value="sportsmanModel.SecondName" />
 
-                <label> DateOfBirth </label>
-                <InputDate class=" form-control" @bind-Value="sportsmanModel.DateOfBirth " />
+                        <label> DateOfBirth </label>
+                        <InputDate class=" form-control" @bind-Value="sportsmanModel.DateOfBirth " />
 
-                <label> Sex </label>
-                <InputSelect class=" form-control" name="Sex" @bind-Value="sportsmanModel.Sex">
-                    @foreach (var sex in SexForSelect)
-                    {
-                        <option value="@sex">
-                            @sex;
-                        </option>
-                    }
-                </InputSelect>
+                        <label> Sex </label>
+                        <InputSelect class=" form-control" name="Sex" @bind-Value="sportsmanModel.Sex">
+                            @foreach (var sex in SexForSelect)
+                            {
+                                <option value="@sex">
+                                    @sex;
+                                </option>
+                            }
+                        </InputSelect>
 
-                <label> Country </label>
-                <InputSelect class=" form-control" name="Country" @bind-Value="sportsmanModel.Country">
-                    @foreach (var country in CountryForSelect)
-                    {
-                        <option value="@country">
-                            @country;
-                        </option>
-                    }
-                </InputSelect>
+                        <label> Country </label>
+                        <InputSelect class=" form-control" name="Country" @bind-Value="sportsmanModel.Country">
+                            @foreach (var country in CountryForSelect)
+                            {
+                                <option value="@country">
+                                    @country;
+                                </option>
+                            }
+                        </InputSelect>
 
-                <label> Rang </label>
-                <InputSelect class=" form-control" name="Rang" @bind-Value="sportsmanModel.Rang">
-                    @foreach (var rang in RangsForSelect)
-                    {
-                        <option value="@rang">
-                            @rang;
-                        </option>
-                    }
-                </InputSelect>
+                        <label> Rang </label>
+                        <InputSelect class=" form-control" name="Rang" @bind-Value="sportsmanModel.Rang">
+                            @foreach (var rang in RangsForSelect)
+                            {
+                                <option value="@rang">
+                                    @rang;
+                                </option>
+                            }
+                        </InputSelect>
 
-                <label> NameOfClub </label>
-                <InputText class=" form-control" placeholder="Name of club" @bind-Value="sportsmanModel.ClubName" />
+                        <label> NameOfClub </label>
+                        <InputText class=" form-control" placeholder="Name of club" @bind-Value="sportsmanModel.ClubName" />
 
-                <label> NamesOfCoachers </label>
-                <InputText class=" form-control" placeholder="Names of coachers" @bind-Value="sportsmanModel.CoachName" />
+                        <label> NamesOfCoachers </label>
+                        <InputText class=" form-control" placeholder="Names of coachers" @bind-Value="sportsmanModel.CoachName" />
 
-                <label> Photo </label>
-                <InputText class=" form-control" placeholder="Photo" @bind-Value="sportsmanModel.URLPhoto" />
+                        <label> Photo </label>
+                        <InputText class=" form-control" placeholder="Photo" @bind-Value="sportsmanModel.URLPhoto" />
 
-                <label> Achivements </label>
-                <InputText class=" form-control" placeholder="Achievements" @bind-Value="sportsmanModel.Achievements" />
+                        <label> Achivements </label>
+                        <InputText class=" form-control" placeholder="Achievements" @bind-Value="sportsmanModel.Achievements" />
+                    </div>
+                    <button class=" btn btn-outline-primary">Save</button>
+                </EditForm>
             </div>
-                <button class=" btn btn-outline-primary">Save</button>
-        </EditForm>
-    </div>
-</div>
-
-
-
-<div class=" container-fluid">
-    <div class=" row">
-        <div class="col">
-            <h2>List of spostsmans</h2>
-            <table class=" table table-striped">
-                <thead class=" table-dark">
-                    <tr>
-                        <th scope="col">Name </th>
-                        <th scope="col">Second name </th>
-                        <th scope="col">Date of Birth</th>
-                        <th scope="col">Sex </th>
-                        <th scope="col">Country </th>
-                        <th scope="col">Rang </th>
-                        <th scope="col">Name of club </th>
-                        <th scope="col">Names of coachers </th>
-                        <th scope="col">URLPhoto</th>
-                        <th scope="col">Achievements </th>
-                        <th scope="col">Rating</th>
-
-                    </tr>
-                </thead>
-                @foreach (var item in sportsmans)
-                {
-                    <tbody>
-                        <tr>
-                            <td>
-                                @item.Name
-                            </td>
-                            <td>
-                                @item.SecondName
-                            </td>
-                            <td>
-                                @item.DateOfBirth.ToString("dd.MM.yyyy")
-                            </td>
-                            <td>
-                                @item.Sex
-                            </td>
-                            <td>
-                                @item.Country
-                            </td>
-                            <td>
-                                @item.Rang
-                            </td>
-                            <td>
-                                @item.ClubName
-                            </td>
-                            <td>
-                                @item.CoachName
-                            </td>
-                            <td>
-                                <div>
-                                    <img class="image" src="@item.URLPhoto">
-                                </div>
-                            </td>
-                            <td>
-                                @item.Achievements
-                            </td>
-                            <td>
-                                @item.Rating
-                            </td>
-                            <td>
-                                <button class=" btn-dark" @onclick="(()=>EditSportsman(item))">Edite</button>
-                            </td>
-                            <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteSportsmanAsync(item))">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                }
-
-            </table>
         </div>
-    </div>
-</div>
+        <div class=" container-fluid">
+            <div class=" row">
+                <div class="col">
+                    <h2>List of spostsmans</h2>
+                    <table class=" table table-striped">
+                        <thead class=" table-striped">
+                            <tr>
+                                <th scope="col">Name </th>
+                                <th scope="col">Second name </th>
+                                <th scope="col">Date of Birth</th>
+                                <th scope="col">Sex </th>
+                                <th scope="col">Country </th>
+                                <th scope="col">Rang </th>
+                                <th scope="col">Name of club </th>
+                                <th scope="col">Names of coachers </th>
+                                <th scope="col">URLPhoto</th>
+                                <th scope="col">Achievements </th>
+                                <th scope="col">Rating</th>
+
+                            </tr>
+                        </thead>
+                        @foreach (var item in sportsmans)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+                                        @item.SecondName
+                                    </td>
+                                    <td>
+                                        @item.DateOfBirth.ToString("dd.MM.yyyy")
+                                    </td>
+                                    <td>
+                                        @item.Sex
+                                    </td>
+                                    <td>
+                                        @item.Country
+                                    </td>
+                                    <td>
+                                        @item.Rang
+                                    </td>
+                                    <td>
+                                        @item.ClubName
+                                    </td>
+                                    <td>
+                                        @item.CoachName
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <img class="image" src="@item.URLPhoto">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @item.Achievements
+                                    </td>
+                                    <td>
+                                        @item.Rating
+                                    </td>
+                                    <td>
+                                        <button class=" btn-dark" @onclick="(()=>EditSportsman(item))">Edite</button>
+                                    </td>
+                                    <td>
+                                        <button class=" btn-danger" @onclick="(()=>DeleteSportsmanAsync(item))">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
 
 @code {
 

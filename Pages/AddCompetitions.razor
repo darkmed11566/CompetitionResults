@@ -1,121 +1,120 @@
 ﻿@page "/addCompetitions"
 @using EnumsAndConstants
 
-<div class="row">
-    <div class="col">
-        <EditForm Model="competitionModel" OnValidSubmit="SaveCompetition">
+        <div class="row">
+            <div class="col">
+                <EditForm Model="competitionModel" OnValidSubmit="SaveCompetition">
 
-            <div class="form-group">
-                <label> Conpetition Name </label>
-                <InputText class=" form-control" @bind-Value="competitionModel.Name" />
+                    <div class="form-group">
+                        <label> Conpetition Name </label>
+                        <InputText class=" form-control" @bind-Value="competitionModel.Name" />
 
-                <label> Start Data </label>
-                <InputDate class=" form-control" @bind-Value="competitionModel.StartDate " />
+                        <label> Start Data </label>
+                        <InputDate class=" form-control" @bind-Value="competitionModel.StartDate " />
 
-                <label> End Data </label>
-                <InputDate class=" form-control" @bind-Value="competitionModel.EndtDate " />
+                        <label> End Data </label>
+                        <InputDate class=" form-control" @bind-Value="competitionModel.EndtDate " />
 
-                <label> Is Full </label>
-                <InputCheckbox class=" form-control" type="checkbox" @bind-Value="competitionModel.IsFull" />
+                        <label> Is Full </label>
+                        <InputCheckbox class=" form-control" type="checkbox" @bind-Value="competitionModel.IsFull" />
 
-                <label> Is Rated </label>
-                <InputCheckbox class=" form-control" type="checkbox" @bind-Value="competitionModel.IsRated" />
+                        <label> Is Rated </label>
+                        <InputCheckbox class=" form-control" type="checkbox" @bind-Value="competitionModel.IsRated" />
 
-                <label> Country </label>
-                <InputSelect class=" form-control" name="Country" @bind-Value="competitionModel.Country">
-                    @foreach (var country in CountryForSelect)
-                    {
-                        <option value="@country">
-                            @country;
-                        </option>
-                    }
-                </InputSelect>
+                        <label> Country </label>
+                        <InputSelect class=" form-control" name="Country" @bind-Value="competitionModel.Country">
+                            @foreach (var country in CountryForSelect)
+                            {
+                                <option value="@country">
+                                    @country;
+                                </option>
+                            }
+                        </InputSelect>
 
-                <label> Type </label>
-                <InputSelect class=" form-control" @bind-Value="competitionModel.Type">
-                    @foreach (var type in TypesForSelect)
-                    {
-                        <option value="@type">
-                            @type;
-                        </option>
-                    }
-                </InputSelect>
+                        <label> Type </label>
+                        <InputSelect class=" form-control" @bind-Value="competitionModel.Type">
+                            @foreach (var type in TypesForSelect)
+                            {
+                                <option value="@type">
+                                    @type;
+                                </option>
+                            }
+                        </InputSelect>
 
-                <label> Status </label>
-                <InputSelect class=" form-control" @bind-Value="competitionModel.Status">
-                    @foreach (var status in StatusForSelect)
-                    {
-                        <option value="@status">
-                            @status;
-                        </option>
-                    }
-                </InputSelect>
+                        <label> Status </label>
+                        <InputSelect class=" form-control" @bind-Value="competitionModel.Status">
+                            @foreach (var status in StatusForSelect)
+                            {
+                                <option value="@status">
+                                    @status;
+                                </option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <button class=" btn btn-outline-primary">Save</button>
+                </EditForm>
             </div>
-            <button class=" btn btn-outline-primary">Save</button>
-        </EditForm>
-    </div>
-</div>
-
-<div class=" container-fluid">
-    <div class=" row">
-        <div class="col">
-            <h2>List of Competitions</h2>
-            <table class=" table table-striped">
-                <thead class=" table-dark">
-                    <tr>
-                        <th scope="col">Name </th>
-                        <th scope="col">Start Data </th>
-                        <th scope="col">Endt Data</th>
-                        <th scope="col">Rating </th>
-                        <th scope="col">Full </th>
-                        <th scope="col">Country </th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                @foreach (var item in competitions)
-                {
-                    <tbody>
-                        <tr>
-                            <td>
-                                @item.Name
-                            </td>
-                            <td>
-                                @item.StartDate.ToString("dd.MM.yyyy")
-                            </td>
-                            <td>
-                                @item.EndtDate.ToString("dd.MM.yyyy")
-                            </td>
-                            <td>
-                                @item.IsRated
-                            </td>
-                            <td>
-                                @item.IsFull
-                            </td>
-                            <td>
-                                @item.Country
-                            </td>
-                            <td>
-                                @item.Type
-                            </td>
-                            <td>
-                                @item.Status
-                            </td>
-                            <td>
-                                <button class=" btn-dark" @onclick="(()=>EditCompetition(item))">Edite</button>
-                            </td>
-                            <td>
-                                <button class=" btn-danger" @onclick="(()=>DeleteCompetitionAsync(item))">Delete</button>
-                            </td>
-
-                        </tr>
-                    </tbody>
-                }
-
-            </table>
         </div>
-    </div>
-</div>
+        <div class=" container-fluid">
+            <div class=" row">
+                <div class="col">
+                    <h2>List of Competitions</h2>
+                    <table class=" table table-striped">
+                        <thead class=" table-striped">
+                            <tr>
+                                <th scope="col">Name </th>
+                                <th scope="col">Start Data </th>
+                                <th scope="col">Endt Data</th>
+                                <th scope="col">Rating </th>
+                                <th scope="col">Full </th>
+                                <th scope="col">Country </th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in competitions)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+                                        @item.StartDate.ToString("dd.MM.yyyy")
+                                    </td>
+                                    <td>
+                                        @item.EndtDate.ToString("dd.MM.yyyy")
+                                    </td>
+                                    <td>
+                                        @item.IsRated
+                                    </td>
+                                    <td>
+                                        @item.IsFull
+                                    </td>
+                                    <td>
+                                        @item.Country
+                                    </td>
+                                    <td>
+                                        @item.Type
+                                    </td>
+                                    <td>
+                                        @item.Status
+                                    </td>
+                                    <td>
+                                        <button class=" btn-dark" @onclick="(()=>EditCompetition(item))">Edite</button>
+                                    </td>
+                                    <td>
+                                        <button class=" btn-danger" @onclick="(()=>DeleteCompetitionAsync(item))">Delete</button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
 
 @code {
 

@@ -15,4 +15,19 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Shared\Components\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\TimeGate.gif" />
+    <None Include="wwwroot\images\TimeGate.jpg" />
+    <None Include="wwwroot\images\TimeGate.png" />
+  </ItemGroup>
+	
+	<ItemGroup>		
+    <Content Update="wwwroot\favicon.ico">
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+	</ItemGroup>
 </Project>
