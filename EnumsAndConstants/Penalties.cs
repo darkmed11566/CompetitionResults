@@ -8,7 +8,7 @@ namespace CompetitionResults.EnumsAndConstants
     public enum Penalties
     {
         CleanPassage = 0,
-        PassageWichTouch = 2,
-        WrongPassageOrSkip = 50
+        PassageWichTouch = 1,
+        WrongPassageOrSkip = 2
     }
 }

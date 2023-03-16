@@ -20,19 +20,10 @@ namespace CompetitionResults.Pages
         public int TrackId { get; set; }
         [Parameter]
         public int CompetitionId { get; set; }
-        //[Parameter]
-        //public string TrackIdStr { get; set; }
-        //[Parameter]
-        //public string CompetitionIdStr { get; set; }
+       
         protected override async Task OnInitializedAsync()
         {
-            //var x = int.TryParse(TrackIdStr, out var trackId);
-            //var y = int.TryParse(CompetitionIdStr, out var competitionId);
-
-            //TrackId = trackId;
-            //CompetitionId = competitionId;
-
-            //await Task.Delay(10);
+            
             var uriT = NavManager.ToAbsoluteUri(NavManager.Uri);
             if (QueryHelpers.ParseQuery(uriT.Query).TryGetValue("TrackId", out var trackId))
             {
@@ -45,7 +36,7 @@ namespace CompetitionResults.Pages
                 CompetitionId = Convert.ToInt32(competitionId);
             }
             await Task.CompletedTask;
-            //StateHasChanged();
+           
         }
     }
 }

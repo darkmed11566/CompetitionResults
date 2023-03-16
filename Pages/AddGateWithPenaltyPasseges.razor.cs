@@ -32,7 +32,7 @@ namespace CompetitionResults.Pages
 
             CompetitionersForSelect = await context.Competitioners
                .AsNoTracking()
-               .Where(x => x.IsActive && x.StatusInTrack==StatusSportsmanInTrack.OnTrack)
+               .Where(x => x.IsActive /*&& x.StatusInTrack==StatusSportsmanInTrack.OnTrack*/)
                .ToListAsync();
 
             GateWithPenaltiesForSelect = await context.GateWithPenalties
