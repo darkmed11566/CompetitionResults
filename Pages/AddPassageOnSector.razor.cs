@@ -35,7 +35,7 @@ namespace CompetitionResults.Pages
                .AsNoTracking()
                .Where(x => x.IsActive 
                //&& x.StatusInTrack == StatusSportsmanInTrack.OnTrack
-               &&x.CompetitionId==IdCompetitionFromPage)
+              /* &&x.CompetitionId==IdCompetitionFromPage*/)
                .ToListAsync();           
 
             gateWithPenaltyPassageModel.GateWihtPenaltyId = GateWithPenaltiesForSelect
@@ -52,7 +52,7 @@ namespace CompetitionResults.Pages
 
             GateWithPenaltiesOnSector = await context.GateWithPenalties
               .AsNoTracking()
-              .Where(x => x.IsActive && x.SectorId == IdSectorFromPage)
+              .Where(x => x.IsActive/* && x.SectorId == IdSectorFromPage*/)
               .ToListAsync();
 
             await ResetDataToDefaultAsync();

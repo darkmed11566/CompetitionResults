@@ -11,7 +11,7 @@ namespace CompetitionResults.Models
         public DateTime GatePasssage { get; set; }
         public int GateWihtTimeId { get; set; }
         public int CompetitionerId { get; set; }
-        public virtual GateWithTime TimaGate { get; set; }
+        public virtual GateWithTime TimeGate { get; set; }
         public virtual Competitioner Competitioner { get; set; }
     }
 }

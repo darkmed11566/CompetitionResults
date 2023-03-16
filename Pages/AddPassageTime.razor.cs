@@ -45,12 +45,12 @@ namespace CompetitionResults.Pages
             {
                 case 1:
                     GateWithTimeForSelect = await context.GateWithTimes
-                      .Where(x => x.IsActive && x.Type == GateType.FinisGate && x.TrackId == IdTrackFromPage)
-                      .ToListAsync();
+                      .Where(x => x.IsActive && x.Type == GateType.StartingGate && x.TrackId == IdTrackFromPage)
+                      .ToListAsync();                    
                     break;
                 case 2:
                     GateWithTimeForSelect = await context.GateWithTimes
-                      .Where(x => x.IsActive && x.Type == GateType.StartingGate && x.TrackId == IdTrackFromPage)
+                      .Where(x => x.IsActive && x.Type == GateType.FinishGate && x.TrackId == IdTrackFromPage)
                       .ToListAsync();
                     break;
 
@@ -83,6 +83,7 @@ namespace CompetitionResults.Pages
 
             if (gateWithTimePassageModel.Id is 0)
             {
+                gateWithTimePassageModel.IsActive = true;
                 gateWithTimePassageModel.GateWihtTimeId = GateWihtTimeId;
                 await context.GateWithTimePassages.AddAsync(gateWithTimePassageModel);
             }
@@ -102,6 +103,7 @@ namespace CompetitionResults.Pages
 
             if (gateWithTimePassageModel.Id is 0)
             {
+                gateWithTimePassageModel.IsActive = true;
                 gateWithTimePassageModel.GateWihtTimeId = GateWihtTimeId;
                 gateWithTimePassageModel.GatePasssage = DateTime.Now;
                 await context.GateWithTimePassages.AddAsync(gateWithTimePassageModel);

@@ -31,7 +31,7 @@ namespace CompetitionResults.Pages
 
             CompetitionersForSelect = await context.Competitioners
                .AsNoTracking()
-               .Where(x => x.IsActive && x.StatusInTrack == StatusSportsmanInTrack.RegisteredForCompetition)
+               .Where(x => x.IsActive/* && x.StatusInTrack == StatusSportsmanInTrack.RegisteredForCompetition*/)
                .ToListAsync();
 
             GateWithTimeForSelect = await context.GateWithTimes

@@ -63,7 +63,7 @@ namespace CompetitionResults.Pages
                     },
                     new GateWithTime
                     {
-                        Type = GateType.FinisGate,
+                        Type = GateType.FinishGate,
                         GateName = GateNameWithTime.Finish,
                         IsActive = true
                     }

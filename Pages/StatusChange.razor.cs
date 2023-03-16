@@ -40,17 +40,7 @@ namespace CompetitionResults.Pages
             StatusForSelect = Enum.GetValues(typeof(StatusSportsmanInTrack))
             .OfType<StatusSportsmanInTrack>()
             .ToList();            
-        }
-        //private async Task RenewStateAsync()
-        //{
-        //    using var scope = serviceScopeFactory.CreateScope();
-        //    var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-
-        //    CompetitionersForSelect = await context.Competitioners
-        //        .AsNoTracking()
-        //        .Where(t => t.IsActive)
-        //        .ToListAsync();
-        //}
+        }  
         private async Task UpdateStatus()
         {
 
@@ -65,8 +55,7 @@ namespace CompetitionResults.Pages
             {
                 context.Competitioners.Update(competitionerModel);
             }
-            await context.SaveChangesAsync();
-           
+            await context.SaveChangesAsync();           
         }
         private void EditCompetitioner(Competitioner competitionerToEdit)
         {
@@ -83,30 +72,6 @@ namespace CompetitionResults.Pages
 
             competitionerModel = shallowCopy;
         }
-        //private async Task ResetDataToDefaultAsync()
-        //{
-        //    using var scope = serviceScopeFactory.CreateScope();
-        //    var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-
-        //    competitionerModel = new Competitioner
-        //    {
-        //        //IsActive = true,
-        //        //BoatClass = BoatClasses.K1M,
-        //        //Number = 1,
-        //        //CompetitionId = CompetitionsForSelect
-        //        //.OrderBy(x => x.Id)
-        //        //    .FirstOrDefault()
-        //        //    ?.Id ?? 0,
-        //        //SportsmanId = SportsmansForSelect
-        //        //.OrderBy(x => x.Id)
-        //        //    .FirstOrDefault()
-        //        //    ?.Id ?? 0,
-        //        StatusInTrack = StatusSportsmanInTrack.OnTrack
-
-        //    };
-
-        //    await RenewStateAsync();
-        //}
     }
 
 }

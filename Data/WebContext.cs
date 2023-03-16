@@ -56,7 +56,7 @@ namespace CompetitionResults.Data
 
             modelBuilder.Entity<GateWithTime>()
                 .HasMany(x => x.TimePassages)
-                .WithOne(x => x.TimaGate)
+                .WithOne(x => x.TimeGate)
                 .HasForeignKey(x => x.GateWihtTimeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
