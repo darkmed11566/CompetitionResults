@@ -21,6 +21,7 @@ namespace CompetitionResults.Pages
         protected IEnumerable<ListOfCountries> CountryForSelect = new List<ListOfCountries>();
         protected IEnumerable<Sex> SexForSelect = new List<Sex>();
         protected IEnumerable<Rangs> RangsForSelect = new List<Rangs>();
+        protected IEnumerable<Coach> CoachForSelect = new List<Coach>();
 
         protected Sportsman sportsmanModel = new Sportsman { IsActive = true };
         protected override async Task OnInitializedAsync()
@@ -41,6 +42,11 @@ namespace CompetitionResults.Pages
             RangsForSelect = Enum.GetValues(typeof(Rangs))
                  .OfType<Rangs>()
                  .ToList();
+
+            CoachForSelect= await context.Coaches
+               .AsNoTracking()
+               .Where(x => x.IsActive)
+               .ToListAsync();
 
             await ResetDataToDefaultAsync();
         }
@@ -69,7 +75,7 @@ namespace CompetitionResults.Pages
                 Country = sportsmanToEdit.Country,
                 Rang = sportsmanToEdit.Rang,
                 ClubName = sportsmanToEdit.ClubName,
-                CoachName = sportsmanToEdit.CoachName,
+                CoachId = sportsmanToEdit.CoachId,
                 Rating = sportsmanToEdit.Rating,
                 Achievements = sportsmanToEdit.Achievements,
                 URLPhoto = sportsmanToEdit.URLPhoto
@@ -134,7 +140,10 @@ namespace CompetitionResults.Pages
                 Sex = Sex.Male,
                 URLPhoto = "Enter photo url",
                 ClubName = "Personally",
-                CoachName = "Enter coach name",
+                CoachId = CoachForSelect
+                .OrderBy(x => x.Id)
+                    .FirstOrDefault()
+                    ?.Id ?? 0,
                 DateOfBirth = new DateTime (1950,01,01),
                 Achievements = "Enter  achievements"
                 

@@ -63,7 +63,7 @@
                             <td>
                                 @item.CoachName
                             </td>
-                            @foreach (var penaltyPassage in item.PenaltesOnGate)
+                            @foreach (var penaltyPassage in item.PenaltesOnGate.OrderBy(x=>x.Name))
                             {
 
                                 <td>

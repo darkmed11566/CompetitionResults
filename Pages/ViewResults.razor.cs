@@ -70,6 +70,7 @@ namespace CompetitionResults.Pages
             KM1 = await context.Competitioners
                  .AsNoTracking()
                  .Include(x => x.Sportsman)
+                    .ThenInclude(x=>x.Coach)
                  .Include(x => x.GateWithPenaltyPassages)
                     .ThenInclude(x=>x.PenaltyGate)
                  .Include(x => x.GateWithTimePassages)
@@ -154,7 +155,7 @@ namespace CompetitionResults.Pages
                     Rang = item.Sportsman.Rang,
                     DateOfBirth = item.Sportsman.DateOfBirth,
                     ClubName = item.Sportsman.ClubName,
-                    CoachName = item.Sportsman.CoachName,
+                    CoachName = item.Sportsman.Coach.SecondName,
                     StartTime = startTime,
                     FinishTime = finishTime,
                     TimePassageTrack = timeInTrackDouble2,
