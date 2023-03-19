@@ -15,10 +15,11 @@ namespace CompetitionResults.Models
         public ListOfCountries Country { get; set; }
         public Rangs Rang { get; set; }
         public string ClubName { get; set; }
-        public string CoachName { get; set; }
         public string URLPhoto { get; set; }
         public string Achievements { get; set; }
         public int Rating { get; set; }
+        public int CoachId { get; set; }
+        public virtual Coach Coach { get; set; }
         public virtual List<Competitioner> Competitioners { get; set; }
         
     }

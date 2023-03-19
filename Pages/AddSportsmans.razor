@@ -45,11 +45,18 @@
                         </InputSelect>
 
                         <label> NameOfClub </label>
-                        <InputText class=" form-control" placeholder="Name of club" @bind-Value="sportsmanModel.ClubName" />
+                        <InputText class=" form-control" placeholder="Name of club" @bind-Value="sportsmanModel.ClubName" />                        
 
                         <label> NamesOfCoachers </label>
-                        <InputText class=" form-control" placeholder="Names of coachers" @bind-Value="sportsmanModel.CoachName" />
+                        <CustomInputSelect class=" form-control" @bind-Value="sportsmanModel.CoachId">
 
+                            @foreach (var item in CoachForSelect)
+                            {
+                                <option value="@item.Id">
+                                    @item.SecondName
+                                </option>
+                            }
+                        </CustomInputSelect>
                         <label> Photo </label>
                         <InputText class=" form-control" placeholder="Photo" @bind-Value="sportsmanModel.URLPhoto" />
 
@@ -107,7 +114,7 @@
                                         @item.ClubName
                                     </td>
                                     <td>
-                                        @item.CoachName
+                                        @item.CoachId
                                     </td>
                                     <td>
                                         <div>

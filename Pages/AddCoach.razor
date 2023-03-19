@@ -1,0 +1,52 @@
+﻿@page "/addCoach"
+@using EnumsAndConstants
+<EditForm Model="coachModel" OnValidSubmit="SaveCoach">
+    <label> Name </label>
+    <InputText class=" form-control" @bind-Value="coachModel.Name" />
+
+    <label> SecondName </label>
+    <InputText class=" form-control" placeholder="Second Name" @bind-Value="coachModel.SecondName" />
+   
+    <button class=" btn btn-outline-primary">Save</button>
+</EditForm>
+
+<div class=" container-fluid">
+    <div class=" row">
+        <div class="col">
+            <h2>List of coach</h2>
+            <table class=" table table-striped">
+                <thead class=" table-striped">
+                    <tr>
+                        <th scope="col">Name </th>
+                        <th scope="col">Second name </th>                        
+                        <th scope="col">Country </th>                        
+
+                    </tr>
+                </thead>
+                @foreach (var item in coach)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.SecondName
+                            </td>                   
+                            <td>
+                                <button class=" btn-dark" @onclick="(()=>EditCoach(item))">Edite</button>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteCoachAsync(item))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+@code {
+
+}

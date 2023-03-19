@@ -21,6 +21,7 @@ namespace CompetitionResults.Data
         public DbSet<Sector> Sectors { get; set; }
         public DbSet<GateWithTimePassage> GateWithTimePassages { get; set; }
         public DbSet<GateWithPenaltyPassage> GateWithPenaltiePassages { get; set; }
+        public DbSet<Coach> Coaches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,6 +68,12 @@ namespace CompetitionResults.Data
             modelBuilder.Entity<Competitioner>()
                .HasMany(x => x.GateWithTimePassages)
                .WithOne(x => x.Competitioner).HasForeignKey(x => x.CompetitionerId);
+
+            modelBuilder.Entity<Coach>()
+                 .HasMany(x => x.Sportsmens)
+                 .WithOne(x => x.Coach)
+                 .HasForeignKey(x => x.CoachId)
+                 .OnDelete(DeleteBehavior.NoAction);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
