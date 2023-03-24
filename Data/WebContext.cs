@@ -22,6 +22,11 @@ namespace CompetitionResults.Data
         public DbSet<GateWithTimePassage> GateWithTimePassages { get; set; }
         public DbSet<GateWithPenaltyPassage> GateWithPenaltiePassages { get; set; }
         public DbSet<Coach> Coaches { get; set; }
+        public DbSet<GateWithPenaltyTraining> GateWithPenaltyTrainings { get; set; }
+        public DbSet<GateWithTimeTraining> GateWithTimeTrainings { get; set; }
+        public DbSet<GateWithPenaltyPassageTraining> GateWithPenaltyPassageTrainings { get; set; }
+        public DbSet<GateWithTimePassageTraining> GateWithTimePassageTrainings { get; set; }
+        public DbSet<ParticipantOfTheTraining> ParticipantOfTheTrainings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -74,6 +79,25 @@ namespace CompetitionResults.Data
                  .WithOne(x => x.Coach)
                  .HasForeignKey(x => x.CoachId)
                  .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<GateWithPenaltyTraining>()
+                .HasMany(x => x.PenaltyPassages)
+                .WithOne(x => x.GateWithPenalty)
+                .HasForeignKey(x => x.GateWihtPenaltyTrainingId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<GateWithTimeTraining>()
+               .HasMany(x => x.TimePassages)
+               .WithOne(x => x.TimeGate)
+               .HasForeignKey(x => x.GateWithPenaltyTrainingId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ParticipantOfTheTraining>()
+                .HasMany(x => x.GateWithPenaltyPassages)
+                .WithOne(x => x.ParticipantOfTheTraining)
+                .HasForeignKey(x => x.ParticipantOfTheTrainingId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

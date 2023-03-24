@@ -10,6 +10,7 @@ namespace CompetitionResults.Models
     {
         public string Name { get; set; }
         public string SecondName { get; set; }
+        public virtual List<Training> Trainings { get; set; }
         public virtual List<Sportsman> Sportsmens { get; set; }
     }
 }

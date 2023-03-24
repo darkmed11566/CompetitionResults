@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace CompetitionResults.Models
 {
-    public class GateWithPenalty:Gate
+    public class GateWithPenaltyTraining : Gate
     {
         public GateNameWithPenalty GateNumber { get; set; }
-        public int SectorId { get; set; }
-        public virtual Sector Sector { get; set; }       
-        public virtual List<GateWithPenaltyPassage> PenaltyPassages { get; set; }
+        public int TrainingId { get; set; }
+        public virtual Training Training { get; set; }       
+        public virtual List<GateWithPenaltyPassageTraining> PenaltyPassages { get; set; }
     }
 }
