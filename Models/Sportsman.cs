@@ -21,6 +21,6 @@ namespace CompetitionResults.Models
         public int CoachId { get; set; }
         public virtual Coach Coach { get; set; }
         public virtual List<Competitioner> Competitioners { get; set; }
-        
+        public virtual List< ParticipantOfTheTraining> ParticipantOfTheTraining { get; set; }
     }
 }

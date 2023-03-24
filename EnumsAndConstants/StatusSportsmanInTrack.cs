@@ -11,6 +11,7 @@ namespace CompetitionResults.EnumsAndConstants
         OnTrack = 2,
         Finished = 3,
         DNS = 4,
-        DNF = 5
+        DNF = 5,
+        InTraining = 6
     }
 }
