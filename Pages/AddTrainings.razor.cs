@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CompetitionResults.Data;
+﻿using CompetitionResults.Data;
+using CompetitionResults.EnumsAndConstants;
 using CompetitionResults.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CompetitionResults.Pages
 {
-    public partial class AddSectors
+    public partial class AddTrainings
     {
         [Inject]
         protected IServiceScopeFactory serviceScopeFactory { get; set; }
 
-        protected IEnumerable<Sector> sectors = new List<Sector>();
-        protected Sector sectorModel = new Sector { IsActive = true };
-
-        protected IEnumerable<Track> TracksForSelect = new List<Track>();
+        protected IEnumerable<Training> trainings = new List<Training>();
+        protected Training trainingModel = new Training { IsActive = true };
+        protected IEnumerable<Coach> CoachForSelect = new List<Coach>();
+        protected IEnumerable<TrainingType> TypesForSelect = new List<TrainingType>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -27,45 +28,43 @@ namespace CompetitionResults.Pages
             using var scope = serviceScopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
 
-            TracksForSelect = await context.Tracks
-                .AsNoTracking()
-                .Where(x => !x.IsFull && x.IsActive)
-                .ToListAsync();
+            TypesForSelect = Enum.GetValues(typeof(TrainingType))
+               .OfType<TrainingType>()
+               .ToList();
 
-            sectorModel.TrackId = TracksForSelect
-                .OrderBy(x => x.Id).
-                FirstOrDefault()?.Id ?? 0;
+            CoachForSelect = await context.Coaches
+              .AsNoTracking()
+              .Where(x => x.IsActive)
+              .ToListAsync();
 
             await ResetDataToDefaultAsync();
         }
-
-
 
         private async Task RenewStateAsync()
         {
             using var scope = serviceScopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
 
-            sectors = await context.Sectors
+            trainings = await context.Trainings
                 .AsNoTracking()
+                .Include(x=>x.Coach)
                 .Where(t => t.IsActive)
                 .ToListAsync();
         }
 
-
-        private async Task SaveSector()
+        private async Task SaveTraining()
         {
             using var scope = serviceScopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
 
-            if (sectorModel.Id is 0)
+            if (trainingModel.Id is 0)
             {
 
-                await context.Sectors.AddAsync(sectorModel);
+                await context.Trainings.AddAsync(trainingModel);
             }
             else
             {
-                context.Sectors.Update(sectorModel);
+                context.Trainings.Update(trainingModel);
             }
 
             await context.SaveChangesAsync();
@@ -74,27 +73,27 @@ namespace CompetitionResults.Pages
 
         }
 
-        private void EditSector(Sector sectorToEdite)
+        private void EditTraining(Training trainingToEdite)
         {
-            var shallowCopy = new Sector
+            var shallowCopy = new Training
             {
-                Id = sectorToEdite.Id,
-                Number = sectorToEdite.Number,
-                TrackId = sectorToEdite.TrackId,
-                IsActive = sectorToEdite.IsActive,
-                IsFull = sectorToEdite.IsFull
+                Id = trainingToEdite.Id,
+                CoachId = trainingToEdite.CoachId,
+                IsActive = trainingToEdite.IsActive,
+                Type = trainingToEdite.Type,
+                TrainingDate = trainingToEdite.TrainingDate
             };
 
-            sectorModel = shallowCopy;
+            trainingModel = shallowCopy;
         }
 
-        private async Task DeleteSectorAsync(Sector sectorToDelete)
+        private async Task DeleteTrainingAsync(Training trainingToDelete)
         {
-            sectorToDelete.IsActive = false;
+            trainingToDelete.IsActive = false;
 
             using var scope = serviceScopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
-            context.Sectors.Update(sectorToDelete);
+            context.Trainings.Update(trainingToDelete);
             await context.SaveChangesAsync();
             await RenewStateAsync();
         }
@@ -104,12 +103,12 @@ namespace CompetitionResults.Pages
             using var scope = serviceScopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<WebContext>();
 
-            sectorModel = new Sector
+            trainingModel = new Training
             {
-                IsFull = false,
                 IsActive = true,
-                Number = 1,
-                TrackId = TracksForSelect
+                Type = TrainingType.ShortTrack,
+                TrainingDate = DateTime.Now,
+                CoachId = CoachForSelect
                  .OrderBy(x => x.Id)
                     .FirstOrDefault()
                     ?.Id ?? 0
@@ -117,8 +116,5 @@ namespace CompetitionResults.Pages
 
             await RenewStateAsync();
         }
-
-
     }
 }
-

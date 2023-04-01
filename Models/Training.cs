@@ -10,6 +10,7 @@ namespace CompetitionResults.Models
     {
         public TrainingType Type { get; set; }
         public int CoachId { get; set; }
+        public DateTime TrainingDate { get; set; }
         public virtual Coach Coach { get; set; }
         public virtual List<ParticipantOfTheTraining> ParticipantOfTheTrainings { get; set; }
     }

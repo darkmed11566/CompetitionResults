@@ -1,0 +1,79 @@
+﻿@page "/addTraining"
+@using EnumsAndConstants
+<div class="row">
+    <div class="col">
+        <EditForm Model="trainingModel" OnValidSubmit="SaveTraining">
+            <div class="form-group">
+
+                <label> Training Date </label>
+                <InputDate class=" form-control" @bind-Value="trainingModel.TrainingDate " />
+
+                <label> Type </label>
+                <InputSelect class=" form-control" @bind-Value="trainingModel.Type">
+
+                    @foreach (var type in TypesForSelect)
+                    {
+                        <option value="@type">
+                            @type;
+                        </option>
+                    }
+                </InputSelect>
+
+                <label> CoachID </label>
+                <CustomInputSelect class=" form-control" @bind-Value="trainingModel.CoachId">
+                    @foreach (var item in CoachForSelect)
+                    {
+                        <option value="@item.Id">
+                            @item.SecondName
+                        </option>
+                    }
+                </CustomInputSelect>
+
+            </div>
+            <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
+    </div>
+</div>
+<div class=" container-fluid">
+    <div class=" row">
+        <div class="col">
+            <h2>List of trainings</h2>
+            <table class=" table table-striped">
+                <thead class=" table-striped">
+                    <tr>
+                        <th scope="col">TrainingDate </th>
+                        <th scope="col">Type </th>
+                        <th scope="col">Coach </th>
+                    </tr>
+                </thead>
+                @foreach (var item in trainings)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.TrainingDate
+                            </td>
+                            <td>
+                                @item.Type
+                            </td>
+                            <td>
+                                @item.Coach.SecondName
+                            </td>
+                            <td>
+                                <button class=" btn-dark" @onclick="(()=>EditTraining(item))">Edite</button>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteTrainingAsync(item))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

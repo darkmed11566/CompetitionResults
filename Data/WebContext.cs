@@ -22,6 +22,7 @@ namespace CompetitionResults.Data
         public DbSet<GateWithTimePassage> GateWithTimePassages { get; set; }
         public DbSet<GateWithPenaltyPassage> GateWithPenaltiePassages { get; set; }
         public DbSet<Coach> Coaches { get; set; }
+        public DbSet<Training> Trainings { get; set; }
         public DbSet<GateWithPenaltyTraining> GateWithPenaltyTrainings { get; set; }
         public DbSet<GateWithTimeTraining> GateWithTimeTrainings { get; set; }
         public DbSet<GateWithPenaltyPassageTraining> GateWithPenaltyPassageTrainings { get; set; }
