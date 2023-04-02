@@ -12,6 +12,6 @@ namespace CompetitionResults.EnumsAndConstants
         Finished = 3,
         DNS = 4,
         DNF = 5,
-        InTraining = 6
+        OnTraining = 6
     }
 }
