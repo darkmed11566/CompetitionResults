@@ -81,6 +81,18 @@ namespace CompetitionResults.Data
                  .HasForeignKey(x => x.CoachId)
                  .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Training>()
+                .HasMany(x=>x.GateWithPenalty)
+                .WithOne(x=>x.Training)
+                .HasForeignKey(x=>x.TrainingId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Training>()
+               .HasMany(x => x.GateWithTimes)
+               .WithOne(x => x.Training)
+               .HasForeignKey(x => x.TrainingId)
+               .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<GateWithPenaltyTraining>()
                 .HasMany(x => x.PenaltyPassages)
                 .WithOne(x => x.GateWithPenalty)
@@ -90,7 +102,7 @@ namespace CompetitionResults.Data
             modelBuilder.Entity<GateWithTimeTraining>()
                .HasMany(x => x.TimePassages)
                .WithOne(x => x.TimeGate)
-               .HasForeignKey(x => x.GateWithPenaltyTrainingId)
+               .HasForeignKey(x => x.GateWithTimeTrainingId)
                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ParticipantOfTheTraining>()

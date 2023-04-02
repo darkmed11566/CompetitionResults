@@ -1,0 +1,149 @@
+﻿@page "/addTrainingGates"
+@using EnumsAndConstants
+
+<div class="row">
+    <div class="col">
+        <EditForm Model="gateWithTimeModel" OnValidSubmit="SaveGateWithTime">
+            <div class="form-group">
+
+                <label> Name </label>
+                <InputSelect class=" form-control" @bind-Value="gateWithTimeModel.GateName">
+                    @foreach (var item in GateNamesWithTimeForSelect)
+                    {
+                        <option value="@item">
+                            @item
+                        </option>
+                    }
+                </InputSelect>
+
+                <label> TrackID </label>
+                <CustomInputSelect class=" form-control" @bind-Value="gateWithTimeModel.TrainingId">
+                    @foreach (var item in TrainingForSelect)
+                    {
+                        <option value="@item.Id">
+                            @item.Type
+                        </option>
+                    }
+                </CustomInputSelect>
+
+                <label> Type </label>
+                <InputSelect class=" form-control" @bind-Value="gateWithTimeModel.Type">
+                    @foreach (var item in GateTypesForSelect)
+                    {
+                        <option value="@item">
+                            @item
+                        </option>
+                    }
+                </InputSelect>
+
+            </div>
+            <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <EditForm Model="gateWithPenaltyModel" OnValidSubmit="SaveGateWithPenalty">
+            <div class="form-group">
+
+                <label> Number </label>
+                <InputSelect class=" form-control" @bind-Value="gateWithPenaltyModel.GateNumber">
+                    @foreach (var item in GateNamesWithPenaltyForSelect)
+                    {
+                        <option value="@item">
+                            @item
+                        </option>
+                    }
+                </InputSelect>
+
+                <label> SectorId </label>
+                <CustomInputSelect class=" form-control" @bind-Value="gateWithPenaltyModel.TrainingId">
+                    @foreach (var item in TrainingForSelect)
+                    {
+                        <option value="@item.Id">
+                            @item.Type
+                        </option>
+                    }
+                </CustomInputSelect>
+
+                <label> Type </label>
+                <InputSelect class=" form-control" @bind-Value="gateWithPenaltyModel.Type">
+                    @foreach (var item in GateTypesForSelect)
+                    {
+                        <option value="@item">
+                            @item
+                        </option>
+                    }
+                </InputSelect>
+
+            </div>
+            <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
+    </div>
+</div>
+<div class=" container-fluid">
+    <div class=" row">
+        <div class="col">
+            <h2>List of Gates</h2>
+            <table class=" table table-striped">
+                <thead class=" table-striped">
+                    <tr>
+                        <th scope="col">Gate Type </th>
+                        <th scope="col">Gate Name/Number </th>
+                        <th scope="col">TrainingId </th>
+                    </tr>
+
+                </thead>
+                @foreach (var item in gateWithTime)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.Type
+                            </td>
+                            <td>
+                                @item.GateName
+                            </td>
+                            <td>
+                                @item.TrainingId
+                            </td>
+                            <td>
+                                <button class=" btn-dark" @onclick="(()=>EditGateWithTime(item))">Edit</button>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithTimeAsync(item))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+                @foreach (var item in gateWithPenalty)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.Type
+                            </td>
+                            <td>
+                                @item.GateNumber
+                            </td>
+                            <td>
+                                @item.TrainingId
+                            </td>
+                            <td>
+                                <button class=" btn-dark" @onclick="(()=>EditGateWithPenalty(item))">Edit</button>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteGateWithPenaltyAsync(item))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

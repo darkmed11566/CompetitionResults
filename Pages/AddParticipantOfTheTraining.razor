@@ -1,0 +1,109 @@
+﻿@page  "/addParticipantOfTheTrainings"
+
+<div class="row">
+    <div class="col">
+        <EditForm Model="participantOfTheTrainingModel" OnValidSubmit="SaveParticipantOfTheTraining">
+            <div class="form-group">
+
+                <label> Name </label>
+                <InputText class=" form-control" @bind-Value="participantOfTheTrainingModel.Name" />
+
+                <label> Class </label>
+                <InputSelect class=" form-control" @bind-Value="participantOfTheTrainingModel.BoatClass">
+
+                    @foreach (var boatClasses in BoatClassesForSelect)
+                    {
+                        <option value="@boatClasses">
+                            @boatClasses
+                        </option>
+                    }
+                </InputSelect>
+
+                <label> Status </label>
+                <InputSelect class=" form-control" @bind-Value="participantOfTheTrainingModel.StatusInTrack">
+
+                    @foreach (var status in StatusForSelect)
+                    {
+                        <option value="@status">
+                            @status
+                        </option>
+                    }
+                </InputSelect>
+
+                <label> Training ID </label>
+                <CustomInputSelect class=" form-control" @bind-Value="participantOfTheTrainingModel.TrainingId">
+
+                    @foreach (var item in TrainingForSelect)
+                    {
+                        <option value="@item.Id">
+                            @item.Id
+                        </option>
+                    }
+                </CustomInputSelect>
+
+                <label> Sportsman Id </label>
+                <CustomInputSelect class=" form-control" @bind-Value="participantOfTheTrainingModel.SportsmanId">
+
+                    @foreach (var item in SportsmansForSelect)
+                    {
+                        <option value="@item.Id">
+                            @item.SecondName @item.Name
+                        </option>
+                    }
+                </CustomInputSelect>
+            </div>
+            <button class=" btn btn-outline-primary">Save</button>
+        </EditForm>
+    </div>
+</div>
+<div class=" container-fluid">
+    <div class=" row">
+        <div class="col">
+            <h2>List of spostsmans</h2>
+            <table class=" table table-striped">
+                <thead class=" table-striped">
+                    <tr>
+                        <th scope="col">Name </th>
+                        <th scope="col">BoatClass </th>
+                        <th scope="col">Status </th>
+                        <th scope="col">SportsmanId </th>
+                        <th scope="col">TrainingId </th>
+                    </tr>
+                </thead>
+                @foreach (var item in participantOfTheTraining)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.BoatClass
+                            </td>
+                            <td>
+                                @item.StatusInTrack
+                            </td>
+                            <td>
+                                @item.SportsmanId
+                            </td>
+                            <td>
+                                @item.TrainingId
+                            </td>
+                            <td>
+                                <button class=" btn-dark" @onclick="(()=>EditParticipantOfTheTraining(item))">Edit</button>
+                            </td>
+                            <td>
+                                <button class=" btn-danger" @onclick="(()=>DeleteParticipantOfTheTrainingAsync(item))">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

@@ -13,5 +13,7 @@ namespace CompetitionResults.Models
         public DateTime TrainingDate { get; set; }
         public virtual Coach Coach { get; set; }
         public virtual List<ParticipantOfTheTraining> ParticipantOfTheTrainings { get; set; }
+        public virtual List<GateWithPenaltyTraining> GateWithPenalty { get; set; }
+        public virtual List<GateWithTimeTraining> GateWithTimes { get; set; }
     }
 }

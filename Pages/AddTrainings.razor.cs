@@ -59,6 +59,24 @@ namespace CompetitionResults.Pages
 
             if (trainingModel.Id is 0)
             {
+                List<GateWithTimeTraining> gatesForTrainingModel = new List<GateWithTimeTraining>
+                {
+                    new GateWithTimeTraining
+                    {
+                        Type = GateType.StartingGate,
+                        GateName = GateNameWithTime.Start,
+                        IsActive = true
+                    },
+                    new GateWithTimeTraining
+                    {
+                        Type = GateType.FinishGate,
+                        GateName = GateNameWithTime.Finish,
+                        IsActive = true
+                    }
+                };
+
+                trainingModel.GateWithTimes = gatesForTrainingModel;
+
 
                 await context.Trainings.AddAsync(trainingModel);
             }
